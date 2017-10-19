@@ -1,8 +1,9 @@
-import React from 'react';
+import React    from 'react';
+import Keyboard from 'components/Keyboard';
 
 const Home = () => (
 	<div>
-		<h1>Keyboard</h1>
+		<Keyboard />
 	</div>
 );
 
