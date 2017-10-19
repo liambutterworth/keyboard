@@ -6204,10 +6204,8 @@ koa-convert	package-lock.json	/^    "koa-convert": {$/;"	o	language:JSON	object:
 koa-is-json	package-lock.json	/^        "koa-is-json": "https:\/\/registry.npmjs.org\/koa-is-json\/-\/koa-is-json-1.0.0.tgz",$/;"	s	language:JSON	object:dependencies.koa.requires
 koa-is-json	package-lock.json	/^    "koa-is-json": {$/;"	o	language:JSON	object:dependencies
 koa-router	package-lock.json	/^    "koa-router": {$/;"	o	language:JSON	object:dependencies
-koa-router	package.json	/^    "koa-router": "^7.2.1",$/;"	s	language:JSON	object:dependencies
 koa-send	package-lock.json	/^        "koa-send": "4.1.1"$/;"	s	language:JSON	object:dependencies.koa-static.requires
 koa-send	package-lock.json	/^    "koa-send": {$/;"	o	language:JSON	object:dependencies
-koa-send	package.json	/^    "koa-send": "^4.1.1",$/;"	s	language:JSON	object:dependencies
 koa-static	package-lock.json	/^    "koa-static": {$/;"	o	language:JSON	object:dependencies
 koa-static	package.json	/^    "koa-static": "^4.0.1",$/;"	s	language:JSON	object:dependencies
 label	build/main.487c93b1baf0c3eebb0e.js	/^    label: 0,$/;"	p	language:JavaScript	class:HTMLDOMPropertyConfig.Properties
