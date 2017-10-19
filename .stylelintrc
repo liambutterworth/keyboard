@@ -1,0 +1,12 @@
+{
+	"extends": "stylelint-config-standard",
+
+	"rules": {
+		"declaration-block-no-duplicate-properties":      0,
+		"block-opening-brace-space-before":               0,
+		"function-parentheses-space-inside":              "always",
+		"media-feature-parentheses-space-inside":         "always",
+		"selector-pseudo-class-parentheses-space-inside": "always",
+		"indentation":                                    "tab",
+	},
+}
