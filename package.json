@@ -6,7 +6,7 @@
   "scripts": {
     "serve": "",
     "watch": "webpack --progress --colors --w",
-    "build": "npm run clean && webpack --progress --colors -p",
+    "build": "webpack --progress --colors -p",
     "clean": "rm -rf build"
   },
   "repository": {
@@ -21,6 +21,7 @@
   "homepage": "https://github.com/wbbutterworth/keyboard#readme",
   "dependencies": {
     "classnames": "^2.2.5",
+    "clean-webpack-plugin": "^0.1.17",
     "koa": "^2.3.0",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",

@@ -1,5 +1,6 @@
-const HtmlWebpackPlugin  = require( 'html-webpack-plugin' );
+// const HtmlWebpackPlugin  = require( 'html-webpack-plugin' );
 const ExtractTextPlugin  = require( 'extract-text-webpack-plugin' );
+const CleanWebpackPlugin = require( 'clean-webpack-plugin' );
 const path               = require( 'path' );
 
 module.exports = {
@@ -20,8 +21,8 @@ module.exports = {
 		extensions: [ '.js', '.json' ],
 
 		modules: [
-			path.resolve( './source' ),
-			path.resolve( './node_modules' ),
+			path.resolve( __dirname, 'source' ),
+			path.resolve( __dirname, 'node_modules' ),
 		],
 	},
 
@@ -51,9 +52,15 @@ module.exports = {
 	plugins: [
 		new ExtractTextPlugin( '[name].[hash].css' ),
 
-		new HtmlWebpackPlugin({
-			template: 'index.html',
-			filename: '../index.html',
+		new CleanWebpackPlugin( [ 'build' ], {
+			root:    __dirname,
+			verbose: true,
+			watch:   true,
 		}),
+
+		// new HtmlWebpackPlugin({
+		// 	template: 'index.html',
+		// 	filename: '../index.html',
+		// }),
 	],
 };
