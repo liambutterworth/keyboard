@@ -12,16 +12,14 @@
 	},
 
 	"rules": {
+		"no-param-reassign":      0,
 		"no-tabs":                0,
 		"indent":                 [ "error", "tab" ],
 		"no-return-assign":       [ "error", "except-parens" ],
 		"key-spacing":            [ "warn", align: "value" ],
 		"template-curly-spacing": [ "warn", "always" ],
 		"arrow-parens":           [ "warn", "always" ],
-
-		"space-in-parens": [ "warn", "always", {
-			exceptions: [ "{}" ],
-		}],
+		"space-in-parens":        [ "warn", "always" ],
 
 		"array-bracket-spacing": [ "warn", "always", {
 			"objectsInArrays": false,

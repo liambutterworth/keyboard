@@ -1,10 +1,10 @@
-// const HtmlWebpackPlugin  = require( 'html-webpack-plugin' );
 const ExtractTextPlugin  = require( 'extract-text-webpack-plugin' );
+const HtmlWebpackPlugin  = require( 'html-webpack-plugin' );
 const CleanWebpackPlugin = require( 'clean-webpack-plugin' );
 const path               = require( 'path' );
 
 module.exports = {
-	context: `${ __dirname }/source/`,
+	context: `${ __dirname }/client/`,
 
 	entry: [
 		'babel-polyfill',
@@ -12,16 +12,15 @@ module.exports = {
 	],
 
 	output: {
-		path:       `${ __dirname }/build/`,
-		filename:   '[name].[hash].js',
-		publicPath: '/build/',
+		path:     `${ __dirname }/build`,
+		filename: '[name].[hash].js',
 	},
 
 	resolve: {
 		extensions: [ '.js', '.json' ],
 
 		modules: [
-			path.resolve( __dirname, 'source' ),
+			path.resolve( __dirname, 'client' ),
 			path.resolve( __dirname, 'node_modules' ),
 		],
 	},
@@ -35,9 +34,9 @@ module.exports = {
 			test:    /\.css$/,
 			exclude: /node_modules/,
 
-			use: ExtractTextPlugin.extract({
+			use: ExtractTextPlugin.extract( {
 				use: [ 'css-loader', 'postcss-loader' ],
-			}),
+			} ),
 		}, {
 			test:    /\.(jpe?g|png)$/,
 			exclude: /node_modules/,
@@ -51,16 +50,12 @@ module.exports = {
 
 	plugins: [
 		new ExtractTextPlugin( '[name].[hash].css' ),
+		new HtmlWebpackPlugin( { template: 'index.html' } ),
 
 		new CleanWebpackPlugin( [ 'build' ], {
 			root:    __dirname,
 			verbose: true,
 			watch:   true,
-		}),
-
-		// new HtmlWebpackPlugin({
-		// 	template: 'index.html',
-		// 	filename: '../index.html',
-		// }),
+		} ),
 	],
 };

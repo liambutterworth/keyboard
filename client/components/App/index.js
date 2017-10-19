@@ -5,6 +5,7 @@ require( './style.css' );
 
 const App = ( props ) => (
 	<div id="app">
+		<h1>App</h1>
 		{ props.children }
 	</div>
 );
