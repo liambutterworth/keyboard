@@ -1,31 +1,59 @@
-import React from 'react';
-import shortid from 'shortid';
+import React    from 'react';
+import shortid  from 'shortid';
 import { Note } from 'music-theory';
-import Key   from './Key';
+import Key      from './Key';
 
 require( './style.css' );
+
+const defaultKeybinds = [
+	{ keybind: '\t', note: 'C' },
+	{ keybind: 'q',  note: 'D' },
+	{ keybind: 'w',  note: 'E' },
+	{ keybind: 'e',  note: 'F' },
+	{ keybind: 'r',  note: 'G' },
+	{ keybind: 't',  note: 'A' },
+	{ keybind: 'y',  note: 'B' },
+	{ keybind: 'u',  note: 'C' },
+	{ keybind: 'i',  note: 'D' },
+	{ keybind: 'o',  note: 'E' },
+	{ keybind: 'p',  note: 'F' },
+	{ keybind: '[',  note: 'G' },
+	{ keybind: ']',  note: 'A' },
+	{ keybind: '\\', note: 'B' },
+	{ keybind: '\b', note: 'C' },
+];
 
 class Keyboard extends React.Component {
 	constructor( props ) {
 		super( props );
 
-		this.keys = {
-			'tab': new Note( 'C' ),
-			'q':   new Note( 'D' ),
-			'w':   new Note( 'E' ),
-			'e':   new Note( 'F' ),
-			'r':   new Note( 'G' ),
-			't':   new Note( 'A' ),
-			'y':   new Note( 'B' ),
-			'u':   new Note( 'C' ),
-			'i':   new Note( 'D' ),
-			'o':   new Note( 'E' ),
-			'p':   new Note( 'F' ),
-			'[':   new Note( 'G' ),
-			']':   new Note( 'A' ),
-			'\\':  new Note( 'B' ),
-			'del': new Note( 'C' ),
-		};
+		this.handleKeyPress = this.handleKeyPress.bind( this );
+		this.keybinds = this.props.keybinds || defaultKeybinds;
+	}
+
+	componentWillMount() {
+		this.keys = this.keybinds.map( ( keybind ) => {
+			return (
+				<Key
+					key={ shortid.generate() }
+					note={ new Note( keybind.note ) }
+					keybind={ keybind.keybind }
+				/>
+			);
+		} );
+
+		document.addEventListener( 'keypress', this.handleKeyPress );
+	}
+
+	componentWillUnmount() {
+	}
+
+	handleKeyPress( event ) {
+		const keyPressed = this.keys.find( ( key ) => {
+			return key.props.keybind.charCodeAt() === event.charCode;
+		} );
+
+		console.log( `play a ${ keyPressed.props.note.symbol() }` );
 	}
 
 	createKeys() {
@@ -37,7 +65,7 @@ class Keyboard extends React.Component {
 	render() {
 		return (
 			<div className="keyboard">
-				{ this.createKeys() }
+				{ this.keys }
 			</div>
 		);
 	}
