@@ -1,7 +1,36 @@
+$natural-color: white;
+$natural-pressed-color: color( $natural-color blackness( 10% ) );
+$accidental-color: black;
+$accidental-pressed-color: color( $accidental-color whiteness( 10% ) );
+
 .keyboard-key {
-	border: 1px solid black;
-	cursor: pointer;
-	height: 100px;
-	width: 250px;
-	margin: 20px;
+	background: $natural-color;
+	height: 100%;
+	float: left;
+	width: 4%;
+	border-right: 1px solid black;
+	position: relative;
+	z-index: 1;
+
+	&:last-child {
+		border-right: none;
+	}
+
+	&.keyboard-key--is-pressed {
+		background: $natural-pressed-color;
+	}
+
+	&.keyboard-key--accidental {
+		border: none;
+		border-radius: 0 0 3px 3px;
+		background: black;
+		margin: 0 -1%;
+		width: 2%;
+		height: 75%;
+		z-index: 2;
+
+		&.keyboard-key--is-pressed {
+			background: $accidental-pressed-color;
+		}
+	}
 }
