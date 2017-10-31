@@ -17,11 +17,13 @@ class Key extends React.Component {
 
 	componentWillMount() {
 		document.addEventListener( 'keydown', ( event ) => {
-			if ( event.key.charCodeAt() === this.props.keybind.charCodeAt() && !event.repeat ) this.play();
+			event.preventDefault();
+			if ( event.which === this.props.keybind.charCodeAt() && !event.repeat ) this.play();
 		} );
 
 		document.addEventListener( 'keyup', ( event ) => {
-			if ( event.key.charCodeAt() === this.props.keybind.charCodeAt() && !event.repeat ) this.stop();
+			event.preventDefault();
+			if ( event.which === this.props.keybind.charCodeAt() && !event.repeat ) this.stop();
 		} );
 	}
 
