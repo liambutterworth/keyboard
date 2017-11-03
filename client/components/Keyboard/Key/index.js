@@ -1,4 +1,5 @@
 import React      from 'react';
+import PropTypes  from 'prop-types';
 import ClassNames from 'classnames';
 import { Note }   from 'music-theory';
 
@@ -38,5 +39,10 @@ class Key extends React.Component {
 		);
 	}
 }
+
+Key.propTypes = {
+	keybind: PropTypes.string.isRequired,
+	note:    PropTypes.string.isRequired,
+};
 
 export default Key;

@@ -2306,6 +2306,7 @@ defaultProps	build/main.bc95eee91344f1981fff.js	/^NavLink.defaultProps = {$/;"	c
 defaultProps	build/main.bc95eee91344f1981fff.js	/^Prompt.defaultProps = {$/;"	c	language:JavaScript	class:Prompt
 defaultProps	build/main.bc95eee91344f1981fff.js	/^Redirect.defaultProps = {$/;"	c	language:JavaScript	class:Redirect
 defaultProps	build/main.bc95eee91344f1981fff.js	/^StaticRouter.defaultProps = {$/;"	c	language:JavaScript	class:StaticRouter
+defaultProps	client/components/Keyboard/index.js	/^Keyboard.defaultProps = {$/;"	c	language:JavaScript	class:Keyboard
 defaultSetTimout	build/main.bc95eee91344f1981fff.js	/^function defaultSetTimout() {$/;"	f	language:JavaScript	function:AnonymousFunctionfac177940100
 defaultValue	build/main.bc95eee91344f1981fff.js	/^    defaultValue: true,$/;"	p	language:JavaScript	class:reactProps
 defer	build/main.bc95eee91344f1981fff.js	/^    defer = function(id){$/;"	f	language:JavaScript
@@ -6425,6 +6426,9 @@ keyPoints	build/main.bc95eee91344f1981fff.js	/^  keyPoints: 'keyPoints',$/;"	p	l
 keySplines	build/main.bc95eee91344f1981fff.js	/^  keySplines: 'keySplines',$/;"	p	language:JavaScript	class:ATTRS
 keyTimes	build/main.bc95eee91344f1981fff.js	/^  keyTimes: 'keyTimes',$/;"	p	language:JavaScript	class:ATTRS
 keyType	build/main.bc95eee91344f1981fff.js	/^    keyType: 0,$/;"	p	language:JavaScript	class:HTMLDOMPropertyConfig.Properties
+keybind	client/components/Keyboard/Key/index.js	/^	keybind: PropTypes.string.isRequired,$/;"	p	language:JavaScript	class:Key.propTypes
+keybinds	client/components/Keyboard/index.js	/^	keybinds: PropTypes.arrayOf( PropTypes.shape( {$/;"	p	language:JavaScript	class:Keyboard.propTypes
+keybinds	client/components/Keyboard/index.js	/^	keybinds: [$/;"	p	language:JavaScript	class:Keyboard.defaultProps
 keygen	build/main.bc95eee91344f1981fff.js	/^  keygen: createDOMFactory('keygen'),$/;"	p	language:JavaScript	class:ReactDOMFactories
 keygen	build/main.bc95eee91344f1981fff.js	/^  keygen: true,$/;"	p	language:JavaScript	class:omittedCloseTags
 keygrip	package-lock.json	/^        "keygrip": "https:\/\/registry.npmjs.org\/keygrip\/-\/keygrip-1.0.2.tgz"$/;"	s	language:JSON	object:dependencies.cookies.requires
@@ -6929,6 +6933,7 @@ normalizeKey	build/main.bc95eee91344f1981fff.js	/^var normalizeKey = {$/;"	c	lan
 normalizeLocation	build/main.bc95eee91344f1981fff.js	/^var normalizeLocation = function normalizeLocation(object) {$/;"	f	language:JavaScript
 noscript	build/main.bc95eee91344f1981fff.js	/^  noscript: createDOMFactory('noscript'),$/;"	p	language:JavaScript	class:ReactDOMFactories
 noslash	build/main.bc95eee91344f1981fff.js	/^  noslash: {$/;"	c	language:JavaScript	class:HashPathCoders
+note	client/components/Keyboard/Key/index.js	/^	note:    PropTypes.string.isRequired,$/;"	p	language:JavaScript	class:Key.propTypes
 notify	build/main.bc95eee91344f1981fff.js	/^var notify = function(record, isReject){$/;"	f	language:JavaScript
 notifyAll	build/main.bc95eee91344f1981fff.js	/^  CallbackQueue.prototype.notifyAll = function notifyAll() {$/;"	m	language:JavaScript	class:CallbackQueue
 notifyListeners	build/main.bc95eee91344f1981fff.js	/^  var notifyListeners = function notifyListeners() {$/;"	f	language:JavaScript
@@ -7613,6 +7618,8 @@ propTypes	build/main.bc95eee91344f1981fff.js	/^StaticRouter.propTypes = {$/;"	c	
 propTypes	build/main.bc95eee91344f1981fff.js	/^Switch.propTypes = {$/;"	c	language:JavaScript	class:Switch
 propTypes	build/main.bc95eee91344f1981fff.js	/^var propTypes = {$/;"	c	language:JavaScript
 propTypes	client/components/App/index.js	/^App.propTypes = {$/;"	c	language:JavaScript	class:App
+propTypes	client/components/Keyboard/Key/index.js	/^Key.propTypes = {$/;"	c	language:JavaScript	class:Key
+propTypes	client/components/Keyboard/index.js	/^Keyboard.propTypes = {$/;"	c	language:JavaScript	class:Keyboard
 properties	build/main.bc95eee91344f1981fff.js	/^  properties: {},$/;"	p	language:JavaScript	class:DOMProperty
 property	build/main.bc95eee91344f1981fff.js	/^    property: 0,$/;"	p	language:JavaScript	class:HTMLDOMPropertyConfig.Properties
 propertyInfo	build/main.bc95eee91344f1981fff.js	/^      var propertyInfo = {$/;"	c	language:JavaScript	class:injectDOMPropertyConfig
