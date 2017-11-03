@@ -13,18 +13,7 @@ class Key extends React.Component {
 		};
 
 		this.note = new Note( this.props.note );
-	}
-
-	componentWillMount() {
-		document.addEventListener( 'keydown', ( event ) => {
-			event.preventDefault();
-			if ( event.which === this.props.keybind.charCodeAt() && !event.repeat ) this.play();
-		} );
-
-		document.addEventListener( 'keyup', ( event ) => {
-			event.preventDefault();
-			if ( event.which === this.props.keybind.charCodeAt() && !event.repeat ) this.stop();
-		} );
+		this.code = this.props.keybind.charCodeAt();
 	}
 
 	play() {

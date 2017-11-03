@@ -8,6 +8,11 @@ class Keyboard extends React.Component {
 	constructor( props ) {
 		super( props );
 
+		this.keys = [];
+
+		document.addEventListener( 'keydown', this.handleKeydown.bind( this ) );
+		document.addEventListener( 'keyup', this.handleKeyup.bind( this ) );
+
 		this.keybinds = this.props.keybinds || [
 			{ keybind: '\t', note: 'C' },
 			{ keybind: '`',  note: 'Db' },
@@ -37,6 +42,25 @@ class Keyboard extends React.Component {
 		];
 	}
 
+	getKeyFromEvent( event ) {
+		return this.keys.find( ( key ) => {
+			const keyCode = event.key.length === 1 ? event.key.charCodeAt() : event.keyCode;
+			return keyCode === key.code;
+		} );
+	}
+
+	handleKeydown( event ) {
+		if ( event.repeat ) return;
+		const keyPressed = this.getKeyFromEvent( event );
+		keyPressed.play();
+	}
+
+	handleKeyup( event ) {
+		if ( event.repeat ) return;
+		const keyPressed = this.getKeyFromEvent( event );
+		keyPressed.stop();
+	}
+
 	render() {
 		return (
 			<div className="keyboard">
@@ -45,6 +69,7 @@ class Keyboard extends React.Component {
 						key={ shortid.generate() }
 						note={ keybind.note }
 						keybind={ keybind.keybind }
+						ref={ ( key ) => this.keys.push( key ) }
 					/>
 				) }
 			</div>
