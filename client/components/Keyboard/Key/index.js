@@ -6,9 +6,7 @@ import { Note }   from 'music-theory';
 require( './style.css' );
 
 class Key extends React.Component {
-	constructor( props ) {
-		super( props );
-
+	componentWillMount() {
 		this.state = {
 			isPressed: false,
 		};
@@ -18,13 +16,19 @@ class Key extends React.Component {
 	}
 
 	play() {
-		this.setState({ isPressed: true })
-		console.log( `play a ${ this.note.symbol() }` );
+		this.setState( { isPressed: true } );
+
+		console.log( this.note.frequency[ this.props.octave ], this.props.octave );
+
+		this.oscillator = this.props.context.createOscillator();
+		this.oscillator.frequency.value = this.note.frequency[ this.props.octave ];
+		this.oscillator.connect( this.props.context.destination );
+		this.oscillator.start();
 	}
 
 	stop() {
-		this.setState({ isPressed: false });
-		console.log( `stop playing a ${ this.note.symbol() }` );
+		this.setState( { isPressed: false } );
+		this.oscillator.stop();
 	}
 
 	render() {
@@ -39,6 +43,10 @@ class Key extends React.Component {
 		);
 	}
 }
+
+Key.defaultProps = {
+
+};
 
 Key.propTypes = {
 	keybind: PropTypes.string.isRequired,

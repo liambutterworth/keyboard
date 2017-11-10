@@ -6,20 +6,21 @@ import Key       from './Key';
 require( './style.css' );
 
 class Keyboard extends React.Component {
-	constructor( props ) {
-		super( props );
-
-		this.keys = [];
-
-		document.addEventListener( 'keydown', this.handleKeydown.bind( this ) );
-		document.addEventListener( 'keyup', this.handleKeyup.bind( this ) );
-	}
-
 	getKeyFromEvent( event ) {
 		return this.keys.find( ( key ) => {
 			const keyCode = event.key.length === 1 ? event.key.charCodeAt() : event.keyCode;
 			return keyCode === key.code;
 		} );
+	}
+
+	componentWillMount() {
+		this.keys    = [];
+		this.context = new AudioContext();
+	}
+
+	componentDidMount() {
+		document.addEventListener( 'keydown', this.handleKeydown.bind( this ) );
+		document.addEventListener( 'keyup', this.handleKeyup.bind( this ) );
 	}
 
 	handleKeydown( event ) {
@@ -35,23 +36,37 @@ class Keyboard extends React.Component {
 		keyPressed.stop();
 	}
 
+	createKeys() {
+		let octave = this.props.bottomOctave;
+
+		return this.props.keybinds.map( ( keybind, index ) => {
+			if ( ( index + 1 ) % 12 === 0 ) octave += 1;
+
+			return (
+				<Key
+					key={ ShortID.generate() }
+					octave={ octave }
+					note={ keybind.note }
+					keybind={ keybind.keybind }
+					context={ this.context }
+					ref={ ( key ) => ( this.keys.push( key ) ) }
+				/>
+			);
+		} );
+	}
+
 	render() {
 		return (
 			<div className="keyboard">
-				{ this.props.keybinds.map( ( keybind ) => (
-					<Key
-						key={ ShortID.generate() }
-						note={ keybind.note }
-						keybind={ keybind.keybind }
-						ref={ ( key ) => ( this.keys.push( key ) ) }
-					/>
-				) ) }
+				{ this.createKeys() }
 			</div>
 		);
 	}
 }
 
 Keyboard.defaultProps = {
+	bottomOctave: 4,
+
 	keybinds: [
 		{ keybind: '\t', note: 'C' },
 		{ keybind: '`',  note: 'Db' },
@@ -82,6 +97,8 @@ Keyboard.defaultProps = {
 };
 
 Keyboard.propTypes = {
+	bottomOctave: PropTypes.number,
+
 	keybinds: PropTypes.arrayOf( PropTypes.shape( {
 		keybind: PropTypes.string,
 		note:    PropTypes.sting,
