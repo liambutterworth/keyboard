@@ -29,11 +29,11 @@ class Key extends React.Component {
 	}
 
 	render() {
-		const classNames = ClassNames({
+		const classNames = ClassNames( {
 			'keyboard-key':             true,
 			'keyboard-key--accidental': this.note.isAccidental,
 			'keyboard-key--is-pressed': this.state.isPressed,
-		});
+		} );
 
 		return (
 			<div className={ classNames } />

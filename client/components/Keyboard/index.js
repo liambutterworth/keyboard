@@ -28,7 +28,7 @@ class Keyboard extends React.Component {
 	}
 
 	handleKeydown( event ) {
-		if ( event.metaKey ) return;
+		if ( window.mode !== 'INPUT' || event.metaKey ) return;
 
 		const key = this.getKeyFromEvent( event );
 
@@ -40,7 +40,7 @@ class Keyboard extends React.Component {
 	}
 
 	handleKeyup( event ) {
-		if ( event.metaKey ) return;
+		if ( window.mode !== 'INPUT' || event.metaKey ) return;
 
 		const key = this.getKeyFromEvent( event );
 
