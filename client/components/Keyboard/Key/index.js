@@ -12,13 +12,10 @@ class Key extends React.Component {
 		};
 
 		this.note = new Note( this.props.note );
-		this.code = this.props.keybind.charCodeAt();
 	}
 
 	play() {
 		this.setState( { isPressed: true } );
-
-		console.log( this.note.frequency[ this.props.octave ], this.props.octave );
 
 		this.oscillator = this.props.context.createOscillator();
 		this.oscillator.frequency.value = this.note.frequency[ this.props.octave ];
@@ -49,8 +46,8 @@ Key.defaultProps = {
 };
 
 Key.propTypes = {
-	keybind: PropTypes.string.isRequired,
-	note:    PropTypes.string.isRequired,
+	code: PropTypes.number.isRequired,
+	note: PropTypes.string.isRequired,
 };
 
 export default Key;
