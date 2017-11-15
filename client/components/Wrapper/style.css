@@ -1,0 +1,14 @@
+.wrapper {
+	box-sizing: content-box;
+	margin: 0 auto;
+	max-width: 1024px;
+	padding: 0 lines( 1 );
+	position: relative;
+	z-index: 1;
+
+	&::after {
+		content: "";
+		clear: both;
+		display: table;
+	}
+}

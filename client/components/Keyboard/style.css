@@ -1,6 +1,25 @@
+$border-top: 40px;
+$border-sides: 20px;
+$keys-width: 1024px;
+$width: calc( $keys-width + ( $border-sides * 2 ) );
+
 .keyboard {
-	border: 1px solid black;
-	height: 150px;
-	overflow: hidden;
-	width: 1024px;
+	border-top: $border-top solid black;
+	border-right: $border-sides solid black;
+	border-left: $border-sides solid black;
+	border-bottom: 1px solid black;
+	border-radius: 3.14px;
+	margin: 20px auto;
+	width: $width;
+}
+
+.keyboard-keys {
+	height: 256px;
+	width: $keys-width;
+
+	&::after {
+		content: "";
+		display: table;
+		clear: both;
+	}
 }

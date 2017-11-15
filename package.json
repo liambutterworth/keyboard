@@ -52,6 +52,7 @@
     "htmlhint": "^0.9.13",
     "nodemon": "^1.12.1",
     "postcss-bassline": "^0.1.0",
+    "postcss-calc": "^6.0.1",
     "postcss-color-function": "^4.0.0",
     "postcss-functions": "^3.0.0",
     "postcss-loader": "^2.0.6",

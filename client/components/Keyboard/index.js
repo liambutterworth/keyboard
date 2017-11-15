@@ -51,7 +51,7 @@ class Keyboard extends React.Component {
 	}
 
 	createKeys() {
-		let octave = this.props.bottomOctave;
+		let octave = this.props.octave;
 
 		return this.props.bindings.map( ( binding, index ) => {
 			const key = (
@@ -74,14 +74,16 @@ class Keyboard extends React.Component {
 	render() {
 		return (
 			<div className="keyboard">
-				{ this.createKeys() }
+				<div className="keyboard-keys">
+					{ this.createKeys() }
+				</div>
 			</div>
 		);
 	}
 }
 
 Keyboard.defaultProps = {
-	bottomOctave: 4,
+	octave: 4,
 
 	bindings: [
 		{ code: 9,   note: 'C'  }, // tab
@@ -108,16 +110,19 @@ Keyboard.defaultProps = {
 		{ code: 221, note: 'A'  }, // ]
 		{ code: 8,   note: 'Bb' }, // delete
 		{ code: 220, note: 'B'  }, // \
+		{ code: 13,  note: 'C'  }, // enter
 	],
 };
 
 Keyboard.propTypes = {
-	bottomOctave: PropTypes.number,
+	octave: PropTypes.number,
 
-	bindings: PropTypes.arrayOf( PropTypes.shape( {
-		code: PropTypes.number,
-		note: PropTypes.sting,
-	} ) ),
+	bindings: PropTypes.arrayOf(
+		PropTypes.shape( {
+			code: PropTypes.number,
+			note: PropTypes.sting,
+		} )
+	),
 };
 
 export default Keyboard;

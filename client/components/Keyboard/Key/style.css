@@ -1,13 +1,17 @@
-$natural-color: white;
-$natural-pressed-color: color( $natural-color blackness( 10% ) );
-$accidental-color: black;
-$accidental-pressed-color: color( $accidental-color whiteness( 10% ) );
+$white-count: 15;
+$white-width: calc( 100% / $white-count );
+$black-width: calc( $white-width / 2 );
+
+$white-color: white;
+$white-pressed-color: color( $white-color blackness( 10% ) );
+$black-color: black;
+$black-pressed-color: color( $black-color whiteness( 10% ) );
 
 .keyboard-key {
-	background: $natural-color;
+	background: $white-color;
 	height: 100%;
 	float: left;
-	width: 4%;
+	width: $white-width;
 	border-right: 1px solid black;
 	position: relative;
 	z-index: 1;
@@ -17,20 +21,20 @@ $accidental-pressed-color: color( $accidental-color whiteness( 10% ) );
 	}
 
 	&.keyboard-key--is-pressed {
-		background: $natural-pressed-color;
+		background: $white-pressed-color;
 	}
 
 	&.keyboard-key--accidental {
 		border: none;
 		border-radius: 0 0 3px 3px;
 		background: black;
-		margin: 0 -1%;
-		width: 2%;
-		height: 75%;
+		margin: 0 calc( $black-width / -2 );
+		width: $black-width;
+		height: 65%;
 		z-index: 2;
 
 		&.keyboard-key--is-pressed {
-			background: $accidental-pressed-color;
+			background: $black-pressed-color;
 		}
 	}
 }
