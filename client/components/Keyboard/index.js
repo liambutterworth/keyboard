@@ -1,56 +1,93 @@
-import React     from 'react';
-import PropTypes from 'prop-types';
-import ShortID   from 'shortid';
-import Key       from './Key';
+import React      from 'react';
+import PropTypes  from 'prop-types';
+import ClassNames from 'classnames';
+import ShortID    from 'shortid';
+import Key        from './Key';
 
 require( './style.css' );
 
 class Keyboard extends React.Component {
-	getKeyFromEvent( event ) {
-		return this.keys.find( ( key ) => {
-			return event.which === key.props.code;
-		} );
-	}
+	constructor( props ) {
+		super( props );
 
-	isBoundKey( event ) {
-		const key = this.getKeyFromEvent( event );
-		return key !== undefined;
+		this.state = {
+			mode: props.mode,
+		}
+
+		this.keys = [];
+
+		this.handleKeydown = this.handleKeydown.bind( this );
+		this.handleKeyup   = this.handleKeyup.bind( this );
 	}
 
 	componentWillMount() {
-		this.keys    = [];
 		this.context = new AudioContext();
+		document.addEventListener( 'keydown', this.handleKeydown );
+		document.addEventListener( 'keyup',   this.handleKeyup );
 	}
 
-	componentDidMount() {
-		document.addEventListener( 'keydown', this.handleKeydown.bind( this ) );
-		document.addEventListener( 'keyup', this.handleKeyup.bind( this ) );
+	componentWillUnmount() {
+		this.context.close();
+		document.removeEventListener( 'keydown', this.handleKeydown );
+		document.removeEventListener( 'keyup',   this.handleKeyup );
+	}
+
+	toggleMode() {
+		if ( this.state.mode === 'INPUT' ) {
+			this.setState( { mode: 'COMMAND' } );
+		} else {
+			this.setState( { mode: 'INPUT' } );
+		}
+	}
+
+	playKey( key ) {
+		key.play();
+	}
+
+	stopKey( key ) {
+		key.stop();
+	}
+
+	getKeyFromEvent( event ) {
+		const key = this.keys.find( ( key ) => {
+			return event.which === key.props.code;
+		} );
+
+		return key;
 	}
 
 	handleKeydown( event ) {
-		if ( window.mode !== 'INPUT' || event.metaKey ) return;
+		if ( event.metaKey ) return;
 
-		const key = this.getKeyFromEvent( event );
+		if ( event.keyCode === this.props.toggle ) { // space
+			this.toggleMode();
+		} else if ( this.state.mode === 'INPUT' ) {
+			const key = this.getKeyFromEvent( event );
 
-		if ( key ) {
-			event.preventDefault();
-			if ( event.repeat ) return;
-			key.play();
+			if ( key ) {
+				event.preventDefault();
+				if ( event.repeat ) return;
+				this.playKey( key );
+			}
+		} else if ( this.state.mode === 'COMMAND' ) {
+			console.log( 'enter command' );
 		}
 	}
 
 	handleKeyup( event ) {
-		if ( window.mode !== 'INPUT' || event.metaKey ) return;
+		if ( event.metaKey || event.keyCode === this.props.toggle ) return;
 
-		const key = this.getKeyFromEvent( event );
+		if ( this.state.mode === 'INPUT' ) {
+			const key = this.getKeyFromEvent( event );
 
-		if ( key ) {
-			event.preventDefault();
-			key.stop();
+			if ( key ) {
+				event.preventDefault();
+				this.stopKey( key );
+			}
 		}
 	}
 
-	createKeys() {
+	renderKeys() {
 		let octave = this.props.octave;
 
 		return this.props.bindings.map( ( binding, index ) => {
@@ -61,7 +98,7 @@ class Keyboard extends React.Component {
 					note={ binding.note }
 					octave={ octave }
 					context={ this.context }
-					ref={ ( key ) => ( this.keys.push( key ) ) }
+					ref={ ( key ) => ( this.keys[index] = key  ) }
 				/>
 			);
 
@@ -72,10 +109,16 @@ class Keyboard extends React.Component {
 	}
 
 	render() {
+		const classNames = ClassNames( {
+			'keyboard':          true,
+			'keyboard--input':   this.state.mode === 'INPUT',
+			'keyboard--command': this.state.mode === 'COMMAND',
+		} );
+
 		return (
-			<div className="keyboard">
+			<div className={ classNames }>
 				<div className="keyboard-keys">
-					{ this.createKeys() }
+					{ this.renderKeys() }
 				</div>
 			</div>
 		);
@@ -83,7 +126,9 @@ class Keyboard extends React.Component {
 }
 
 Keyboard.defaultProps = {
+	mode:   'INPUT',
 	octave: 4,
+	toggle: 32, // space
 
 	bindings: [
 		{ code: 9,   note: 'C'  }, // tab
@@ -115,7 +160,9 @@ Keyboard.defaultProps = {
 };
 
 Keyboard.propTypes = {
+	mode:   PropTypes.string,
 	octave: PropTypes.number,
+	toggle: PropTypes.number,
 
 	bindings: PropTypes.arrayOf(
 		PropTypes.shape( {

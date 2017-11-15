@@ -6,12 +6,14 @@ import { Note }   from 'music-theory';
 require( './style.css' );
 
 class Key extends React.Component {
-	componentWillMount() {
+	constructor( props ) {
+		super( props );
+
 		this.state = {
 			isPressed: false,
 		};
 
-		this.note = new Note( this.props.note );
+		this.note = new Note( props.note );
 	}
 
 	play() {
@@ -39,10 +41,6 @@ class Key extends React.Component {
 		);
 	}
 }
-
-Key.defaultProps = {
-
-};
 
 Key.propTypes = {
 	code: PropTypes.number.isRequired,
