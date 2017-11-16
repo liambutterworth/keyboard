@@ -35,11 +35,14 @@ class Keyboard extends React.Component {
 			octave: props.octave,
 		}
 
+		// create a reference for all keyboard keys
 		this.keys = [];
 
+		// ensure that event handlers always refer to this componen with "this"
 		this.handleKeydown = this.handleKeydown.bind( this );
 		this.handleKeyup   = this.handleKeyup.bind( this );
 
+		// create regex to quickly and efficiently test for keys, commands and shortcuts
 		this.keyCodes      = props.keys.map( ( key ) => ( key.code ) );
 		this.keyRegex      = new RegExp( `^(${ this.keyCodes.join( '|' ) })$` );
 		this.commandCodes  = props.commands.map( ( command ) => ( command.code ) );
@@ -55,6 +58,7 @@ class Keyboard extends React.Component {
 	componentWillMount() {
 		this.context = new AudioContext();
 
+		// bind event listeners when mounting
 		document.addEventListener( 'keydown', this.handleKeydown );
 		document.addEventListener( 'keyup',   this.handleKeyup );
 	}
@@ -62,6 +66,7 @@ class Keyboard extends React.Component {
 	componentWillUnmount() {
 		this.context.close();
 
+		// unbind event listeners when unmounting
 		document.removeEventListener( 'keydown', this.handleKeydown );
 		document.removeEventListener( 'keyup',   this.handleKeyup );
 	}
@@ -161,12 +166,16 @@ class Keyboard extends React.Component {
 	//
 
 	handleKeydown( event ) {
+
+		// dont hijack application shortcuts
 		if ( event.metaKey ) return;
 
+		// if this is the mode toggle key command
 		if ( event.keyCode === this.props.toggle ) {
 
 			this.toggleMode();
 
+		// if in input mode and the keycode is for a keyboard key
 		} else if ( this.state.mode === 'INPUT' && this.isKey( event.which ) ) {
 
 			const key = this.getKey( event.which );
@@ -174,11 +183,13 @@ class Keyboard extends React.Component {
 			if ( event.repeat ) return;
 			this.playKey( key );
 
+		// if in command mode and the keycode is for a command
 		} else if ( this.state.mode === 'COMMAND' && this.isCommand( event.which ) ) {
 
 			const command = this.getCommand( event.which );
 			this.enterCommand( command );
 
+		// if the keycode is for a shortcut; mode is irrelevant
 		} else if ( this.isShortcut( event.which ) ) {
 
 			const shortcut = this.getShortcut( event.which );
@@ -188,8 +199,11 @@ class Keyboard extends React.Component {
 	}
 
 	handleKeyup( event ) {
+
+		// dont hijack application shortcuts and ignore the mode toggle key
 		if ( event.metaKey || event.keyCode === this.props.toggle ) return;
 
+		// keyup only needed to stop keys from playing notes when released
 		if ( this.state.mode === 'INPUT' ) {
 			const key = this.getKey( event.which );
 
@@ -219,6 +233,7 @@ class Keyboard extends React.Component {
 				/>
 			);
 
+			// increment the index by one every twelve notes
 			if ( ( index + 1 ) % 12 === 0 ) octave += 1;
 
 			return component;
