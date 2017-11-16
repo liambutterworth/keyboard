@@ -12,21 +12,52 @@
 	},
 
 	"rules": {
-		"no-param-reassign":                 0,
-		"no-tabs":                           0,
-		"indent":                            [ "error", "tab" ],
-		"no-return-assign":                  [ "error", "except-parens" ],
-		"key-spacing":                       [ "warn", align: "value" ],
-		"template-curly-spacing":            [ "warn", "always" ],
-		"arrow-parens":                      [ "warn", "always" ],
-		"space-in-parens":                   [ "warn", "always" ],
-		"no-multi-spaces":                   [ "warn", { "exceptions": { "Property": true } } ],
-		"array-bracket-spacing":             [ "warn", "always", { "objectsInArrays": false, "arraysInArrays":  false }],
-		"no-multi-spaces":                   [ "warn", { "exceptions": { AssignmentExpression: true, VariableDeclarator: true, ImportDeclaration: true } }],
-		"import/no-extraneous-dependencies": [ "error", { "devDependencies": true }],
-		"react/jsx-indent":                  [ "error", "tab" ],
-		"react/jsx-indent-props":            [ "error", "tab" ],
-		"react/jsx-curly-spacing":           [ "warn", { "when": "always", "spacing": { "objectLiterals": "never" } }],
-		"react/jsx-filename-extension":      [ "error", { extensions: [ ".js", ".jsx" ] }],
+		"no-param-reassign":      0,
+		"no-tabs":                0,
+		"no-return-assign":       [ "error", "except-parens" ],
+		"template-curly-spacing": [ "warn", "always" ],
+		"arrow-parens":           [ "warn", "always" ],
+		"space-in-parens":        [ "warn", "always" ],
+
+		"key-spacing": [ "warn", {
+			align: "value"
+		} ],
+
+		"indent": [ "error", "tab", {
+			SwitchCase: 1,
+		} ],
+
+		"array-bracket-spacing": [ "warn", "always", {
+			objectsInArrays: false,
+			arraysInArrays:  false,
+		} ],
+
+		"no-multi-spaces": [ "warn", {
+			exceptions: {
+				Property:             true,
+				AssignmentExpression: true,
+				VariableDeclarator:   true,
+				ImportDeclaration:    true,
+			}
+		} ],
+
+		"import/no-extraneous-dependencies": [ "error", {
+			devDependencies: true,
+		} ],
+
+		"react/jsx-indent":       [ "error", "tab" ],
+		"react/jsx-indent-props": [ "error", "tab" ],
+
+		"react/jsx-curly-spacing": [ "warn", {
+			when: "always",
+
+			spacing: {
+				objectLiterals: "never",
+			},
+		} ],
+
+		"react/jsx-filename-extension": [ "error", {
+			extensions: [ ".js", ".jsx" ],
+		} ],
 	},
 }

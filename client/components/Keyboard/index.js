@@ -128,7 +128,7 @@ class Keyboard extends React.Component {
 				break;
 
 			case 'define key':
-				console.log( 'define a key' );
+				console.log( 'define a key' )
 				break;
 		}
 	}
