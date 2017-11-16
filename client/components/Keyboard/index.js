@@ -1,12 +1,32 @@
+//
+// Keyboard
+//
+// :: Constructor
+// :: Mount Methods
+// :: Toggle Mode
+// :: Key Methods
+// :: Command Methods
+// :: Shortcut Methods
+// :: Event Handlers
+// :: Render Methods
+// :: Default Props
+// :: Prop Types
+
 import React      from 'react';
 import PropTypes  from 'prop-types';
 import ClassNames from 'classnames';
 import ShortID    from 'shortid';
 import Key        from './Key';
+import Prompt     from './Prompt';
 
 require( './style.css' );
 
 class Keyboard extends React.Component {
+
+	//
+	// Constructor
+	//
+
 	constructor( props ) {
 		super( props );
 
@@ -17,30 +37,38 @@ class Keyboard extends React.Component {
 
 		this.keys = [];
 
-		this.keyCodes = props.keys.map( ( key ) => { return key.code } );
-		this.keyRegex = new RegExp( this.keyCodes.join( '|' ) );
-
-		this.shortcutCodes = props.shortcuts.map( ( shortcut ) => { return shortcut.code } );
-		this.shortcutRegex = new RegExp( this.shortcutCodes.join( '|' ) );
-
-		this.commandCodes = props.commands.map( ( command ) => { return command.code } );
-		this.commandRegex = new RegExp( this.commandCodes.join( '|' ) );
-
 		this.handleKeydown = this.handleKeydown.bind( this );
 		this.handleKeyup   = this.handleKeyup.bind( this );
+
+		this.keyCodes      = props.keys.map( ( key ) => ( key.code ) );
+		this.keyRegex      = new RegExp( `^(${ this.keyCodes.join( '|' ) })$` );
+		this.commandCodes  = props.commands.map( ( command ) => ( command.code ) );
+		this.commandRegex  = new RegExp( `^(${ this.commandCodes.join( '|' ) })$` );
+		this.shortcutCodes = props.shortcuts.map( ( shortcut ) => ( shortcut.code ) );
+		this.shortcutRegex = new RegExp( `^(${ this.shortcutCodes.join( '|' ) })$` );
 	}
+
+	//
+	// Mount Methods
+	//
 
 	componentWillMount() {
 		this.context = new AudioContext();
+
 		document.addEventListener( 'keydown', this.handleKeydown );
 		document.addEventListener( 'keyup',   this.handleKeyup );
 	}
 
 	componentWillUnmount() {
 		this.context.close();
+
 		document.removeEventListener( 'keydown', this.handleKeydown );
 		document.removeEventListener( 'keyup',   this.handleKeyup );
 	}
+
+	//
+	// Toggle Mode
+	//
 
 	toggleMode() {
 		if ( this.state.mode === 'INPUT' ) {
@@ -50,12 +78,16 @@ class Keyboard extends React.Component {
 		}
 	}
 
+	//
+	// Key Methods
+	//
+
 	isKey( code ) {
 		return this.keyRegex.test( code );
 	}
 
 	getKey( code ) {
-		return this.keys.find( ( key ) => { return key.props.code === code } );
+		return this.keys.find( ( key ) => ( key.props.code === code ) );
 	}
 
 	playKey( key ) {
@@ -72,39 +104,61 @@ class Keyboard extends React.Component {
 		} );
 	}
 
-	isShortcut( code ) {
-		return this.shortcutRegex.test( code );
-	}
-
-	getShortcut( code ) {
-		return this.props.shortcuts.find( ( shortcut ) => { return shortcut.code === code } );
-	}
-
-	enterShortcut( shortcut ) {
-		switch ( shortcut.action ) {
-			case 'octave down':
-				this.stopAllKeys();
-				this.setState( { octave: this.state.octave - 1 } );
-				break;
-
-			case 'octave up':
-				this.stopAllKeys();
-				this.setState( { octave: this.state.octave + 1 } );
-				break;
-		}
-	}
+	//
+	// Command Methods
+	//
 
 	isCommand( code ) {
 		return this.commandRegex.test( code );
 	}
 
 	getCommand( code ) {
-		return this.props.commands.find( ( command ) => { return command.code === code } );
+		return this.props.commands.find( ( command ) => ( command.code === code ) );
 	}
 
 	enterCommand( command ) {
-		console.log( command.action );
+		switch ( command.action ) {
+			case 'open prompt':
+				this.prompt.toggle();
+				break;
+
+			case 'define key':
+				console.log( 'define a key' );
+				break;
+		}
 	}
+
+	//
+	// Shortcut Methods
+	//
+
+	isShortcut( code ) {
+		return this.shortcutRegex.test( code );
+	}
+
+	getShortcut( code ) {
+		return this.props.shortcuts.find( ( shortcut ) => ( shortcut.code === code ) );
+	}
+
+	enterShortcut( shortcut ) {
+		switch ( shortcut.action ) {
+			case 'octave down':
+				if ( this.state.octave === 1 ) return;
+				this.stopAllKeys();
+				this.setState( { octave: this.state.octave - 1 } );
+				break;
+
+			case 'octave up':
+				if ( this.state.octave === 9 ) return;
+				this.stopAllKeys();
+				this.setState( { octave: this.state.octave + 1 } );
+				break;
+		}
+	}
+
+	//
+	// Event Handlers
+	//
 
 	handleKeydown( event ) {
 		if ( event.metaKey ) return;
@@ -146,6 +200,10 @@ class Keyboard extends React.Component {
 		}
 	}
 
+	//
+	// Render Methods
+	//
+
 	renderKeys() {
 		let octave = this.state.octave;
 
@@ -157,7 +215,7 @@ class Keyboard extends React.Component {
 					note={ key.note }
 					octave={ octave }
 					context={ this.context }
-					ref={ ( key ) => ( this.keys[index] = key  ) }
+					ref={ ( key ) => ( this.keys[index] = key ) }
 				/>
 			);
 
@@ -176,6 +234,10 @@ class Keyboard extends React.Component {
 
 		return (
 			<div className={ classNames }>
+				<Prompt
+					ref={ ( prompt ) => ( this.prompt = prompt ) }
+				/>
+
 				<div className="keyboard-keys">
 					{ this.renderKeys() }
 				</div>
@@ -183,6 +245,10 @@ class Keyboard extends React.Component {
 		);
 	}
 }
+
+//
+// Default Props
+//
 
 Keyboard.defaultProps = {
 	mode:   'INPUT',
@@ -223,9 +289,14 @@ Keyboard.defaultProps = {
 	],
 
 	commands: [
-		{ code: 75, action: 'define key' }, // k
+		{ code: 80, action: 'open prompt' }, // p
+		{ code: 75, action: 'define key'  }, // k
 	],
 };
+
+//
+// Prop Types
+//
 
 Keyboard.propTypes = {
 	mode:   PropTypes.string,
