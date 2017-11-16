@@ -11,10 +11,20 @@ class Keyboard extends React.Component {
 		super( props );
 
 		this.state = {
-			mode: props.mode,
+			mode:   props.mode,
+			octave: props.octave,
 		}
 
 		this.keys = [];
+
+		this.keyCodes = props.keys.map( ( key ) => { return key.code } );
+		this.keyRegex = new RegExp( this.keyCodes.join( '|' ) );
+
+		this.shortcutCodes = props.shortcuts.map( ( shortcut ) => { return shortcut.code } );
+		this.shortcutRegex = new RegExp( this.shortcutCodes.join( '|' ) );
+
+		this.commandCodes = props.commands.map( ( command ) => { return command.code } );
+		this.commandRegex = new RegExp( this.commandCodes.join( '|' ) );
 
 		this.handleKeydown = this.handleKeydown.bind( this );
 		this.handleKeyup   = this.handleKeyup.bind( this );
@@ -40,6 +50,14 @@ class Keyboard extends React.Component {
 		}
 	}
 
+	isKey( code ) {
+		return this.keyRegex.test( code );
+	}
+
+	getKey( code ) {
+		return this.keys.find( ( key ) => { return key.props.code === code } );
+	}
+
 	playKey( key ) {
 		key.play();
 	}
@@ -48,29 +66,70 @@ class Keyboard extends React.Component {
 		key.stop();
 	}
 
-	getKeyFromEvent( event ) {
-		const key = this.keys.find( ( key ) => {
-			return event.which === key.props.code;
+	stopAllKeys() {
+		this.keys.forEach( ( key ) => {
+			if ( key.state.isPressed ) key.stop();
 		} );
+	}
 
-		return key;
+	isShortcut( code ) {
+		return this.shortcutRegex.test( code );
+	}
+
+	getShortcut( code ) {
+		return this.props.shortcuts.find( ( shortcut ) => { return shortcut.code === code } );
+	}
+
+	enterShortcut( shortcut ) {
+		switch ( shortcut.action ) {
+			case 'octave down':
+				this.stopAllKeys();
+				this.setState( { octave: this.state.octave - 1 } );
+				break;
+
+			case 'octave up':
+				this.stopAllKeys();
+				this.setState( { octave: this.state.octave + 1 } );
+				break;
+		}
+	}
+
+	isCommand( code ) {
+		return this.commandRegex.test( code );
+	}
+
+	getCommand( code ) {
+		return this.props.commands.find( ( command ) => { return command.code === code } );
+	}
+
+	enterCommand( command ) {
+		console.log( command.action );
 	}
 
 	handleKeydown( event ) {
 		if ( event.metaKey ) return;
 
-		if ( event.keyCode === this.props.toggle ) { // space
-			this.toggleMode();
-		} else if ( this.state.mode === 'INPUT' ) {
-			const key = this.getKeyFromEvent( event );
+		if ( event.keyCode === this.props.toggle ) {
 
-			if ( key ) {
-				event.preventDefault();
-				if ( event.repeat ) return;
-				this.playKey( key );
-			}
-		} else if ( this.state.mode === 'COMMAND' ) {
-			console.log( 'enter command' );
+			this.toggleMode();
+
+		} else if ( this.state.mode === 'INPUT' && this.isKey( event.which ) ) {
+
+			const key = this.getKey( event.which );
+			event.preventDefault();
+			if ( event.repeat ) return;
+			this.playKey( key );
+
+		} else if ( this.state.mode === 'COMMAND' && this.isCommand( event.which ) ) {
+
+			const command = this.getCommand( event.which );
+			this.enterCommand( command );
+
+		} else if ( this.isShortcut( event.which ) ) {
+
+			const shortcut = this.getShortcut( event.which );
+			this.enterShortcut( shortcut );
+
 		}
 	}
 
@@ -78,9 +137,9 @@ class Keyboard extends React.Component {
 		if ( event.metaKey || event.keyCode === this.props.toggle ) return;
 
 		if ( this.state.mode === 'INPUT' ) {
-			const key = this.getKeyFromEvent( event );
+			const key = this.getKey( event.which );
 
-			if ( key ) {
+			if ( key && key.state.isPressed ) {
 				event.preventDefault();
 				this.stopKey( key );
 			}
@@ -88,14 +147,14 @@ class Keyboard extends React.Component {
 	}
 
 	renderKeys() {
-		let octave = this.props.octave;
+		let octave = this.state.octave;
 
-		return this.props.bindings.map( ( binding, index ) => {
-			const key = (
+		return this.props.keys.map( ( key, index ) => {
+			const component = (
 				<Key
 					key={ ShortID.generate() }
-					code={ binding.code }
-					note={ binding.note }
+					code={ key.code }
+					note={ key.note }
 					octave={ octave }
 					context={ this.context }
 					ref={ ( key ) => ( this.keys[index] = key  ) }
@@ -104,7 +163,7 @@ class Keyboard extends React.Component {
 
 			if ( ( index + 1 ) % 12 === 0 ) octave += 1;
 
-			return key;
+			return component;
 		} );
 	}
 
@@ -130,7 +189,7 @@ Keyboard.defaultProps = {
 	octave: 4,
 	toggle: 32, // space
 
-	bindings: [
+	keys: [
 		{ code: 9,   note: 'C'  }, // tab
 		{ code: 49,  note: 'Db' }, // 1
 		{ code: 81,  note: 'D'  }, // q
@@ -157,6 +216,15 @@ Keyboard.defaultProps = {
 		{ code: 220, note: 'B'  }, // \
 		{ code: 13,  note: 'C'  }, // enter
 	],
+
+	shortcuts: [ 
+		{ code: 188, action: 'octave down' }, // ,
+		{ code: 190, action: 'octave up'   }, // .
+	],
+
+	commands: [
+		{ code: 75, action: 'define key' }, // k
+	],
 };
 
 Keyboard.propTypes = {
@@ -164,7 +232,7 @@ Keyboard.propTypes = {
 	octave: PropTypes.number,
 	toggle: PropTypes.number,
 
-	bindings: PropTypes.arrayOf(
+	inputs: PropTypes.arrayOf(
 		PropTypes.shape( {
 			code: PropTypes.number,
 			note: PropTypes.sting,
