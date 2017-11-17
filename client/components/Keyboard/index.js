@@ -3,10 +3,7 @@
 //
 // :: Constructor
 // :: Mount Methods
-// :: Toggle Mode
 // :: Key Methods
-// :: Command Methods
-// :: Shortcut Methods
 // :: Event Handlers
 // :: Render Methods
 // :: Default Props
@@ -14,10 +11,9 @@
 
 import React      from 'react';
 import PropTypes  from 'prop-types';
-import ClassNames from 'classnames';
 import ShortID    from 'shortid';
+import Prompt     from 'components/Prompt';
 import Key        from './Key';
-import Prompt     from './Prompt';
 
 require( './style.css' );
 
@@ -33,22 +29,20 @@ class Keyboard extends React.Component {
 		this.state = {
 			mode:   props.mode,
 			octave: props.octave,
-		}
+		};
 
 		// create a reference for all keyboard keys
 		this.keys = [];
 
-		// ensure that event handlers always refer to this componen with "this"
-		this.handleKeydown = this.handleKeydown.bind( this );
-		this.handleKeyup   = this.handleKeyup.bind( this );
+		// ensure event handlers have the correct "this" reference
+		this.handleShortcut = this.handleShortcut.bind( this );
+		this.handleCommand  = this.handleCommand.bind( this );
+		this.handleKeydown  = this.handleKeydown.bind( this );
+		this.handleKeyup    = this.handleKeyup.bind( this );
 
-		// create regex to quickly and efficiently test for keys, commands and shortcuts
-		this.keyCodes      = props.keys.map( ( key ) => ( key.code ) );
-		this.keyRegex      = new RegExp( `^(${ this.keyCodes.join( '|' ) })$` );
-		this.commandCodes  = props.commands.map( ( command ) => ( command.code ) );
-		this.commandRegex  = new RegExp( `^(${ this.commandCodes.join( '|' ) })$` );
-		this.shortcutCodes = props.shortcuts.map( ( shortcut ) => ( shortcut.code ) );
-		this.shortcutRegex = new RegExp( `^(${ this.shortcutCodes.join( '|' ) })$` );
+		// create regex to quickly test for keys
+		this.keyCodes = props.keys.map( ( key ) => ( key.code ) );
+		this.keyRegex = new RegExp( `^(${ this.keyCodes.join( '|' ) })$` );
 	}
 
 	//
@@ -58,29 +52,19 @@ class Keyboard extends React.Component {
 	componentWillMount() {
 		this.context = new AudioContext();
 
-		// bind event listeners when mounting
-		document.addEventListener( 'keydown', this.handleKeydown );
-		document.addEventListener( 'keyup',   this.handleKeyup );
+		document.addEventListener( 'shortcut', this.handleShortcut );
+		document.addEventListener( 'command',  this.handleCommand );
+		document.addEventListener( 'keydown',  this.handleKeydown );
+		document.addEventListener( 'keyup',    this.handleKeyup );
 	}
 
 	componentWillUnmount() {
 		this.context.close();
 
-		// unbind event listeners when unmounting
-		document.removeEventListener( 'keydown', this.handleKeydown );
-		document.removeEventListener( 'keyup',   this.handleKeyup );
-	}
-
-	//
-	// Toggle Mode
-	//
-
-	toggleMode() {
-		if ( this.state.mode === 'INPUT' ) {
-			this.setState( { mode: 'COMMAND' } );
-		} else {
-			this.setState( { mode: 'INPUT' } );
-		}
+		document.removeEventListener( 'shortcut', this.handleShortcut );
+		document.removeEventListener( 'command',  this.handleCommand );
+		document.removeEventListener( 'keydown',  this.handleKeydown );
+		document.removeEventListener( 'keyup',    this.handleKeyup );
 	}
 
 	//
@@ -110,43 +94,11 @@ class Keyboard extends React.Component {
 	}
 
 	//
-	// Command Methods
+	// Event Handlers
 	//
 
-	isCommand( code ) {
-		return this.commandRegex.test( code );
-	}
-
-	getCommand( code ) {
-		return this.props.commands.find( ( command ) => ( command.code === code ) );
-	}
-
-	enterCommand( command ) {
-		switch ( command.action ) {
-			case 'open prompt':
-				this.prompt.toggle();
-				break;
-
-			case 'define key':
-				console.log( 'define a key' )
-				break;
-		}
-	}
-
-	//
-	// Shortcut Methods
-	//
-
-	isShortcut( code ) {
-		return this.shortcutRegex.test( code );
-	}
-
-	getShortcut( code ) {
-		return this.props.shortcuts.find( ( shortcut ) => ( shortcut.code === code ) );
-	}
-
-	enterShortcut( shortcut ) {
-		switch ( shortcut.action ) {
+	handleShortcut( event ) {
+		switch ( event.detail ) {
 			case 'octave down':
 				if ( this.state.octave === 1 ) return;
 				this.stopAllKeys();
@@ -161,57 +113,42 @@ class Keyboard extends React.Component {
 		}
 	}
 
-	//
-	// Event Handlers
-	//
+	handleCommand( event ) {
+		switch ( event.detail ) {
+			case 'open prompt':
+				this.prompt.toggle();
+				break;
 
-	handleKeydown( event ) {
-
-		// dont hijack application shortcuts
-		if ( event.metaKey ) return;
-
-		// if this is the mode toggle key command
-		if ( event.keyCode === this.props.toggle ) {
-
-			this.toggleMode();
-
-		// if in input mode and the keycode is for a keyboard key
-		} else if ( this.state.mode === 'INPUT' && this.isKey( event.which ) ) {
-
-			const key = this.getKey( event.which );
-			event.preventDefault();
-			if ( event.repeat ) return;
-			this.playKey( key );
-
-		// if in command mode and the keycode is for a command
-		} else if ( this.state.mode === 'COMMAND' && this.isCommand( event.which ) ) {
-
-			const command = this.getCommand( event.which );
-			this.enterCommand( command );
-
-		// if the keycode is for a shortcut; mode is irrelevant
-		} else if ( this.isShortcut( event.which ) ) {
-
-			const shortcut = this.getShortcut( event.which );
-			this.enterShortcut( shortcut );
-
+			case 'define key':
+				console.log( 'define a key' );
+				break;
 		}
 	}
 
+	handleKeydown( event ) {
+		if (
+			event.metaKey ||
+			document.mode !== 'INPUT' ||
+			!this.isKey( event.which )
+		) return;
+
+		const key = this.getKey( event.which );
+		event.preventDefault();
+		if ( event.repeat ) return;
+		this.playKey( key );
+	}
+
 	handleKeyup( event ) {
+		if (
+			event.metaKey ||
+			document.mode !== 'INPUT' ||
+			!this.isKey( event.which )
+		) return;
 
-		// dont hijack application shortcuts and ignore the mode toggle key
-		if ( event.metaKey || event.keyCode === this.props.toggle ) return;
-
-		// keyup only needed to stop keys from playing notes when released
-		if ( this.state.mode === 'INPUT' ) {
-			const key = this.getKey( event.which );
-
-			if ( key && key.state.isPressed ) {
-				event.preventDefault();
-				this.stopKey( key );
-			}
-		}
+		const key = this.getKey( event.which );
+		event.preventDefault();
+		if ( !key.state.isPressed ) return;
+		this.stopKey( key );
 	}
 
 	//
@@ -241,14 +178,8 @@ class Keyboard extends React.Component {
 	}
 
 	render() {
-		const classNames = ClassNames( {
-			'keyboard':          true,
-			'keyboard--input':   this.state.mode === 'INPUT',
-			'keyboard--command': this.state.mode === 'COMMAND',
-		} );
-
 		return (
-			<div className={ classNames }>
+			<div className="keyboard">
 				<Prompt
 					ref={ ( prompt ) => ( this.prompt = prompt ) }
 				/>
@@ -266,9 +197,7 @@ class Keyboard extends React.Component {
 //
 
 Keyboard.defaultProps = {
-	mode:   'INPUT',
 	octave: 4,
-	toggle: 32, // space
 
 	keys: [
 		{ code: 9,   note: 'C'  }, // tab
@@ -297,16 +226,6 @@ Keyboard.defaultProps = {
 		{ code: 220, note: 'B'  }, // \
 		{ code: 13,  note: 'C'  }, // enter
 	],
-
-	shortcuts: [ 
-		{ code: 188, action: 'octave down' }, // ,
-		{ code: 190, action: 'octave up'   }, // .
-	],
-
-	commands: [
-		{ code: 80, action: 'open prompt' }, // p
-		{ code: 75, action: 'define key'  }, // k
-	],
 };
 
 //
@@ -314,15 +233,13 @@ Keyboard.defaultProps = {
 //
 
 Keyboard.propTypes = {
-	mode:   PropTypes.string,
 	octave: PropTypes.number,
-	toggle: PropTypes.number,
 
-	inputs: PropTypes.arrayOf(
+	keys: PropTypes.arrayOf(
 		PropTypes.shape( {
 			code: PropTypes.number,
 			note: PropTypes.sting,
-		} )
+		} ),
 	),
 };
 
