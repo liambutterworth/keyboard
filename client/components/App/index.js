@@ -4,14 +4,18 @@
 // :: Constructor
 // :: Component Will Mount
 // :: Component Will Unmount
+// :: Get Input
 // :: Get Command
 // :: Get Shortcut
+// :: Is Input
 // :: is Command
 // :: Is Shortcut
+// :: Dispatch Input
 // :: Dispatch Command
 // :: Dispatch Shortcut
 // :: Toggle Mode
 // :: Handle Keydown
+// :: Handle Keyup
 // :: Render
 // :: Default Props
 // :: Prop Types
@@ -19,6 +23,7 @@
 import React      from 'react';
 import PropTypes  from 'prop-types';
 import ClassNames from 'classnames';
+import Settings   from 'settings.json';
 
 require( './style.css' );
 
@@ -36,16 +41,16 @@ class App extends React.Component {
 			mode: 'INPUT',
 		};
 
-		// set initial mode state on document
-		document.mode = this.state.mode;
-
 		// ensure event handlers have the correct "this" reference
 		this.handleKeydown = this.handleKeydown.bind( this );
+		this.handleKeyup   = this.handleKeyup.bind( this );
 
 		// create regex to quickly test for commands and shortcuts
-		this.commandCodes  = props.commands.map( ( command ) => ( command.code ) );
+		this.inputCodes    = Settings.inputs.map( ( input ) => ( input.code ) );
+		this.inputRegex    = new RegExp( `^(${ this.inputCodes.join( '|' ) })$` );
+		this.commandCodes  = Settings.commands.map( ( command ) => ( command.code ) );
 		this.commandRegex  = new RegExp( `^(${ this.commandCodes.join( '|' ) })$` );
-		this.shortcutCodes = props.shortcuts.map( ( shortcut ) => ( shortcut.code ) );
+		this.shortcutCodes = Settings.shortcuts.map( ( shortcut ) => ( shortcut.code ) );
 		this.shortcutRegex = new RegExp( `^(${ this.shortcutCodes.join( '|' ) })$` );
 
 	}
@@ -57,6 +62,7 @@ class App extends React.Component {
 	componentWillMount() {
 
 		document.addEventListener( 'keydown', this.handleKeydown );
+		document.addEventListener( 'keyup', this.handleKeyup );
 
 	}
 
@@ -67,6 +73,17 @@ class App extends React.Component {
 	componentWillUnmount() {
 
 		document.removeEventListener( 'keydown', this.handleKeydown );
+		document.removeEventListener( 'keyup', this.handleKeyup );
+
+	}
+
+	//
+	// Get Input
+	//
+
+	getInput( code ) {
+
+		return Settings.inputs.find( ( input ) => ( input.code === code ) );
 
 	}
 
@@ -76,7 +93,7 @@ class App extends React.Component {
 
 	getCommand( code ) {
 
-		return this.props.commands.find( ( command ) => ( command.code === code ) );
+		return Settings.commands.find( ( command ) => ( command.code === code ) );
 
 	}
 
@@ -86,7 +103,17 @@ class App extends React.Component {
 
 	getShortcut( code ) {
 
-		return this.props.shortcuts.find( ( shortcut ) => ( shortcut.code === code ) );
+		return Settings.shortcuts.find( ( shortcut ) => ( shortcut.code === code ) );
+
+	}
+
+	//
+	// Is Input
+	//
+
+	isInput( code ) {
+
+		return this.inputRegex.test( code );
 
 	}
 
@@ -111,12 +138,23 @@ class App extends React.Component {
 	}
 
 	//
+	// Dispatch Input
+	//
+
+	dispatchInput( input ) {
+
+		const event = new CustomEvent( 'input', { detail: input } );
+		document.dispatchEvent( event );
+
+	}
+
+	//
 	// Dispatch Command
 	//
 
 	dispatchCommand( command ) {
 
-		const event = new CustomEvent( 'command', { detail: command.detail } );
+		const event = new CustomEvent( 'command', { detail: command } );
 		document.dispatchEvent( event );
 
 	}
@@ -127,7 +165,7 @@ class App extends React.Component {
 
 	dispatchShortcut( shortcut ) {
 
-		const event = new CustomEvent( 'shortcut', { detail: shortcut.detail } );
+		const event = new CustomEvent( 'shortcut', { detail: shortcut } );
 		document.dispatchEvent( event );
 
 	}
@@ -148,8 +186,6 @@ class App extends React.Component {
 
 		}
 
-		document.mode = this.state.mode;
-
 	}
 
 	//
@@ -158,9 +194,19 @@ class App extends React.Component {
 
 	handleKeydown( event ) {
 
+		if ( event.metaKey ) return;
+
+		event.preventDefault();
+
 		if ( event.which === this.props.toggle ) {
 
 			this.toggleMode();
+
+		} else if ( this.state.mode === 'INPUT' && this.isInput( event.which ) ) {
+
+			const input = this.getInput( event.which );
+			input.action = 'keydown';
+			this.dispatchInput( input );
 
 		} else if ( this.state.mode === 'COMMAND' && this.isCommand( event.which ) ) {
 
@@ -173,6 +219,21 @@ class App extends React.Component {
 			this.dispatchShortcut( shortcut );
 
 		}
+
+	}
+
+	handleKeyup( event ) {
+
+		if (
+			event.metaKey ||
+			this.state.mode !== 'INPUT' ||
+			!this.isInput( event.which )
+		) return;
+
+		event.preventDefault();
+		const input = this.getInput( event.which );
+		input.action = 'keyup';
+		this.dispatchInput( input );
 
 	}
 
@@ -203,16 +264,6 @@ class App extends React.Component {
 
 App.defaultProps = {
 	toggle: 32, // space
-
-	commands: [
-		{ code: 80, detail: 'open prompt' }, // p
-		{ code: 75, detail: 'define key'  }, // k
-	],
-
-	shortcuts: [
-		{ code: 188, detail: 'octave down' }, // ,
-		{ code: 190, detail: 'octave up'   }, // .
-	],
 };
 
 //
@@ -222,20 +273,6 @@ App.defaultProps = {
 App.propTypes = {
 	children: PropTypes.node.isRequired,
 	toggle:   PropTypes.number,
-
-	commands: PropTypes.arrayOf(
-		PropTypes.shape( {
-			code:   PropTypes.number,
-			detail: PropTypes.sting,
-		} ),
-	),
-
-	shortcuts: PropTypes.arrayOf(
-		PropTypes.shape( {
-			code:   PropTypes.number,
-			detail: PropTypes.sting,
-		} ),
-	),
 };
 
 export default App;

@@ -20,6 +20,7 @@ import React      from 'react';
 import PropTypes  from 'prop-types';
 import ShortID    from 'shortid';
 import Prompt     from 'components/Prompt';
+import Settings   from 'settings.json';
 import Key        from './Key';
 
 require( './style.css' );
@@ -44,11 +45,10 @@ class Keyboard extends React.Component {
 		// ensure event handlers have the correct "this" reference
 		this.handleShortcut = this.handleShortcut.bind( this );
 		this.handleCommand  = this.handleCommand.bind( this );
-		this.handleKeydown  = this.handleKeydown.bind( this );
-		this.handleKeyup    = this.handleKeyup.bind( this );
+		this.handleInput    = this.handleInput.bind( this );
 
 		// create regex to quickly test for keys
-		this.keyCodes = props.keys.map( ( key ) => ( key.code ) );
+		this.keyCodes = Settings.inputs.filter( ( input ) => ( input.type === 'key' ) ).map( ( key ) => ( key.code ) );
 		this.keyRegex = new RegExp( `^(${ this.keyCodes.join( '|' ) })$` );
 
 	}
@@ -60,11 +60,9 @@ class Keyboard extends React.Component {
 	componentWillMount() {
 
 		this.context = new AudioContext();
-
 		document.addEventListener( 'shortcut', this.handleShortcut );
 		document.addEventListener( 'command', this.handleCommand );
-		document.addEventListener( 'keydown', this.handleKeydown );
-		document.addEventListener( 'keyup', this.handleKeyup );
+		document.addEventListener( 'input', this.handleInput );
 
 	}
 
@@ -74,11 +72,9 @@ class Keyboard extends React.Component {
 	componentWillUnmount() {
 
 		this.context.close();
-
 		document.removeEventListener( 'shortcut', this.handleShortcut );
 		document.removeEventListener( 'command', this.handleCommand );
-		document.removeEventListener( 'keydown', this.handleKeydown );
-		document.removeEventListener( 'keyup', this.handleKeyup );
+		document.removeEventListener( 'input', this.handleInput );
 
 	}
 
@@ -161,38 +157,26 @@ class Keyboard extends React.Component {
 	}
 
 	//
-	// Handle Keydown
+	// Handle Input
 	//
 
-	handleKeydown( event ) {
+	handleInput( event ) {
 
-		if (
-			event.metaKey ||
-			document.mode !== 'INPUT' ||
-			!this.isKey( event.which )
-		) return;
+		if ( event.detail.type !== 'key' ) return;
 
-		const key = this.getKey( event.which );
-		event.preventDefault();
-		if ( !event.repeat ) key.play();
+		const key = this.getKey( event.detail.code );
 
-	}
+		switch ( event.detail.action ) {
 
-	//
-	// Handle Keyup
-	//
+			case 'keydown':
+				if ( !event.repeat ) key.play();
+				break;
 
-	handleKeyup( event ) {
+			case 'keyup':
+				if ( key.state.isPressed ) key.stop();
+				break;
 
-		if (
-			event.metaKey ||
-			document.mode !== 'INPUT' ||
-			!this.isKey( event.which )
-		) return;
-
-		const key = this.getKey( event.which );
-		event.preventDefault();
-		if ( key.state.isPressed ) key.stop();
+		}
 
 	}
 
@@ -202,9 +186,10 @@ class Keyboard extends React.Component {
 
 	renderKeys() {
 
+		const keys = Settings.inputs.filter( ( input ) => ( input.type === 'key' ) );
 		let octave = this.state.octave;
 
-		return this.props.keys.map( ( key, index ) => {
+		return keys.map( ( key, index ) => {
 
 			const component = (
 				<Key
@@ -254,34 +239,6 @@ class Keyboard extends React.Component {
 
 Keyboard.defaultProps = {
 	octave: 4,
-
-	keys: [
-		{ code: 9,   note: 'C'  }, // tab
-		{ code: 49,  note: 'Db' }, // 1
-		{ code: 81,  note: 'D'  }, // q
-		{ code: 50,  note: 'Eb' }, // 2
-		{ code: 87,  note: 'E'  }, // w
-		{ code: 69,  note: 'F'  }, // e
-		{ code: 52,  note: 'Gb' }, // 4
-		{ code: 82,  note: 'G'  }, // r
-		{ code: 53,  note: 'Ab' }, // 5
-		{ code: 84,  note: 'A'  }, // t
-		{ code: 54,  note: 'Bb' }, // 6
-		{ code: 89,  note: 'B'  }, // y
-		{ code: 85,  note: 'C'  }, // u
-		{ code: 56,  note: 'Db' }, // 8
-		{ code: 73,  note: 'D'  }, // i
-		{ code: 57,  note: 'Eb' }, // 9
-		{ code: 79,  note: 'E'  }, // o
-		{ code: 80,  note: 'F'  }, // p
-		{ code: 189, note: 'Gb' }, // -
-		{ code: 219, note: 'G'  }, // [
-		{ code: 187, note: 'Ab' }, // =
-		{ code: 221, note: 'A'  }, // ]
-		{ code: 8,   note: 'Bb' }, // delete
-		{ code: 220, note: 'B'  }, // \
-		{ code: 13,  note: 'C'  }, // enter
-	],
 };
 
 //
@@ -290,13 +247,6 @@ Keyboard.defaultProps = {
 
 Keyboard.propTypes = {
 	octave: PropTypes.number,
-
-	keys: PropTypes.arrayOf(
-		PropTypes.shape( {
-			code: PropTypes.number,
-			note: PropTypes.sting,
-		} ),
-	),
 };
 
 export default Keyboard;
