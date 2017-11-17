@@ -142,7 +142,7 @@ class Keyboard extends React.Component {
 
 	handleCommand( event ) {
 
-		switch ( event.detail ) {
+		switch ( event.detail.action ) {
 
 			case 'open prompt':
 				this.prompt.toggle();
