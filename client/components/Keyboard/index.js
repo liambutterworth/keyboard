@@ -2,10 +2,17 @@
 // Keyboard
 //
 // :: Constructor
-// :: Mount Methods
-// :: Key Methods
-// :: Event Handlers
-// :: Render Methods
+// :: Component Will Mount
+// :: Component Will Unmount
+// :: Get Key
+// :: Is Key
+// :: Stop Keys
+// :: Handle Shortcut
+// :: Handle Command
+// :: Handle Keydown
+// :: Handle Keyup
+// :: Render Keys
+// :: Render
 // :: Default Props
 // :: Prop Types
 
@@ -24,10 +31,10 @@ class Keyboard extends React.Component {
 	//
 
 	constructor( props ) {
+
 		super( props );
 
 		this.state = {
-			mode:   props.mode,
 			octave: props.octave,
 		};
 
@@ -43,78 +50,104 @@ class Keyboard extends React.Component {
 		// create regex to quickly test for keys
 		this.keyCodes = props.keys.map( ( key ) => ( key.code ) );
 		this.keyRegex = new RegExp( `^(${ this.keyCodes.join( '|' ) })$` );
+
 	}
 
 	//
-	// Mount Methods
+	// Component Will Mount
 	//
 
 	componentWillMount() {
+
 		this.context = new AudioContext();
 
 		document.addEventListener( 'shortcut', this.handleShortcut );
-		document.addEventListener( 'command',  this.handleCommand );
-		document.addEventListener( 'keydown',  this.handleKeydown );
-		document.addEventListener( 'keyup',    this.handleKeyup );
+		document.addEventListener( 'command', this.handleCommand );
+		document.addEventListener( 'keydown', this.handleKeydown );
+		document.addEventListener( 'keyup', this.handleKeyup );
+
 	}
 
+	//
+	// Component Will Unmount
+
 	componentWillUnmount() {
+
 		this.context.close();
 
 		document.removeEventListener( 'shortcut', this.handleShortcut );
-		document.removeEventListener( 'command',  this.handleCommand );
-		document.removeEventListener( 'keydown',  this.handleKeydown );
-		document.removeEventListener( 'keyup',    this.handleKeyup );
+		document.removeEventListener( 'command', this.handleCommand );
+		document.removeEventListener( 'keydown', this.handleKeydown );
+		document.removeEventListener( 'keyup', this.handleKeyup );
+
 	}
 
 	//
-	// Key Methods
+	// Get Key
+	//
+
+	getKey( code ) {
+
+		return this.keys.find( ( key ) => ( key.props.code === code ) );
+
+	}
+
+	//
+	// Is Key
 	//
 
 	isKey( code ) {
+
 		return this.keyRegex.test( code );
-	}
 
-	getKey( code ) {
-		return this.keys.find( ( key ) => ( key.props.code === code ) );
-	}
-
-	playKey( key ) {
-		key.play();
-	}
-
-	stopKey( key ) {
-		key.stop();
-	}
-
-	stopAllKeys() {
-		this.keys.forEach( ( key ) => {
-			if ( key.state.isPressed ) key.stop();
-		} );
 	}
 
 	//
-	// Event Handlers
+	// Stop Keys
+	//
+
+	stopKeys() {
+
+		this.keys.forEach( ( key ) => {
+
+			if ( key.state.isPressed ) key.stop();
+
+		} );
+
+	}
+
+	//
+	// Hanlde Shortcut
 	//
 
 	handleShortcut( event ) {
+
 		switch ( event.detail ) {
+
 			case 'octave down':
 				if ( this.state.octave === 1 ) return;
-				this.stopAllKeys();
+				this.stopKeys();
 				this.setState( { octave: this.state.octave - 1 } );
 				break;
 
 			case 'octave up':
 				if ( this.state.octave === 9 ) return;
-				this.stopAllKeys();
+				this.stopKeys();
 				this.setState( { octave: this.state.octave + 1 } );
 				break;
+
 		}
+
 	}
 
+	//
+	// Handle Command
+	//
+
 	handleCommand( event ) {
+
 		switch ( event.detail ) {
+
 			case 'open prompt':
 				this.prompt.toggle();
 				break;
@@ -122,43 +155,57 @@ class Keyboard extends React.Component {
 			case 'define key':
 				console.log( 'define a key' );
 				break;
+
 		}
-	}
 
-	handleKeydown( event ) {
-		if (
-			event.metaKey ||
-			document.mode !== 'INPUT' ||
-			!this.isKey( event.which )
-		) return;
-
-		const key = this.getKey( event.which );
-		event.preventDefault();
-		if ( event.repeat ) return;
-		this.playKey( key );
-	}
-
-	handleKeyup( event ) {
-		if (
-			event.metaKey ||
-			document.mode !== 'INPUT' ||
-			!this.isKey( event.which )
-		) return;
-
-		const key = this.getKey( event.which );
-		event.preventDefault();
-		if ( !key.state.isPressed ) return;
-		this.stopKey( key );
 	}
 
 	//
-	// Render Methods
+	// Handle Keydown
+	//
+
+	handleKeydown( event ) {
+
+		if (
+			event.metaKey ||
+			document.mode !== 'INPUT' ||
+			!this.isKey( event.which )
+		) return;
+
+		const key = this.getKey( event.which );
+		event.preventDefault();
+		if ( !event.repeat ) key.play();
+
+	}
+
+	//
+	// Handle Keyup
+	//
+
+	handleKeyup( event ) {
+
+		if (
+			event.metaKey ||
+			document.mode !== 'INPUT' ||
+			!this.isKey( event.which )
+		) return;
+
+		const key = this.getKey( event.which );
+		event.preventDefault();
+		if ( key.state.isPressed ) key.stop();
+
+	}
+
+	//
+	// Render Keys
 	//
 
 	renderKeys() {
+
 		let octave = this.state.octave;
 
 		return this.props.keys.map( ( key, index ) => {
+
 			const component = (
 				<Key
 					key={ ShortID.generate() }
@@ -166,7 +213,7 @@ class Keyboard extends React.Component {
 					note={ key.note }
 					octave={ octave }
 					context={ this.context }
-					ref={ ( key ) => ( this.keys[index] = key ) }
+					ref={ ( self ) => ( this.keys[index] = self ) }
 				/>
 			);
 
@@ -174,10 +221,17 @@ class Keyboard extends React.Component {
 			if ( ( index + 1 ) % 12 === 0 ) octave += 1;
 
 			return component;
+
 		} );
+
 	}
 
+	//
+	// Render
+	//
+
 	render() {
+
 		return (
 			<div className="keyboard">
 				<Prompt
@@ -189,7 +243,9 @@ class Keyboard extends React.Component {
 				</div>
 			</div>
 		);
+
 	}
+
 }
 
 //

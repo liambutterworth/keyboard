@@ -14,10 +14,13 @@
 	"rules": {
 		"no-param-reassign":      0,
 		"no-tabs":                0,
+		"default-case":           0,
+		"class-methods-use-this": 0,
 		"no-return-assign":       [ "error", "except-parens" ],
 		"template-curly-spacing": [ "warn", "always" ],
 		"arrow-parens":           [ "warn", "always" ],
 		"space-in-parens":        [ "warn", "always" ],
+		"padded-blocks":          [ "warn", "always" ],
 
 		"key-spacing": [ "warn", {
 			align: "value"
