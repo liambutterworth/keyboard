@@ -7,7 +7,6 @@ module.exports = {
 	context: `${ __dirname }/client/`,
 
 	entry: [
-		'babel-polyfill',
 		'./index.js',
 	],
 

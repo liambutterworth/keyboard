@@ -5,7 +5,6 @@
 // :: Component Will Mount
 // :: Component Will Unmount
 // :: Get Key
-// :: Is Key
 // :: Stop Keys
 // :: Handle Shortcut
 // :: Handle Command
@@ -20,7 +19,7 @@ import React      from 'react';
 import PropTypes  from 'prop-types';
 import ShortID    from 'shortid';
 import Prompt     from 'components/Prompt';
-import Settings   from 'settings.json';
+import Keys       from 'keys.json';
 import Key        from './Key';
 
 require( './style.css' );
@@ -47,10 +46,6 @@ class Keyboard extends React.Component {
 		this.handleCommand  = this.handleCommand.bind( this );
 		this.handleInput    = this.handleInput.bind( this );
 
-		// create regex to quickly test for keys
-		this.keyCodes = Settings.inputs.filter( ( input ) => ( input.type === 'key' ) ).map( ( key ) => ( key.code ) );
-		this.keyRegex = new RegExp( `^(${ this.keyCodes.join( '|' ) })$` );
-
 	}
 
 	//
@@ -74,7 +69,7 @@ class Keyboard extends React.Component {
 		this.context.close();
 		document.removeEventListener( 'shortcut', this.handleShortcut );
 		document.removeEventListener( 'command', this.handleCommand );
-		document.removeEventListener( 'input', this.handleInput );
+		document.removeEventListener( 'key', this.handleKey );
 
 	}
 
@@ -88,15 +83,6 @@ class Keyboard extends React.Component {
 
 	}
 
-	//
-	// Is Key
-	//
-
-	isKey( code ) {
-
-		return this.keyRegex.test( code );
-
-	}
 
 	//
 	// Stop Keys
@@ -118,7 +104,7 @@ class Keyboard extends React.Component {
 
 	handleShortcut( event ) {
 
-		switch ( event.detail ) {
+		switch ( event.detail.action ) {
 
 			case 'octave down':
 				if ( this.state.octave === 1 ) return;
@@ -162,14 +148,12 @@ class Keyboard extends React.Component {
 
 	handleInput( event ) {
 
-		if ( event.detail.type !== 'key' ) return;
-
 		const key = this.getKey( event.detail.code );
 
 		switch ( event.detail.action ) {
 
 			case 'keydown':
-				if ( !event.repeat ) key.play();
+				key.play();
 				break;
 
 			case 'keyup':
@@ -186,7 +170,7 @@ class Keyboard extends React.Component {
 
 	renderKeys() {
 
-		const keys = Settings.inputs.filter( ( input ) => ( input.type === 'key' ) );
+		const keys = Keys.inputs;
 		let octave = this.state.octave;
 
 		return keys.map( ( key, index ) => {
