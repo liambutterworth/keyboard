@@ -8,15 +8,16 @@
 // :: Render Methods
 // :: Properties
 
-import React         from 'react';
-import PropTypes     from 'prop-types';
-import ShortID       from 'shortid';
-import { Chord }     from 'music-theory';
-import ChordBuilder  from 'components/ChordBuilder';
-import ScaleSelector from 'components/ScaleSelector';
-import KeySelector   from 'components/KeySelector';
-import keys          from 'keys.json';
-import Key           from './Key';
+import React          from 'react';
+import PropTypes      from 'prop-types';
+import ShortID        from 'shortid';
+// import { Key, Chord } from 'music-theory';
+import MusicTheory from 'music-theory';
+import ChordBuilder   from 'components/ChordBuilder';
+import ScaleSelector  from 'components/ScaleSelector';
+import KeySelector    from 'components/KeySelector';
+import keys           from 'keys.json';
+import Key            from './Key';
 
 require( './style.css' );
 
@@ -41,16 +42,7 @@ class Keyboard extends React.Component {
 		this.handleInput    = this.handleInput.bind( this );
 
 		// TEST
-		this.chord = new Chord( 'maj' );
-		// const interval = this.chord.intervals[1];
-		// this.chord.intervals.forEach( ( interval ) => {
-		// 	const inverted = interval.getInverted();
-		// 	const reinverted = inverted.getInverted();
-		// 	console.log( reinverted );
-		// } );
-		// const invertedInterval = interval.getInverted();
-		// const note = interval.apply( 'C' );
-		// console.log( note );
+		this.key = new MusicTheory.Key( 'C' );
 
 	}
 
@@ -86,9 +78,32 @@ class Keyboard extends React.Component {
 
 	}
 
+	getKeys( rootKey ) {
+
+		let targetKeys;
+
+		if ( this.key ) {
+
+			const chord = this.getChordFromKey( rootKey );
+			targetKeys = this.getChordKeys( rootKey, chord );
+
+		} else if ( this.chord ) {
+
+			targetKeys = this.getChordKeys( rootKey );
+
+		} else {
+
+			targetKeys = [ rootKey ];
+
+		}
+
+		return targetKeys;
+
+	}
+
 	getChordFromKey( key ) {
 
-		console.log( key );
+		return this.key.getChordFromNote( key.note );
 
 	}
 
@@ -124,22 +139,7 @@ class Keyboard extends React.Component {
 
 	playKey( key ) {
 
-		let keysToPlay;
-
-		if ( this.key ) {
-
-			const chord = this.getChordFromKey( key );
-			keysToPlay = this.getChordKeys( key, chord );
-
-		} else if ( this.chord ) {
-
-			keysToPlay = this.getChordKeys( key );
-
-		} else {
-
-			keysToPlay = [ key ];
-
-		}
+		const keysToPlay = this.getKeys( key );
 
 		keysToPlay.forEach( ( keyToPlay ) => {
 
@@ -151,8 +151,7 @@ class Keyboard extends React.Component {
 
 	stopKey( key ) {
 
-		let keysToStop = [ key ];
-		if ( this.chord ) keysToStop = this.getChordKeys( key );
+		const keysToStop = this.getKeys( key );
 
 		keysToStop.forEach( ( keyToStop ) => {
 
