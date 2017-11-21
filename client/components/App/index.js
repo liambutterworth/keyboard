@@ -32,27 +32,21 @@ class App extends React.Component {
 			mode: 'INPUT',
 		};
 
+		this.eventTarget = document;
+
+		this.handleCommand = this.handleCommand.bind( this );
+		this.handleKeydown = this.handleKeydown.bind( this );
+		this.handleKeyup   = this.handleKeyup.bind( this );
+
 		this.keys         = keys;
 		this.inputKeys    = this.keys.filter( ( key ) => ( key.type === 'input' ) );
 		this.commandKeys  = this.keys.filter( ( key ) => ( key.type === 'command' ) );
 		this.shortcutKeys = this.keys.filter( ( key ) => ( key.type === 'shortcut' ) );
 
-		const testRegex = ( type ) => {
-
-			const filteredKeys = this.keys.filter( ( key ) => ( !type || key.type === type ) );
-			const keyCodes     = filteredKeys.map( ( key ) => ( key.code ) );
-			return new RegExp( `^(${ keyCodes.join( '|' ) })$` );
-
-		};
-
-		this.isKeyRegex      = testRegex();
-		this.isInputRegex    = testRegex( 'input' );
-		this.isCommandRegex  = testRegex( 'command' );
-		this.isShortcutRegex = testRegex( 'shortcut' );
-
-		this.handleCommand = this.handleCommand.bind( this );
-		this.handleKeydown = this.handleKeydown.bind( this );
-		this.handleKeyup   = this.handleKeyup.bind( this );
+		this.isKeyRegex      = this.createIsRegex();
+		this.isInputRegex    = this.createIsRegex( 'input' );
+		this.isCommandRegex  = this.createIsRegex( 'command' );
+		this.isShortcutRegex = this.createIsRegex( 'shortcut' );
 
 	}
 
@@ -100,6 +94,14 @@ class App extends React.Component {
 	// Is Methods
 	//
 
+	createIsRegex( type ) {
+
+		const filteredKeys = this.keys.filter( ( key ) => ( !type || key.type === type ) );
+		const keyCodes     = filteredKeys.map( ( key ) => ( key.code ) );
+		return new RegExp( `^(${ keyCodes.join( '|' ) })$` );
+
+	}
+
 	isKey( code ) {
 
 		return this.isKeyRegex.test( code );
@@ -131,21 +133,21 @@ class App extends React.Component {
 	dispatchInput( input ) {
 
 		const event = new CustomEvent( 'input', { detail: input } );
-		document.dispatchEvent( event );
+		this.eventTarget.dispatchEvent( event );
 
 	}
 
 	dispatchCommand( command ) {
 
 		const event = new CustomEvent( 'command', { detail: command } );
-		document.dispatchEvent( event );
+		this.eventTarget.dispatchEvent( event );
 
 	}
 
 	dispatchShortcut( shortcut ) {
 
 		const event = new CustomEvent( 'shortcut', { detail: shortcut } );
-		document.dispatchEvent( event );
+		this.eventTarget.dispatchEvent( event );
 
 	}
 
@@ -193,7 +195,7 @@ class App extends React.Component {
 		if ( this.state.mode === 'INPUT' && this.isInput( code ) ) {
 
 			const input = this.getInput( code );
-			input.action = 'keydown';
+			input.action = 'play key';
 			this.dispatchInput( input );
 
 		} else if ( this.state.mode === 'COMMAND' && this.isCommand( code ) ) {
@@ -220,7 +222,7 @@ class App extends React.Component {
 
 		event.preventDefault();
 		const input = this.getInput( event.which );
-		input.action = 'keyup';
+		input.action = 'stop key';
 		this.dispatchInput( input );
 
 	}

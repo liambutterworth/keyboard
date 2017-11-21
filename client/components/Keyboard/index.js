@@ -11,6 +11,7 @@
 import React         from 'react';
 import PropTypes     from 'prop-types';
 import ShortID       from 'shortid';
+import { Chord }     from 'music-theory';
 import ChordBuilder  from 'components/ChordBuilder';
 import ScaleSelector from 'components/ScaleSelector';
 import KeySelector   from 'components/KeySelector';
@@ -38,6 +39,18 @@ class Keyboard extends React.Component {
 		this.handleShortcut = this.handleShortcut.bind( this );
 		this.handleCommand  = this.handleCommand.bind( this );
 		this.handleInput    = this.handleInput.bind( this );
+
+		// TEST
+		this.chord = new Chord( 'maj' );
+		// const interval = this.chord.intervals[1];
+		// this.chord.intervals.forEach( ( interval ) => {
+		// 	const inverted = interval.getInverted();
+		// 	const reinverted = inverted.getInverted();
+		// 	console.log( reinverted );
+		// } );
+		// const invertedInterval = interval.getInverted();
+		// const note = interval.apply( 'C' );
+		// console.log( note );
 
 	}
 
@@ -70,6 +83,82 @@ class Keyboard extends React.Component {
 	getKey( code ) {
 
 		return this.keys.find( ( key ) => ( key.props.code === code ) );
+
+	}
+
+	getChordFromKey( key ) {
+
+		console.log( key );
+
+	}
+
+	getChordKeys( rootKey, chord ) {
+
+		chord = chord || this.chord;
+
+		return chord.intervals.map( ( interval ) => {
+
+			const maxIndex    = this.keys.length - 1;
+			const targetIndex = rootKey.props.index + interval.steps;
+
+			let key;
+
+			if ( targetIndex <= maxIndex ) {
+
+				key = this.keys[targetIndex];
+
+			} else {
+
+				const invertedInverval = interval.getInverted();
+				const invertedIndex    = rootKey.props.index - invertedInverval.steps;
+
+				key = this.keys[invertedIndex];
+
+			}
+
+			return key;
+
+		} );
+
+	}
+
+	playKey( key ) {
+
+		let keysToPlay;
+
+		if ( this.key ) {
+
+			const chord = this.getChordFromKey( key );
+			keysToPlay = this.getChordKeys( key, chord );
+
+		} else if ( this.chord ) {
+
+			keysToPlay = this.getChordKeys( key );
+
+		} else {
+
+			keysToPlay = [ key ];
+
+		}
+
+		keysToPlay.forEach( ( keyToPlay ) => {
+
+			if ( !keyToPlay.state.isPressed ) keyToPlay.play();
+
+		} );
+
+	}
+
+	stopKey( key ) {
+
+		let keysToStop = [ key ];
+		if ( this.chord ) keysToStop = this.getChordKeys( key );
+
+		keysToStop.forEach( ( keyToStop ) => {
+
+			if ( keyToStop.state.isPressed ) keyToStop.stop();
+
+		} );
 
 	}
 
@@ -137,12 +226,12 @@ class Keyboard extends React.Component {
 
 		switch ( event.detail.action ) {
 
-			case 'keydown':
-				key.play();
+			case 'play key':
+				this.playKey( key );
 				break;
 
-			case 'keyup':
-				if ( key.state.isPressed ) key.stop();
+			case 'stop key':
+				this.stopKey( key );
 				break;
 
 		}
@@ -164,6 +253,7 @@ class Keyboard extends React.Component {
 			const component = (
 				<Key
 					key={ ShortID.generate() }
+					index={ index }
 					code={ key.code }
 					note={ key.note }
 					octave={ octave }

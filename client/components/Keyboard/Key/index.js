@@ -44,8 +44,9 @@ class Key extends React.Component {
 }
 
 Key.propTypes = {
-	code: PropTypes.number.isRequired,
-	note: PropTypes.string.isRequired,
+	code:  PropTypes.number.isRequired,
+	note:  PropTypes.string.isRequired,
+	index: PropTypes.number.isRequired,
 };
 
 export default Key;
