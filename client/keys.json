@@ -1,7 +1,9 @@
 {
 	"commands": [
 		{ "char": "p", "code": 80, "action": "open prompt" },
-		{ "char": "k", "code": 75, "action": "define key"  }
+		{ "char": "c", "code": 67, "action": "toggle chord builder" },
+		{ "char": "s", "code": 83, "action": "toggle scale selector" },
+		{ "char": "k", "code": 75, "action": "toggle key selector" }
 	],
 
 	"shortcuts": [

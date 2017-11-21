@@ -21,6 +21,7 @@ class Key extends React.Component {
 		this.oscillator = this.props.context.createOscillator();
 		this.oscillator.frequency.value = this.note.frequency[ this.props.octave - 1 ];
 		this.oscillator.connect( this.props.context.destination );
+		this.oscillator.type = 'sawtooth';
 		this.oscillator.start();
 	}
 

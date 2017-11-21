@@ -2,28 +2,19 @@
 // App
 //
 // :: Constructor
-// :: Component Will Mount
-// :: Component Will Unmount
-// :: Get Input
-// :: Get Command
-// :: Get Shortcut
-// :: Is Key
-// :: Is Input
-// :: is Command
-// :: Is Shortcut
-// :: Dispatch Input
-// :: Dispatch Command
-// :: Dispatch Shortcut
+// :: Mount Events
+// :: Get Methods
+// :: Is Methods
+// :: Dispatch Methods
 // :: Toggle Mode
-// :: Handle Keydown
-// :: Handle Keyup
+// :: Event Handlers
 // :: Render
-// :: Default Props
-// :: Prop Types
+// :: Properties
 
 import React      from 'react';
 import PropTypes  from 'prop-types';
 import ClassNames from 'classnames';
+import Dispatcher from 'library/Dispatcher';
 import Keys       from 'keys.json';
 
 require( './style.css' );
@@ -42,12 +33,13 @@ class App extends React.Component {
 			mode: 'INPUT',
 		};
 
+		this.dispatcher = new Dispatcher();
+
 		const testRegex = ( entries ) => {
 			const codes = entries.map( ( entry ) => ( entry.code ) );
 			return new RegExp( `^(${ codes.join( '|' ) })$` );
 		};
 
-		this.keyRegex      = testRegex( Keys.inputs.concat( Keys.commands, Keys.shortcuts ) );
 		this.inputRegex    = testRegex( Keys.inputs );
 		this.commandRegex  = testRegex( Keys.commands );
 		this.shortcutRegex = testRegex( Keys.shortcuts );
@@ -58,7 +50,7 @@ class App extends React.Component {
 	}
 
 	//
-	// Component Will Mount
+	// Mount Events
 	//
 
 	componentWillMount() {
@@ -68,10 +60,6 @@ class App extends React.Component {
 
 	}
 
-	//
-	// Component Will Unmount
-	//
-
 	componentWillUnmount() {
 
 		document.removeEventListener( 'keydown', this.handleKeydown );
@@ -80,7 +68,7 @@ class App extends React.Component {
 	}
 
 	//
-	// Get Input
+	// Get Methods
 	//
 
 	getInput( code ) {
@@ -89,19 +77,11 @@ class App extends React.Component {
 
 	}
 
-	//
-	// Get Command
-	//
-
 	getCommand( code ) {
 
 		return Keys.commands.find( ( command ) => ( command.code === code ) );
 
 	}
-
-	//
-	// Get Shortcut
-	//
 
 	getShortcut( code ) {
 
@@ -110,17 +90,7 @@ class App extends React.Component {
 	}
 
 	//
-	// Is Key
-	//
-
-	isKey( code ) {
-
-		return this.keyRegex.test( code );
-
-	}
-
-	//
-	// Is Input
+	// Is Methods
 	//
 
 	isInput( code ) {
@@ -129,19 +99,11 @@ class App extends React.Component {
 
 	}
 
-	//
-	// Is Command
-	//
-
 	isCommand( code ) {
 
 		return this.commandRegex.test( code );
 
 	}
-
-	//
-	// Is Shortcut
-	//
 
 	isShortcut( code ) {
 
@@ -150,7 +112,7 @@ class App extends React.Component {
 	}
 
 	//
-	// Dispatch Input
+	// Dispatch Methods
 	//
 
 	dispatchInput( input ) {
@@ -160,20 +122,12 @@ class App extends React.Component {
 
 	}
 
-	//
-	// Dispatch Command
-	//
-
 	dispatchCommand( command ) {
 
 		const event = new CustomEvent( 'command', { detail: command } );
 		document.dispatchEvent( event );
 
 	}
-
-	//
-	// Dispatch Shortcut
-	//
 
 	dispatchShortcut( shortcut ) {
 
@@ -201,15 +155,15 @@ class App extends React.Component {
 	}
 
 	//
-	// Hanlde Keydown
+	// Event Handlers
 	//
 
 	handleKeydown( event ) {
 
-		const code = event.which;
-		if ( event.metaKey || !this.isKey( code ) ) return;
+		if ( event.metaKey ) return;
 		event.preventDefault();
-		if ( event.repeat ) return;
+
+		const code = event.which;
 
 		if ( code === this.props.toggle ) {
 
@@ -217,6 +171,7 @@ class App extends React.Component {
 
 		} else if ( this.state.mode === 'INPUT' && this.isInput( code ) ) {
 
+			if ( event.repeat ) return;
 			const input = this.getInput( code );
 			input.action = 'keydown';
 			this.dispatchInput( input );
@@ -272,16 +227,12 @@ class App extends React.Component {
 }
 
 //
-// Default Props
+// Properties
 //
 
 App.defaultProps = {
 	toggle: 32, // space
 };
-
-//
-// Prop Types
-//
 
 App.propTypes = {
 	children: PropTypes.node.isRequired,

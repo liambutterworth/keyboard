@@ -2,25 +2,21 @@
 // Keyboard
 //
 // :: Constructor
-// :: Component Will Mount
-// :: Component Will Unmount
-// :: Get Key
-// :: Stop Keys
-// :: Handle Shortcut
-// :: Handle Command
-// :: Handle Keydown
-// :: Handle Keyup
-// :: Render Keys
-// :: Render
-// :: Default Props
-// :: Prop Types
+// :: Mount Events
+// :: Key Methods
+// :: Event Handlers
+// :: Render Methods
+// :: Properties
 
-import React      from 'react';
-import PropTypes  from 'prop-types';
-import ShortID    from 'shortid';
-import Prompt     from 'components/Prompt';
-import Keys       from 'keys.json';
-import Key        from './Key';
+import React         from 'react';
+import PropTypes     from 'prop-types';
+import ShortID       from 'shortid';
+import Prompt        from 'components/Prompt';
+import ChordBuilder  from 'components/ChordBuilder';
+import ScaleSelector from 'components/ScaleSelector';
+import KeySelector   from 'components/KeySelector';
+import Keys          from 'keys.json';
+import Key           from './Key';
 
 require( './style.css' );
 
@@ -49,7 +45,7 @@ class Keyboard extends React.Component {
 	}
 
 	//
-	// Component Will Mount
+	// Mount Events
 	//
 
 	componentWillMount() {
@@ -59,10 +55,11 @@ class Keyboard extends React.Component {
 		document.addEventListener( 'command', this.handleCommand );
 		document.addEventListener( 'input', this.handleInput );
 
-	}
+		// Dispatcher.on( 'shortcut', this.handleShortcut );
+		// Dispatcher.on( 'command', this.handleCommand );
+		// Dispatcher.on( 'input', this.handleInput );
 
-	//
-	// Component Will Unmount
+	}
 
 	componentWillUnmount() {
 
@@ -74,7 +71,7 @@ class Keyboard extends React.Component {
 	}
 
 	//
-	// Get Key
+	// Key Methods
 	//
 
 	getKey( code ) {
@@ -82,11 +79,6 @@ class Keyboard extends React.Component {
 		return this.keys.find( ( key ) => ( key.props.code === code ) );
 
 	}
-
-
-	//
-	// Stop Keys
-	//
 
 	stopKeys() {
 
@@ -99,7 +91,7 @@ class Keyboard extends React.Component {
 	}
 
 	//
-	// Hanlde Shortcut
+	// Event Handlers
 	//
 
 	handleShortcut( event ) {
@@ -122,10 +114,6 @@ class Keyboard extends React.Component {
 
 	}
 
-	//
-	// Handle Command
-	//
-
 	handleCommand( event ) {
 
 		switch ( event.detail.action ) {
@@ -134,17 +122,21 @@ class Keyboard extends React.Component {
 				this.prompt.toggle();
 				break;
 
-			case 'define key':
-				console.log( 'define a key' );
+			case 'toggle chord builder':
+				this.chordBuilder.prompt.toggle();
+				break;
+
+			case 'toggle scale selector':
+				this.scaleSelector.prompt.toggle();
+				break;
+
+			case 'toggle key selector':
+				this.keySelector.prompt.toggle();
 				break;
 
 		}
 
 	}
-
-	//
-	// Handle Input
-	//
 
 	handleInput( event ) {
 
@@ -165,7 +157,7 @@ class Keyboard extends React.Component {
 	}
 
 	//
-	// Render Keys
+	// Render Methods
 	//
 
 	renderKeys() {
@@ -195,21 +187,28 @@ class Keyboard extends React.Component {
 
 	}
 
-	//
-	// Render
-	//
-
 	render() {
 
 		return (
 			<div className="keyboard">
-				<Prompt
-					ref={ ( prompt ) => ( this.prompt = prompt ) }
-				/>
-
 				<div className="keyboard-keys">
 					{ this.renderKeys() }
 				</div>
+
+				<ChordBuilder
+					set={ this.setChord }
+					ref={ ( chordBuilder ) => ( this.chordBuilder = chordBuilder ) }
+				/>
+
+				<ScaleSelector
+					set={ this.setKey }
+					ref={ ( scaleSelector ) => ( this.scaleSelector = scaleSelector ) }
+				/>
+
+				<KeySelector
+					set={ this.setKey }
+					ref={ ( keySelector ) => ( this.keySelector = keySelector ) }
+				/>
 			</div>
 		);
 
@@ -218,16 +217,12 @@ class Keyboard extends React.Component {
 }
 
 //
-// Default Props
+// Properties
 //
 
 Keyboard.defaultProps = {
 	octave: 4,
 };
-
-//
-// Prop Types
-//
 
 Keyboard.propTypes = {
 	octave: PropTypes.number,

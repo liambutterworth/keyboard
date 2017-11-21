@@ -129,7 +129,9 @@ class Prompt extends React.Component {
 		} );
 
 		return (
-			<div className={ classNames } />
+			<div className={ classNames }>
+				{ this.props.children }
+			</div>
 		);
 
 	}
@@ -149,7 +151,8 @@ Prompt.defaultProps = {
 //
 
 Prompt.propTypes = {
-	open: PropTypes.bool,
+	open:     PropTypes.bool,
+	children: PropTypes.node,
 };
 
 export default Prompt;
