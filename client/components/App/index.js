@@ -14,8 +14,7 @@
 import React      from 'react';
 import PropTypes  from 'prop-types';
 import ClassNames from 'classnames';
-import Dispatcher from 'library/Dispatcher';
-import Keys       from 'keys.json';
+import keys       from 'keys.json';
 
 require( './style.css' );
 
@@ -33,17 +32,25 @@ class App extends React.Component {
 			mode: 'INPUT',
 		};
 
-		this.dispatcher = new Dispatcher();
+		this.keys         = keys;
+		this.inputKeys    = this.keys.filter( ( key ) => ( key.type === 'input' ) );
+		this.commandKeys  = this.keys.filter( ( key ) => ( key.type === 'command' ) );
+		this.shortcutKeys = this.keys.filter( ( key ) => ( key.type === 'shortcut' ) );
 
-		const testRegex = ( entries ) => {
-			const codes = entries.map( ( entry ) => ( entry.code ) );
-			return new RegExp( `^(${ codes.join( '|' ) })$` );
+		const testRegex = ( type ) => {
+
+			const filteredKeys = this.keys.filter( ( key ) => ( !type || key.type === type ) );
+			const keyCodes     = filteredKeys.map( ( key ) => ( key.code ) );
+			return new RegExp( `^(${ keyCodes.join( '|' ) })$` );
+
 		};
 
-		this.inputRegex    = testRegex( Keys.inputs );
-		this.commandRegex  = testRegex( Keys.commands );
-		this.shortcutRegex = testRegex( Keys.shortcuts );
+		this.isKeyRegex      = testRegex();
+		this.isInputRegex    = testRegex( 'input' );
+		this.isCommandRegex  = testRegex( 'command' );
+		this.isShortcutRegex = testRegex( 'shortcut' );
 
+		this.handleCommand = this.handleCommand.bind( this );
 		this.handleKeydown = this.handleKeydown.bind( this );
 		this.handleKeyup   = this.handleKeyup.bind( this );
 
@@ -73,19 +80,19 @@ class App extends React.Component {
 
 	getInput( code ) {
 
-		return Keys.inputs.find( ( input ) => ( input.code === code ) );
+		return this.inputKeys.find( ( input ) => ( input.code === code ) );
 
 	}
 
 	getCommand( code ) {
 
-		return Keys.commands.find( ( command ) => ( command.code === code ) );
+		return this.commandKeys.find( ( command ) => ( command.code === code ) );
 
 	}
 
 	getShortcut( code ) {
 
-		return Keys.shortcuts.find( ( shortcut ) => ( shortcut.code === code ) );
+		return this.shortcutKeys.find( ( shortcut ) => ( shortcut.code === code ) );
 
 	}
 
@@ -93,21 +100,27 @@ class App extends React.Component {
 	// Is Methods
 	//
 
+	isKey( code ) {
+
+		return this.isKeyRegex.test( code );
+
+	}
+
 	isInput( code ) {
 
-		return this.inputRegex.test( code );
+		return this.isInputRegex.test( code );
 
 	}
 
 	isCommand( code ) {
 
-		return this.commandRegex.test( code );
+		return this.isCommandRegex.test( code );
 
 	}
 
 	isShortcut( code ) {
 
-		return this.shortcutRegex.test( code );
+		return this.isShortcutRegex.test( code );
 
 	}
 
@@ -158,20 +171,27 @@ class App extends React.Component {
 	// Event Handlers
 	//
 
+	handleCommand( event ) {
+
+		switch ( event.detail.action ) {
+
+			case 'toggle mode':
+				this.toggleMode();
+				break;
+
+		}
+	}
+
 	handleKeydown( event ) {
 
 		if ( event.metaKey ) return;
 		event.preventDefault();
+		if ( event.repeat ) return;
 
 		const code = event.which;
 
-		if ( code === this.props.toggle ) {
+		if ( this.state.mode === 'INPUT' && this.isInput( code ) ) {
 
-			this.toggleMode();
-
-		} else if ( this.state.mode === 'INPUT' && this.isInput( code ) ) {
-
-			if ( event.repeat ) return;
 			const input = this.getInput( code );
 			input.action = 'keydown';
 			this.dispatchInput( input );
@@ -230,13 +250,8 @@ class App extends React.Component {
 // Properties
 //
 
-App.defaultProps = {
-	toggle: 32, // space
-};
-
 App.propTypes = {
 	children: PropTypes.node.isRequired,
-	toggle:   PropTypes.number,
 };
 
 export default App;

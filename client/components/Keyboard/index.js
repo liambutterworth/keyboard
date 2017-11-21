@@ -11,11 +11,10 @@
 import React         from 'react';
 import PropTypes     from 'prop-types';
 import ShortID       from 'shortid';
-import Prompt        from 'components/Prompt';
 import ChordBuilder  from 'components/ChordBuilder';
 import ScaleSelector from 'components/ScaleSelector';
 import KeySelector   from 'components/KeySelector';
-import Keys          from 'keys.json';
+import keys          from 'keys.json';
 import Key           from './Key';
 
 require( './style.css' );
@@ -34,10 +33,8 @@ class Keyboard extends React.Component {
 			octave: props.octave,
 		};
 
-		// create a reference for all keyboard keys
 		this.keys = [];
 
-		// ensure event handlers have the correct "this" reference
 		this.handleShortcut = this.handleShortcut.bind( this );
 		this.handleCommand  = this.handleCommand.bind( this );
 		this.handleInput    = this.handleInput.bind( this );
@@ -54,10 +51,6 @@ class Keyboard extends React.Component {
 		document.addEventListener( 'shortcut', this.handleShortcut );
 		document.addEventListener( 'command', this.handleCommand );
 		document.addEventListener( 'input', this.handleInput );
-
-		// Dispatcher.on( 'shortcut', this.handleShortcut );
-		// Dispatcher.on( 'command', this.handleCommand );
-		// Dispatcher.on( 'input', this.handleInput );
 
 	}
 
@@ -162,10 +155,11 @@ class Keyboard extends React.Component {
 
 	renderKeys() {
 
-		const keys = Keys.inputs;
+		const inputs = keys.filter( ( key ) => ( key.type === 'input' ) );
+
 		let octave = this.state.octave;
 
-		return keys.map( ( key, index ) => {
+		return inputs.map( ( key, index ) => {
 
 			const component = (
 				<Key
