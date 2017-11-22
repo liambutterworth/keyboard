@@ -3,9 +3,9 @@ $white-width: calc( 100% / $white-count );
 $black-width: calc( $white-width / 2 );
 
 $white-color: white;
-$white-pressed-color: color( $white-color blackness( 10% ) );
+$white-pressed-color: color( $white-color blackness( 15% ) );
 $black-color: black;
-$black-pressed-color: color( $black-color whiteness( 10% ) );
+$black-pressed-color: color( $black-color whiteness( 15% ) );
 
 .keyboard-key {
 	background: $white-color;

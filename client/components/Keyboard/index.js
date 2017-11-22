@@ -3,21 +3,21 @@
 //
 // :: Constructor
 // :: Mount Events
+// :: ---
 // :: Key Methods
 // :: Event Handlers
 // :: Render Methods
 // :: Properties
 
-import React          from 'react';
-import PropTypes      from 'prop-types';
-import ShortID        from 'shortid';
-// import { Key, Chord } from 'music-theory';
-import MusicTheory from 'music-theory';
-import ChordBuilder   from 'components/ChordBuilder';
-import ScaleSelector  from 'components/ScaleSelector';
-import KeySelector    from 'components/KeySelector';
-import keys           from 'keys.json';
-import Key            from './Key';
+import React         from 'react';
+import PropTypes     from 'prop-types';
+import ShortID       from 'shortid';
+import MusicTheory   from 'music-theory';
+import ChordBuilder  from 'components/ChordBuilder';
+import ScaleSelector from 'components/ScaleSelector';
+import KeySelector   from 'components/KeySelector';
+import keys          from 'keys.json';
+import Key           from './Key';
 
 require( './style.css' );
 
@@ -42,7 +42,7 @@ class Keyboard extends React.Component {
 		this.handleInput    = this.handleInput.bind( this );
 
 		// TEST
-		this.key = new MusicTheory.Key( 'C' );
+		this.keySignature = new MusicTheory.Key( 'C' );
 
 	}
 
@@ -69,6 +69,18 @@ class Keyboard extends React.Component {
 	}
 
 	//
+	// ---
+	//
+
+	setKeySignature() {
+
+	}
+
+	setChord() {
+
+	}
+
+	//
 	// Key Methods
 	//
 
@@ -82,9 +94,9 @@ class Keyboard extends React.Component {
 
 		let targetKeys;
 
-		if ( this.key ) {
+		if ( this.keySignature ) {
 
-			const chord = this.getChordFromKey( rootKey );
+			const chord = this.keySignature.getChordFromNote( rootKey.note );
 			targetKeys = this.getChordKeys( rootKey, chord );
 
 		} else if ( this.chord ) {
@@ -101,15 +113,10 @@ class Keyboard extends React.Component {
 
 	}
 
-	getChordFromKey( key ) {
-
-		return this.key.getChordFromNote( key.note );
-
-	}
-
 	getChordKeys( rootKey, chord ) {
 
 		chord = chord || this.chord;
+		if ( !chord ) return [ rootKey ];
 
 		return chord.intervals.map( ( interval ) => {
 
@@ -124,7 +131,7 @@ class Keyboard extends React.Component {
 
 			} else {
 
-				const invertedInverval = interval.getInverted();
+				const invertedInverval = interval.invert();
 				const invertedIndex    = rootKey.props.index - invertedInverval.steps;
 
 				key = this.keys[invertedIndex];
@@ -137,37 +144,27 @@ class Keyboard extends React.Component {
 
 	}
 
+	highlightKeys() {
+
+	}
+
 	playKey( key ) {
 
 		const keysToPlay = this.getKeys( key );
-
-		keysToPlay.forEach( ( keyToPlay ) => {
-
-			if ( !keyToPlay.state.isPressed ) keyToPlay.play();
-
-		} );
+		keysToPlay.forEach( ( keyToPlay ) => ( keyToPlay.play() ) );
 
 	}
 
 	stopKey( key ) {
 
 		const keysToStop = this.getKeys( key );
-
-		keysToStop.forEach( ( keyToStop ) => {
-
-			if ( keyToStop.state.isPressed ) keyToStop.stop();
-
-		} );
+		keysToStop.forEach( ( keyToStop ) => ( keyToStop.stop() ) );
 
 	}
 
 	stopKeys() {
 
-		this.keys.forEach( ( key ) => {
-
-			if ( key.state.isPressed ) key.stop();
-
-		} );
+		this.keys.forEach( ( keyToStop ) => ( key.stop() ) );
 
 	}
 

@@ -17,6 +17,7 @@ class Key extends React.Component {
 	}
 
 	play() {
+		if ( this.state.isPressed ) return;
 		this.setState( { isPressed: true } );
 		this.oscillator = this.props.context.createOscillator();
 		this.oscillator.frequency.value = this.note.frequency[ this.props.octave - 1 ];
@@ -26,6 +27,7 @@ class Key extends React.Component {
 	}
 
 	stop() {
+		if ( !this.state.isPressed ) return;
 		this.setState( { isPressed: false } );
 		this.oscillator.stop();
 	}
