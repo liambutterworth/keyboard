@@ -41,8 +41,8 @@ class Keyboard extends React.Component {
 		this.handleCommand  = this.handleCommand.bind( this );
 		this.handleInput    = this.handleInput.bind( this );
 
-		// TEST
-		this.keySignature = new MusicTheory.Key( 'C' );
+		// TESTING
+		this.modifier = new MusicTheory.Key( 'C' );
 
 	}
 
@@ -59,6 +59,13 @@ class Keyboard extends React.Component {
 
 	}
 
+	componentDidMount() {
+
+		const musicalObject = new MusicTheory.Chord( 'Cmaj' );
+		this.highlightKeys( musicalObject );
+
+	}
+
 	componentWillUnmount() {
 
 		this.context.close();
@@ -72,11 +79,9 @@ class Keyboard extends React.Component {
 	// ---
 	//
 
-	setKeySignature() {
+	setModifier( modifier ) {
 
-	}
-
-	setChord() {
+		this.modifier = modifier;
 
 	}
 
@@ -90,32 +95,8 @@ class Keyboard extends React.Component {
 
 	}
 
-	getKeys( rootKey ) {
-
-		let targetKeys;
-
-		if ( this.keySignature ) {
-
-			const chord = this.keySignature.getChordFromNote( rootKey.note );
-			targetKeys = this.getChordKeys( rootKey, chord );
-
-		} else if ( this.chord ) {
-
-			targetKeys = this.getChordKeys( rootKey );
-
-		} else {
-
-			targetKeys = [ rootKey ];
-
-		}
-
-		return targetKeys;
-
-	}
-
 	getChordKeys( rootKey, chord ) {
 
-		chord = chord || this.chord;
 		if ( !chord ) return [ rootKey ];
 
 		return chord.intervals.map( ( interval ) => {
@@ -144,27 +125,76 @@ class Keyboard extends React.Component {
 
 	}
 
-	highlightKeys() {
+	getKeys( rootKey ) {
+
+		let targetKeys;
+
+		if ( this.modifier instanceof MusicTheory.Key ) {
+
+			const chord = this.modifier.getChordFromNote( rootKey.note );
+			targetKeys = this.getChordKeys( rootKey, chord );
+
+		} else if ( this.modifier instanceof MusicTheory.Chord ) {
+
+			targetKeys = this.getChordKeys( rootKey, this.modifier );
+
+		} else {
+
+			targetKeys = [ rootKey ];
+
+		}
+
+		return targetKeys;
+
+	}
+
+	highlightKeys( musicTheoryObject ) {
+
+		const symbols = musicTheoryObject.notes.symbols();
+
+		this.keys.forEach( ( key ) => {
+
+			const symbol = key.note.symbol();
+			if ( symbols.includes( symbol ) ) key.highlight();
+
+		} );
 
 	}
 
 	playKey( key ) {
 
-		const keysToPlay = this.getKeys( key );
-		keysToPlay.forEach( ( keyToPlay ) => ( keyToPlay.play() ) );
+		if ( this.modifier ) {
+
+			const keysToPlay = this.getKeys( key );
+			keysToPlay.forEach( ( keyToPlay ) => ( keyToPlay.play() ) );
+
+		} else {
+
+			key.play();
+
+		}
+
 
 	}
 
 	stopKey( key ) {
 
-		const keysToStop = this.getKeys( key );
-		keysToStop.forEach( ( keyToStop ) => ( keyToStop.stop() ) );
+		if ( this.modifier ) {
+
+			const keysToStop = this.getKeys( key );
+			keysToStop.forEach( ( keyToStop ) => ( keyToStop.stop() ) );
+
+		} else {
+
+			key.stop();
+
+		}
 
 	}
 
 	stopKeys() {
 
-		this.keys.forEach( ( keyToStop ) => ( key.stop() ) );
+		this.keys.forEach( ( keyToStop ) => ( keyToStop.stop() ) );
 
 	}
 

@@ -20,6 +20,10 @@ $black-pressed-color: color( $black-color whiteness( 15% ) );
 		border-right: none;
 	}
 
+	&.keyboard-key--is-highlighted {
+		background: red;
+	}
+
 	&.keyboard-key--is-pressed {
 		background: $white-pressed-color;
 	}
