@@ -13,10 +13,12 @@ import React         from 'react';
 import PropTypes     from 'prop-types';
 import ShortID       from 'shortid';
 import MusicTheory   from 'music-theory';
+import Prompt        from 'components/Prompt';
+import Tabs, { Tab } from 'components/Tabs';
 import ChordBuilder  from 'components/ChordBuilder';
 import ScaleSelector from 'components/ScaleSelector';
 import KeySelector   from 'components/KeySelector';
-import keys          from 'keys.json';
+import actions       from 'actions.json';
 import Key           from './Key';
 
 require( './style.css' );
@@ -37,12 +39,10 @@ class Keyboard extends React.Component {
 
 		this.keys = [];
 
-		this.handleShortcut = this.handleShortcut.bind( this );
-		this.handleCommand  = this.handleCommand.bind( this );
-		this.handleInput    = this.handleInput.bind( this );
+		this.handleAction = this.handleAction.bind( this );
 
 		// TESTING
-		this.modifier = new MusicTheory.Key( 'C' );
+		// this.modifier = new MusicTheory.Key( 'C' );
 
 	}
 
@@ -53,35 +53,37 @@ class Keyboard extends React.Component {
 	componentWillMount() {
 
 		this.context = new AudioContext();
-		document.addEventListener( 'shortcut', this.handleShortcut );
-		document.addEventListener( 'command', this.handleCommand );
-		document.addEventListener( 'input', this.handleInput );
-
-	}
-
-	componentDidMount() {
-
-		const musicalObject = new MusicTheory.Chord( 'Cmaj' );
-		this.highlightKeys( musicalObject );
+		document.addEventListener( 'action', this.handleAction );
 
 	}
 
 	componentWillUnmount() {
 
 		this.context.close();
-		document.removeEventListener( 'shortcut', this.handleShortcut );
-		document.removeEventListener( 'command', this.handleCommand );
-		document.removeEventListener( 'key', this.handleKey );
+		document.removeEventListener( 'action', this.handleAction );
 
 	}
 
 	//
-	// ---
+	// Setters
 	//
 
 	setModifier( modifier ) {
 
 		this.modifier = modifier;
+
+	}
+
+	setHighlight( highlight ) {
+
+		const symbols = highlight.notes.symbols();
+
+		this.keys.forEach( ( key ) => {
+
+			const symbol = key.note.symbol();
+			if ( symbols.includes( symbol ) ) key.highlight();
+
+		} );
 
 	}
 
@@ -148,19 +150,6 @@ class Keyboard extends React.Component {
 
 	}
 
-	highlightKeys( musicTheoryObject ) {
-
-		const symbols = musicTheoryObject.notes.symbols();
-
-		this.keys.forEach( ( key ) => {
-
-			const symbol = key.note.symbol();
-			if ( symbols.includes( symbol ) ) key.highlight();
-
-		} );
-
-	}
-
 	playKey( key ) {
 
 		if ( this.modifier ) {
@@ -202,9 +191,17 @@ class Keyboard extends React.Component {
 	// Event Handlers
 	//
 
-	handleShortcut( event ) {
+	handleAction( event ) {
 
-		switch ( event.detail.action ) {
+		switch ( event.detail.desc ) {
+
+			case 'play key':
+				this.playKey( this.getKey( event.detail.code ) );
+				break;
+
+			case 'stop key':
+				this.stopKey( this.getKey( event.detail.code ) );
+				break;
 
 			case 'octave down':
 				if ( this.state.octave === 1 ) return;
@@ -218,46 +215,16 @@ class Keyboard extends React.Component {
 				this.setState( { octave: this.state.octave + 1 } );
 				break;
 
-		}
-
-	}
-
-	handleCommand( event ) {
-
-		switch ( event.detail.action ) {
-
 			case 'open prompt':
 				this.prompt.toggle();
 				break;
 
-			case 'toggle chord builder':
-				this.chordBuilder.prompt.toggle();
+			case 'toggle modifier prompt':
+				this.modifierPrompt.toggle();
 				break;
 
-			case 'toggle scale selector':
-				this.scaleSelector.prompt.toggle();
-				break;
-
-			case 'toggle key selector':
-				this.keySelector.prompt.toggle();
-				break;
-
-		}
-
-	}
-
-	handleInput( event ) {
-
-		const key = this.getKey( event.detail.code );
-
-		switch ( event.detail.action ) {
-
-			case 'play key':
-				this.playKey( key );
-				break;
-
-			case 'stop key':
-				this.stopKey( key );
+			case 'toggle highlight prompt':
+				this.highlightPrompt.toggle();
 				break;
 
 		}
@@ -270,7 +237,7 @@ class Keyboard extends React.Component {
 
 	renderKeys() {
 
-		const inputs = keys.filter( ( key ) => ( key.type === 'input' ) );
+		const inputs = actions.filter( ( actions ) => ( actions.type === 'input' ) );
 
 		let octave = this.state.octave;
 
@@ -305,20 +272,20 @@ class Keyboard extends React.Component {
 					{ this.renderKeys() }
 				</div>
 
-				<ChordBuilder
-					set={ this.setChord }
-					ref={ ( chordBuilder ) => ( this.chordBuilder = chordBuilder ) }
-				/>
+				<Prompt ref={ ( self ) => ( this.modifierPrompt = self ) }>
+					<Tabs>
+						<Tab title="Chord"><ChordBuilder submit={ this.setModifier } /></Tab>
+						<Tab title="Key"><KeySelector submit={ this.setModifier } /></Tab>
+					</Tabs>
+				</Prompt>
 
-				<ScaleSelector
-					set={ this.setKey }
-					ref={ ( scaleSelector ) => ( this.scaleSelector = scaleSelector ) }
-				/>
-
-				<KeySelector
-					set={ this.setKey }
-					ref={ ( keySelector ) => ( this.keySelector = keySelector ) }
-				/>
+				<Prompt ref={ ( self ) => ( this.highlightPrompt = self ) }>
+					<Tabs>
+						<Tab title="Chord"><ChordBuilder submit={ this.setHighlight } /></Tab>
+						<Tab title="Key"><KeySelector submit={ this.setHighlight } /></Tab>
+						<Tab title="Scale"><ScaleSelector submit={ this.setHighlight } /></Tab>
+					</Tabs>
+				</Prompt>
 			</div>
 		);
 

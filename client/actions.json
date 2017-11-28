@@ -1,13 +1,12 @@
 [
-	{ "type": "command", "char": " ", "code": 32, "action": "toggle mode" },
-	{ "type": "command", "char": "p", "code": 80, "action": "open prompt" },
-	{ "type": "command", "char": "c", "code": 67, "action": "toggle chord builder" },
-	{ "type": "command", "char": "s", "code": 83, "action": "toggle scale selector" },
-	{ "type": "command", "char": "k", "code": 75, "action": "toggle key selector" },
+	{ "type": "command", "char": "p", "code": 80, "desc": "open prompt" },
+	{ "type": "command", "char": "m", "code": 77, "desc": "toggle modifier prompt" },
+	{ "type": "command", "char": "h", "code": 72, "desc": "toggle highlight prompt" },
 
-	{ "type": "shortcut", "char": ",", "code": 188, "action": "octave down"   },
-	{ "type": "shortcut", "char": ".", "code": 190, "action": "octave up"     },
-	{ "type": "shortcut", "char": "/", "code": 191, "action": "toggle legend" },
+	{ "type": "shortcut", "char": " ", "code": 32,  "desc": "toggle mode" },
+	{ "type": "shortcut", "char": ",", "code": 188, "desc": "octave down"   },
+	{ "type": "shortcut", "char": ".", "code": 190, "desc": "octave up"     },
+	{ "type": "shortcut", "char": "/", "code": 191, "desc": "toggle legend" },
 
 	{ "type": "input", "char": "\t", "code": 9,   "note": "C"  },
 	{ "type": "input", "char": "i",  "code": 49,  "note": "Db" },

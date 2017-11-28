@@ -21,6 +21,11 @@
 		"space-in-parens":        [ "warn", "always" ],
 		"padded-blocks":          [ "warn", "always" ],
 
+		"one-var-declaration-per-line": [ "warn", {
+			initialized:   "never",
+			uninitialized: "always",
+		} ],
+
 		"key-spacing": [ "warn", {
 			align: "value"
 		} ],

@@ -1,7 +1,6 @@
-import React      from 'react';
-import PropTypes  from 'prop-types';
-import ClassNames from 'classnames';
-// import { Note }   from 'music-theory';
+import React       from 'react';
+import PropTypes   from 'prop-types';
+import ClassNames  from 'classnames';
 import MusicTheory from 'music-theory';
 
 require( './style.css' );

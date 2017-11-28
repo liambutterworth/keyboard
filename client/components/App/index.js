@@ -3,9 +3,7 @@
 //
 // :: Constructor
 // :: Mount Events
-// :: Get Methods
-// :: Is Methods
-// :: Dispatch Methods
+// :: Action Methods
 // :: Toggle Mode
 // :: Event Handlers
 // :: Render
@@ -14,7 +12,7 @@
 import React      from 'react';
 import PropTypes  from 'prop-types';
 import ClassNames from 'classnames';
-import keys       from 'keys.json';
+import actions    from 'actions.json';
 
 require( './style.css' );
 
@@ -32,21 +30,16 @@ class App extends React.Component {
 			mode: 'INPUT',
 		};
 
-		this.eventTarget = document;
+		this.actions = actions;
 
-		this.handleCommand = this.handleCommand.bind( this );
 		this.handleKeydown = this.handleKeydown.bind( this );
 		this.handleKeyup   = this.handleKeyup.bind( this );
+		this.handleAction  = this.handleAction.bind( this );
 
-		this.keys         = keys;
-		this.inputKeys    = this.keys.filter( ( key ) => ( key.type === 'input' ) );
-		this.commandKeys  = this.keys.filter( ( key ) => ( key.type === 'command' ) );
-		this.shortcutKeys = this.keys.filter( ( key ) => ( key.type === 'shortcut' ) );
-
-		this.isKeyRegex      = this.createIsRegex();
-		this.isInputRegex    = this.createIsRegex( 'input' );
-		this.isCommandRegex  = this.createIsRegex( 'command' );
-		this.isShortcutRegex = this.createIsRegex( 'shortcut' );
+		this.isActionRegex   = this.actionIsRegex();
+		this.isInputRegex    = this.actionIsRegex( 'input' );
+		this.isCommandRegex  = this.actionIsRegex( 'command' );
+		this.isShortcutRegex = this.actionIsRegex( 'shortcut' );
 
 	}
 
@@ -58,6 +51,7 @@ class App extends React.Component {
 
 		document.addEventListener( 'keydown', this.handleKeydown );
 		document.addEventListener( 'keyup', this.handleKeyup );
+		document.addEventListener( 'action', this.handleAction );
 
 	}
 
@@ -65,89 +59,67 @@ class App extends React.Component {
 
 		document.removeEventListener( 'keydown', this.handleKeydown );
 		document.removeEventListener( 'keyup', this.handleKeyup );
+		document.removeEventListener( 'action', this.handleAction );
 
 	}
 
 	//
-	// Get Methods
+	// Action Methods
 	//
 
-	getInput( code ) {
+	actionIsRegex( type ) {
 
-		return this.inputKeys.find( ( input ) => ( input.code === code ) );
+		const results = this.actions.filter( ( action ) => ( !type || action.type === type ) );
+		const codes   = results.map( ( action ) => ( action.code ) );
 
-	}
-
-	getCommand( code ) {
-
-		return this.commandKeys.find( ( command ) => ( command.code === code ) );
+		return new RegExp( `^(${ codes.join( '|' ) })$` );
 
 	}
 
-	getShortcut( code ) {
+	isAction( code, type ) {
 
-		return this.shortcutKeys.find( ( shortcut ) => ( shortcut.code === code ) );
+		let passed;
 
-	}
+		switch ( type ) {
 
-	//
-	// Is Methods
-	//
+			case 'input':
+				passed = this.isInputRegex.test( code );
+				break;
 
-	createIsRegex( type ) {
+			case 'command':
+				passed = this.isCommandRegex.test( code );
+				break;
 
-		const filteredKeys = this.keys.filter( ( key ) => ( !type || key.type === type ) );
-		const keyCodes     = filteredKeys.map( ( key ) => ( key.code ) );
-		return new RegExp( `^(${ keyCodes.join( '|' ) })$` );
+			case 'shortcut':
+				passed = this.isShortcutRegex.test( code );
+				break;
 
-	}
+			default:
+				passed = this.isActionRegex.test( code );
+				break;
 
-	isKey( code ) {
+		}
 
-		return this.isKeyRegex.test( code );
-
-	}
-
-	isInput( code ) {
-
-		return this.isInputRegex.test( code );
+		return passed;
 
 	}
 
-	isCommand( code ) {
+	getAction( code, type, options ) {
+		
+		const action = this.actions.find( ( action ) => {
 
-		return this.isCommandRegex.test( code );
+			return action.code === code && ( !type || action.type === type );
 
-	}
+		} );
 
-	isShortcut( code ) {
-
-		return this.isShortcutRegex.test( code );
-
-	}
-
-	//
-	// Dispatch Methods
-	//
-
-	dispatchInput( input ) {
-
-		const event = new CustomEvent( 'input', { detail: input } );
-		this.eventTarget.dispatchEvent( event );
+		return Object.assign( action, options || {} );
 
 	}
 
-	dispatchCommand( command ) {
+	dispatchAction( action ) {
 
-		const event = new CustomEvent( 'command', { detail: command } );
-		this.eventTarget.dispatchEvent( event );
-
-	}
-
-	dispatchShortcut( shortcut ) {
-
-		const event = new CustomEvent( 'shortcut', { detail: shortcut } );
-		this.eventTarget.dispatchEvent( event );
+		const customEvent = new CustomEvent( 'action', { detail: action } );
+		document.dispatchEvent( customEvent );
 
 	}
 
@@ -173,15 +145,16 @@ class App extends React.Component {
 	// Event Handlers
 	//
 
-	handleCommand( event ) {
+	handleAction( event ) {
 
-		switch ( event.detail.action ) {
+		switch ( event.detail.desc ) {
 
 			case 'toggle mode':
 				this.toggleMode();
 				break;
 
 		}
+
 	}
 
 	handleKeydown( event ) {
@@ -192,38 +165,39 @@ class App extends React.Component {
 
 		const code = event.which;
 
-		if ( this.state.mode === 'INPUT' && this.isInput( code ) ) {
+		let action;
 
-			const input = this.getInput( code );
-			input.action = 'play key';
-			this.dispatchInput( input );
+		if ( this.state.mode === 'INPUT' && this.isAction( code, 'input' ) ) {
 
-		} else if ( this.state.mode === 'COMMAND' && this.isCommand( code ) ) {
+			action = this.getAction( code, 'input', { desc: 'play key' } );
 
-			const command = this.getCommand( code );
-			this.dispatchCommand( command );
+		} else if ( this.state.mode === 'COMMAND' && this.isAction( code, 'command' ) ) {
 
-		} else if ( this.isShortcut( code ) ) {
+			action = this.getAction( code, 'command' );
 
-			const shortcut = this.getShortcut( code );
-			this.dispatchShortcut( shortcut );
+		} else if ( this.isAction( code, 'shortcut' ) ) {
+
+			action = this.getAction( code, 'shortcut' );
 
 		}
+
+		if ( action ) this.dispatchAction( action );
 
 	}
 
 	handleKeyup( event ) {
 
+		const code = event.which;
+
 		if (
 			event.metaKey ||
 			this.state.mode !== 'INPUT' ||
-			!this.isInput( event.which )
+			!this.isAction( code, 'input' )
 		) return;
 
 		event.preventDefault();
-		const input = this.getInput( event.which );
-		input.action = 'stop key';
-		this.dispatchInput( input );
+		const action = Object.assign( this.getAction( code, 'input' ), { desc: 'stop key' } );
+		this.dispatchAction( action );
 
 	}
 
