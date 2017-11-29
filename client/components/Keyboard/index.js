@@ -18,7 +18,7 @@ import Tabs, { Tab } from 'components/Tabs';
 import ChordBuilder  from 'components/ChordBuilder';
 import ScaleSelector from 'components/ScaleSelector';
 import KeySelector   from 'components/KeySelector';
-import actions       from 'actions.json';
+import Actions       from 'library/Actions';
 import Key           from './Key';
 
 require( './style.css' );
@@ -42,7 +42,7 @@ class Keyboard extends React.Component {
 		this.handleAction = this.handleAction.bind( this );
 
 		// TESTING
-		// this.modifier = new MusicTheory.Key( 'C' );
+		this.modifier = new MusicTheory.Key( 'C' );
 
 	}
 
@@ -237,7 +237,7 @@ class Keyboard extends React.Component {
 
 	renderKeys() {
 
-		const inputs = actions.filter( ( actions ) => ( actions.type === 'input' ) );
+		const inputs = Actions.all( 'input' );
 
 		let octave = this.state.octave;
 
