@@ -7,9 +7,7 @@ class ScaleSelector extends React.Component {
 
 		return (
 			<div className="scale-selector">
-				<Prompt ref={ ( prompt ) => ( this.prompt = prompt ) }>
-					<h2>Scale Selector</h2>
-				</Prompt>
+				<h2>Scale Selector</h2>
 			</div>
 		);
 

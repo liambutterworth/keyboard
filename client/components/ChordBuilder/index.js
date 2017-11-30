@@ -7,9 +7,7 @@ class ChordBuilder extends React.Component {
 
 		return (
 			<div className="chord-builder">
-				<Prompt ref={ ( prompt ) => ( this.prompt = prompt ) }>
-					<h2>Chord Builder</h2>
-				</Prompt>
+				<h2>Chord Builder</h2>
 			</div>
 		);
 

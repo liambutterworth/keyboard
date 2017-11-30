@@ -1,0 +1,5 @@
+.tabs-title {
+	&.tabs-title--active {
+		color: red;
+	}
+}

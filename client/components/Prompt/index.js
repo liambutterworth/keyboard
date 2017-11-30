@@ -96,12 +96,12 @@ class Prompt extends React.Component {
 
 		if ( this.state.open ) {
 
-			this.setState( { open: false } );
+			this.close();
 
 		} else {
 
 			this.closeAll();
-			this.setState( { open: true } );
+			this.open();
 
 		}
 
