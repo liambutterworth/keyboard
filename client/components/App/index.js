@@ -64,15 +64,9 @@ class App extends React.Component {
 
 	toggleMode() {
 
-		if ( this.state.mode === 'INPUT' ) {
-
-			this.setState( { mode: 'COMMAND' } );
-
-		} else {
-
-			this.setState( { mode: 'INPUT' } );
-
-		}
+		this.setState( {
+			mode: this.state.mode === 'INPUT' ? 'COMMAND' : 'INPUT',
+		} );
 
 	}
 

@@ -2,16 +2,11 @@
 // Prompt
 //
 // :: Constructor
-// :: Component Will Mount
-// :: Component Will Unmount
-// :: Open
-// :: Close
-// :: Close All
-// :: Toggle
-// :: Handle Close Prompts
+// :: Mount Methods
+// :: State Methods
+// :: Event Handlers
 // :: Render
-// :: Default Props
-// :: Prop Types
+// :: Properties
 
 import React      from 'react';
 import PropTypes  from 'prop-types';
@@ -20,10 +15,6 @@ import ClassNames from 'classnames';
 require( './style.css' );
 
 class Prompt extends React.Component {
-
-	//
-	// Constructor
-	//
 
 	constructor( props ) {
 
@@ -38,7 +29,7 @@ class Prompt extends React.Component {
 	}
 
 	//
-	// Component Will Mount
+	// Mount Methods
 	//
 
 	componentWillMount() {
@@ -47,10 +38,6 @@ class Prompt extends React.Component {
 
 	}
 
-	//
-	// Component Will Unmount
-	//
-
 	componentWillUnmount() {
 
 		document.remoevEventListener( 'close-prompts', this.handleClosePrompts );
@@ -58,7 +45,7 @@ class Prompt extends React.Component {
 	}
 
 	//
-	// Open
+	// State Methods
 	//
 
 	open() {
@@ -67,19 +54,11 @@ class Prompt extends React.Component {
 
 	}
 
-	//
-	// Close
-	//
-
 	close() {
 
 		this.setState( { open: false } );
 
 	}
-
-	//
-	// Close All
-	//
 
 	closeAll() {
 
@@ -87,10 +66,6 @@ class Prompt extends React.Component {
 		document.dispatchEvent( event );
 
 	}
-
-	//
-	// Toggle
-	//
 
 	toggle() {
 
@@ -108,7 +83,7 @@ class Prompt extends React.Component {
 	}
 
 	//
-	// Handle Close Prompts
+	// Event Handlers
 	//
 
 	handleClosePrompts() {
@@ -139,16 +114,12 @@ class Prompt extends React.Component {
 }
 
 //
-// Default Props
+// Properties
 //
 
 Prompt.defaultProps = {
 	open: false,
 };
-
-//
-// Prop Types
-//
 
 Prompt.propTypes = {
 	open:     PropTypes.bool,

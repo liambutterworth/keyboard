@@ -9,29 +9,25 @@ class Legend extends React.Component {
 	constructor( props ) {
 
 		super( props );
-		this.handleShortcut = this.handleShortcut.bind( this );
+		this.handleAction = this.handleAction.bind( this );
 
 	}
 
 	componentWillMount() {
 
-		document.addEventListener( 'shortcut', this.handleShortcut );
+		document.addEventListener( 'action', this.handleAction );
 
 	}
 
 	componentWillUnmount() {
 
-		document.removeEventListener( 'shortcut', this.handleShortcut );
+		document.removeEventListener( 'action', this.handleAction );
 
 	}
 
-	handleShortcut( event ) {
+	handleAction( event ) {
 
-		switch ( event.detail.action ) {
-
-			case 'close prompt':
-				this.prompt.close();
-				break;
+		switch ( event.detail.desc ) {
 
 			case 'toggle legend':
 				this.prompt.toggle();
@@ -45,9 +41,9 @@ class Legend extends React.Component {
 
 		return (
 			<div className="legend">
-				<Prompt
-					ref={ ( prompt ) => ( this.prompt = prompt ) }
-				/>
+				<Prompt ref={ ( prompt ) => ( this.prompt = prompt ) }>
+					<h2>Legend</h2>
+				</Prompt>
 			</div>
 		);
 

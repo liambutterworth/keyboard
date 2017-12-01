@@ -21,29 +21,13 @@ class Tabs extends React.Component {
 
 		this.titles.forEach( ( title, titleIndex ) => {
 
-			if ( titleIndex === index ) {
-
-				title.activate();
-
-			} else {
-
-				title.deactivate();
-
-			}
+			if ( titleIndex === index ) title.activate(); else title.deactivate();
 
 		} );
 
 		this.tabs.forEach( ( tab, tabIndex ) => {
 
-			if ( tabIndex === index ) {
-
-				tab.show();
-
-			} else {
-
-				tab.hide();
-
-			}
+			if ( tabIndex === index ) tab.show(); else tab.hide();
 
 		} );
 
@@ -56,25 +40,21 @@ class Tabs extends React.Component {
 
 		React.Children.forEach( this.props.children, ( child, index ) => {
 
-			titles.push(
-				<Title
-					key={ ShortID.generate() }
-					text={ child.props.title }
-					index={ index }
-					active={ index === 0 }
-					showTab={ this.showTab }
-					ref={ ( self ) => ( this.titles[index] = self ) }
-				/>
-			);
+			titles.push( <Title
+				key={ ShortID.generate() }
+				text={ child.props.title }
+				index={ index }
+				active={ index === 0 }
+				showTab={ this.showTab }
+				ref={ ( self ) => ( this.titles[index] = self ) }
+			/> );
 
-			tabs.push(
-				React.cloneElement( child, {
-					key:   ShortID.generate(),
-					index: index,
-					show:  index === 0,
-					ref:   ( self ) => ( this.tabs[index] = self ),
-				} )
-			);
+			tabs.push( React.cloneElement( child, {
+				key:   ShortID.generate(),
+				index: index,
+				show:  index === 0,
+				ref:   ( self ) => ( this.tabs[index] = self ),
+			} ) );
 
 		} );
 
@@ -90,7 +70,7 @@ class Tabs extends React.Component {
 }
 
 Tabs.propTypes = {
-	children: PropTypes.node,
+	children: PropTypes.node.isRequired,
 };
 
 export default Tabs;

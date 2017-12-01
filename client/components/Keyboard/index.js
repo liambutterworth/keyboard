@@ -3,7 +3,6 @@
 //
 // :: Constructor
 // :: Mount Events
-// :: ---
 // :: Key Methods
 // :: Event Handlers
 // :: Render Methods
@@ -42,7 +41,7 @@ class Keyboard extends React.Component {
 		this.handleAction = this.handleAction.bind( this );
 
 		// TESTING
-		this.modifier = new MusicTheory.Key( 'C' );
+		// this.modifier = new MusicTheory.Key( 'C' );
 
 	}
 
