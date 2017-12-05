@@ -1,6 +1,9 @@
 import React     from 'react';
 import PropTypes from 'prop-types';
 import ShortID   from 'shortid'
+import Radio     from './Radio';
+
+require( './style.css' );
 
 class Radios extends React.Component {
 
@@ -9,23 +12,20 @@ class Radios extends React.Component {
 		super( props );
 
 		this.state = {
-			selected: this.props.checked,
+			disabled: this.props.disabled,
 		};
 
 	}
 
-	renderButtons() {
+	disable() {
 
-		return this.props.buttons.map( ( button ) => {
+		if ( !this.state.disabled ) this.setState( { disabled: true } );
 
-			return ( <input
-				type="radio"
-				key={ ShortID.generate() }
-				name={ button.name }
-				value={ button.value }
-			/> );
+	}
 
-		} );
+	enable() {
+
+		if ( this.state.disabled ) this.setState( { disabled: false } );
 
 	}
 
@@ -33,18 +33,31 @@ class Radios extends React.Component {
 
 		return (
 			<div className="form-radios">
-				{ this.renderButtons() }
+				{ this.props.data.map( ( button ) =>
+
+					<Radio
+						key={ ShortID.generate() }
+						name={ this.props.name }
+						disabled={ this.props.disabled }
+						{ ...button }
+					/>
+
+	 			) }
 			</div>
 		);
 	}
 
 }
 
+Radios.defaultProps = {
+	disabled: false,
+};
+
 Radios.propTypes = {
-	buttons: PropTypes.arrayOf( PropTypes.shape( {
-		name:  PropTypes.string.isRequired,
-		value: PropTypes.string.isRequired,
-	} ) ),
+	name:     PropTypes.string.isRequired,
+	data:     PropTypes.array.isRequired,
+	disabled: PropTypes.bool,
 };
 
 export default Radios;
+export { Radio };

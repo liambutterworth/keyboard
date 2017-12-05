@@ -1,7 +1,9 @@
-import React     from 'react';
-import PropTypes from 'prop-types';
-import Button    from './Button';
-import Select    from './Select';
+import React                    from 'react';
+import PropTypes                from 'prop-types';
+import Button                   from './Button';
+import Select                   from './Select';
+import Radios, { Radio }        from './Radios';
+import Checkboxes, { Checkbox } from './Checkboxes';
 
 require( './style.css' );
 
@@ -39,4 +41,11 @@ Form.propTypes = {
 }
 
 export default Form;
-export { Select };
+
+export {
+	Select,
+	Radio,
+	Radios,
+	Checkbox,
+	Checkboxes
+};

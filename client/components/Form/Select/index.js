@@ -1,6 +1,7 @@
 import React     from 'react';
 import PropTypes from 'prop-types';
 import ShortID   from 'shortid';
+import Option    from './Option';
 
 require( './style.css' );
 
@@ -25,27 +26,26 @@ class Select extends React.Component {
 	enable() {
 
 		if ( this.state.disabled ) this.setState( { disabled: false } );
+
 	}
 
 	renderOptions( options ) {
 
-		return Object.keys( options ).map( ( key ) => {
+		return options.map( ( option ) => {
 
-			const value = options[key];
-			const uuid  = ShortID.generate();
+			const key = ShortID.generate();
 
-			if ( typeof value === 'object' ) {
+			if ( typeof option.value === 'array' ) {
 
-				return ( <optgroup key={ uuid } label={ key } >{ this.renderOptions( value ) }</optgroup> );
+				return ( <optgroup key={ key } label={ option.label }>{ this.renderOptions( option.value ) }</optgroup> );
 
 			} else {
 
-				return ( <option key={ uuid } value={ value }>{ key }</option> );
+				return ( <Option key={ key } { ...option } /> );
 
 			}
 
 		} );
-
 	}
 
 	render() {
@@ -71,30 +71,18 @@ Select.defaultProps = {
 	required:     false,
 	multiple:     false,
 	disabled:     false,
+	onChange:     null,
 	defaultValue: "",
-	handleChange: null,
 };
 
 Select.propTypes = {
 	name:         PropTypes.string.isRequired,
+	options:      PropTypes.array.isRequired,
 	required:     PropTypes.bool,
 	multiple:     PropTypes.bool,
 	disabled:     PropTypes.bool,
 	onChange:     PropTypes.func,
 	defaultValue: PropTypes.string,
-
-	options: PropTypes.arrayOf( PropTypes.shape( {
-		label: PropTypes.string.isRequired,
-		value: PropTypes.string.isRequired,
-	} ) ),
-
-	// options:      PropTypes.object.isRequired,
-	// name:         PropTypes.string.isRequired,
-	// selected:     PropTypes.string,
-	// required:     PropTypes.bool,
-	// multiple:     PropTypes.bool,
-	// disabled:     PropTypes.bool,
-	// handleChange: PropTypes.func,
 };
 
 export default Select;
