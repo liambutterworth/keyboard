@@ -7,45 +7,24 @@ import Checkboxes, { Checkbox } from './Checkboxes';
 
 require( './style.css' );
 
-class Form extends React.Component {
-
-	constructor( props ) {
-
-		super( props );
-
-		this.handleSubmit = this.handleSubmit.bind( this );
-
-	}
-
-	handleSubmit( event ) {
-
-		event.preventDefault();
-		console.log( 'submit form' );
-
-	}
-
-	render() {
-
-		return (
-			<form onSubmit={ this.handleSubmit }>
-				{ this.props.children }
-			</form>
-		);
-
-	}
-
-}
+const Form = ( props ) => (
+	<form onSubmit={ props.onSubmit }>
+		{ props.children }
+	</form>
+);
 
 Form.propTypes = {
 	children: PropTypes.node,
+	onSubmit: PropTypes.func,
 }
 
 export default Form;
 
 export {
+	Button,
 	Select,
-	Radio,
 	Radios,
+	Radio,
+	Checkboxes,
 	Checkbox,
-	Checkboxes
 };

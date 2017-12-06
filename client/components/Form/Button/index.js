@@ -36,8 +36,10 @@ class Button extends React.Component {
 				name={ this.props.name }
 				value={ this.props.value }
 				disabled={ this.state.disabled }
-				onClick={ this.props.handleClick }
-			/>
+				onClick={ this.props.onClick }
+			>
+				{ this.props.children || this.props.text }
+			</button>
 		);
 
 	}
@@ -45,17 +47,22 @@ class Button extends React.Component {
 }
 
 Button.defaultProps = {
-	value:       "",
-	disabled:    false,
-	handleClick: undefined,
+	text:     "",
+	name:     "",
+	value:    "",
+	children: null,
+	disabled: false,
+	onClick:  null,
 };
 
 Button.propTypes = {
-	type:        PropTypes.string.isRequired,
-	name:        PropTypes.string.isRequired,
-	value:       PropTypes.string,
-	disabled:    PropTypes.bool,
-	handleClick: PropTypes.func,
+	type:     PropTypes.string.isRequired,
+	text:     PropTypes.string,
+	name:     PropTypes.string,
+	value:    PropTypes.string,
+	children: PropTypes.node,
+	disabled: PropTypes.bool,
+	onClick:  PropTypes.func,
 };
 
 export default Button;

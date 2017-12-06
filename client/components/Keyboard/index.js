@@ -39,6 +39,8 @@ class Keyboard extends React.Component {
 		this.keys = [];
 
 		this.handleAction = this.handleAction.bind( this );
+		this.setHighlight = this.setHighlight.bind( this );
+		this.setModifier  = this.setModifier.bind( this );
 
 		// TESTING
 		// this.modifier = new MusicTheory.Key( 'C' );
@@ -67,12 +69,6 @@ class Keyboard extends React.Component {
 	// Setters
 	//
 
-	setModifier( modifier ) {
-
-		this.modifier = modifier;
-
-	}
-
 	setHighlight( highlight ) {
 
 		const symbols = highlight.notes.symbols();
@@ -80,9 +76,24 @@ class Keyboard extends React.Component {
 		this.keys.forEach( ( key ) => {
 
 			const symbol = key.note.symbol();
-			if ( symbols.includes( symbol ) ) key.highlight();
+
+			if ( symbols.includes( symbol ) ) {
+
+				key.highlight();
+
+			} else {
+
+				key.unhighlight();
+
+			}
 
 		} );
+
+	}
+
+	setModifier( modifier ) {
+
+		this.modifier = modifier;
 
 	}
 
@@ -273,16 +284,16 @@ class Keyboard extends React.Component {
 
 				<Prompt ref={ ( self ) => ( this.modifierPrompt = self ) }>
 					<Tabs>
-						<Tab title="Chord"><ChordBuilder submit={ this.setModifier } /></Tab>
-						<Tab title="Key"><KeySelector submit={ this.setModifier } /></Tab>
+						<Tab title="Chord"><ChordBuilder set={ this.setModifier } /></Tab>
+						<Tab title="Key"><KeySelector set={ this.setModifier } /></Tab>
 					</Tabs>
 				</Prompt>
 
 				<Prompt ref={ ( self ) => ( this.highlightPrompt = self ) }>
 					<Tabs>
-						<Tab title="Chord"><ChordBuilder submit={ this.setHighlight } /></Tab>
-						<Tab title="Key"><KeySelector submit={ this.setHighlight } /></Tab>
-						<Tab title="Scale"><ScaleSelector submit={ this.setHighlight } /></Tab>
+						<Tab title="Chord"><ChordBuilder set={ this.setHighlight } /></Tab>
+						<Tab title="Key"><KeySelector set={ this.setHighlight } /></Tab>
+						<Tab title="Scale"><ScaleSelector set={ this.setHighlight } /></Tab>
 					</Tabs>
 				</Prompt>
 			</div>

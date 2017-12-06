@@ -45,6 +45,12 @@ class Key extends React.Component {
 
 	}
 
+	unhighlight() {
+
+		this.setState( { isHighlighted: false } );
+
+	}
+
 	render() {
 
 		const classNames = ClassNames( {
