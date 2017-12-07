@@ -4,10 +4,10 @@ import MusicTheory from 'music-theory';
 
 import Form, {
 	Button,
-	Select
+	Select,
 } from 'components/Form';
 
-class ScaleSelector extends React.Component {
+class ChordSelector extends React.Component {
 
 	constructor( props ) {
 
@@ -21,23 +21,23 @@ class ScaleSelector extends React.Component {
 		event.preventDefault();
 		if ( !this.props.set ) return;
 
-		const form  = event.target;
-		const root  = this.props.defineRoot ? form['root'].value : '';
-		const name  = form['scale'].value;
-		const scale = new MusicTheory.Scale( name, root );
+		const form   = event.target;
+		const root   = this.props.defineRoot ? form['root'].value : '';
+		const symbol = form['chord'].value;
+		const chord  = new MusicTheory.Chord( `${ root }${ symbol }` );
 
-		this.props.set( scale );
+		this.props.set( chord );
 
 	}
 
 	render() {
 
 		const rootOptions  = MusicTheory.Note.all().map( ( name ) => ( { label: name, value: name } ) );
-		const scaleOptions = MusicTheory.Scale.names().map( ( name ) => ( { label: name, value: name } ) );
+		const chordOptions = MusicTheory.Chord.all().map( ( chord ) => ( { label: chord.name, value: chord.symbol } ) );
 
 		return (
-			<div className="scale-selector">
-				<h2>Scale Selector</h2>
+			<div className="chord-builder">
+				<h2>Chord Selector</h2>
 
 				<Form onSubmit={ this.handleSubmit }>
 					{ this.props.defineRoot &&
@@ -49,9 +49,9 @@ class ScaleSelector extends React.Component {
 					}
 
 					<Select
-						name="scale"
-						options={ scaleOptions }
-						defaultValue={ this.props.scale }
+						name="chord"
+						options={ chordOptions }
+						defaultValue={ this.props.chord }
 					/>
 
 					<Button type="submit" text="Set" />
@@ -60,21 +60,20 @@ class ScaleSelector extends React.Component {
 		);
 
 	}
-
 }
 
-ScaleSelector.defaultProps = {
+ChordSelector.defaultProps = {
 	defineRoot: true,
 	root:       null,
-	scale:      null,
+	chord:      null,
 	set:        null,
 };
 
-ScaleSelector.propTypes = {
+ChordSelector.propTypes = {
 	defineRoot: PropTypes.bool,
 	root:       PropTypes.string,
-	scale:      PropTypes.string,
+	chord:      PropTypes.string,
 	set:        PropTypes.func,
 };
 
-export default ScaleSelector;
+export default ChordSelector;

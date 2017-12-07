@@ -14,7 +14,7 @@ import ShortID       from 'shortid';
 import MusicTheory   from 'music-theory';
 import Prompt        from 'components/Prompt';
 import Tabs, { Tab } from 'components/Tabs';
-import ChordBuilder  from 'components/ChordBuilder';
+import ChordSelector from 'components/ChordSelector';
 import ScaleSelector from 'components/ScaleSelector';
 import KeySelector   from 'components/KeySelector';
 import Actions       from 'library/Actions';
@@ -284,14 +284,14 @@ class Keyboard extends React.Component {
 
 				<Prompt ref={ ( self ) => ( this.modifierPrompt = self ) }>
 					<Tabs>
-						<Tab title="Chord"><ChordBuilder set={ this.setModifier } /></Tab>
+						<Tab title="Chord"><ChordSelector set={ this.setModifier } defineRoot={ false } /></Tab>
 						<Tab title="Key"><KeySelector set={ this.setModifier } /></Tab>
 					</Tabs>
 				</Prompt>
 
 				<Prompt ref={ ( self ) => ( this.highlightPrompt = self ) }>
 					<Tabs>
-						<Tab title="Chord"><ChordBuilder set={ this.setHighlight } /></Tab>
+						<Tab title="Chord"><ChordSelector set={ this.setHighlight } /></Tab>
 						<Tab title="Key"><KeySelector set={ this.setHighlight } /></Tab>
 						<Tab title="Scale"><ScaleSelector set={ this.setHighlight } /></Tab>
 					</Tabs>
