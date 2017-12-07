@@ -3,14 +3,15 @@ import Keyboard from 'components/Keyboard';
 import Legend   from 'components/Legend';
 
 import ScaleSelector from 'components/ScaleSelector';
+import KeySelector from 'components/KeySelector';
 
-function foo( scale ) {
-	console.log( scale );
+function foo( x ) {
+	console.log( x );
 }
 
 const Home = () => (
 	<div>
-		<ScaleSelector set={ foo } />
+		<KeySelector set={ foo } />
 
 		<Legend />
 		<Keyboard />
