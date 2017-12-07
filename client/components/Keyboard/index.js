@@ -42,9 +42,6 @@ class Keyboard extends React.Component {
 		this.setHighlight = this.setHighlight.bind( this );
 		this.setModifier  = this.setModifier.bind( this );
 
-		// TESTING
-		// this.modifier = new MusicTheory.Key( 'C' );
-
 	}
 
 	//
