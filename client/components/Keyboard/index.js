@@ -12,6 +12,7 @@ import React         from 'react';
 import PropTypes     from 'prop-types';
 import ShortID       from 'shortid';
 import MusicTheory   from 'music-theory';
+import Tone          from 'tone';
 import Prompt        from 'components/Prompt';
 import Tabs, { Tab } from 'components/Tabs';
 import ChordSelector from 'components/ChordSelector';
@@ -42,6 +43,8 @@ class Keyboard extends React.Component {
 		this.setHighlight = this.setHighlight.bind( this );
 		this.setModifier  = this.setModifier.bind( this );
 
+		this.modifier = new MusicTheory.Key( 'C' );
+
 	}
 
 	//
@@ -51,6 +54,7 @@ class Keyboard extends React.Component {
 	componentWillMount() {
 
 		this.context = new AudioContext();
+		this.synth = new Tone.PolySynth().toMaster();
 		document.addEventListener( 'action', this.handleAction );
 
 	}
@@ -104,14 +108,12 @@ class Keyboard extends React.Component {
 
 	}
 
-	getChordKeys( rootKey, chord ) {
-
-		if ( !chord ) return [ rootKey ];
+	getChordKeys( root, chord ) {
 
 		return chord.intervals.map( ( interval ) => {
 
 			const maxIndex    = this.keys.length - 1;
-			const targetIndex = rootKey.props.index + interval.steps;
+			const targetIndex = root.props.index + interval.steps;
 
 			let key;
 
@@ -122,7 +124,7 @@ class Keyboard extends React.Component {
 			} else {
 
 				const invertedInverval = interval.invert();
-				const invertedIndex    = rootKey.props.index - invertedInverval.steps;
+				const invertedIndex    = root.props.index - invertedInverval.steps;
 
 				key = this.keys[invertedIndex];
 
@@ -134,63 +136,47 @@ class Keyboard extends React.Component {
 
 	}
 
-	getKeys( rootKey ) {
+	modifyKey( root ) {
 
-		let targetKeys;
+		let chord;
 
 		if ( this.modifier instanceof MusicTheory.Key ) {
 
-			const chord = this.modifier.getChordFromNote( rootKey.note );
-			targetKeys = this.getChordKeys( rootKey, chord );
+			chord = this.modifier.getChordFromNote( root.note );
 
 		} else if ( this.modifier instanceof MusicTheory.Chord ) {
 
-			targetKeys = this.getChordKeys( rootKey, this.modifier );
-
-		} else {
-
-			targetKeys = [ rootKey ];
+			chord = this.modifier;
 
 		}
 
-		return targetKeys;
+		return this.getChordKeys( root, chord );
 
 	}
 
-	playKey( key ) {
+	playKey( root ) {
 
-		if ( this.modifier ) {
+		const keys    = this.modifier ? this.modifyKey( root ) : [ root ];
+		const pitches = keys.map( ( key ) => ( key.pitch ) );
 
-			const keysToPlay = this.getKeys( key );
-			keysToPlay.forEach( ( keyToPlay ) => ( keyToPlay.play() ) );
-
-		} else {
-
-			key.play();
-
-		}
-
+		this.synth.triggerAttack( pitches );
+		keys.forEach( ( key ) => ( key.press() ) );
 
 	}
 
-	stopKey( key ) {
+	stopKey( root ) {
 
-		if ( this.modifier ) {
+		const keys    = this.modifier ? this.modifyKey( root ) : [ root ];
+		const pitches = keys.map( ( key ) => ( key.pitch ) );
 
-			const keysToStop = this.getKeys( key );
-			keysToStop.forEach( ( keyToStop ) => ( keyToStop.stop() ) );
-
-		} else {
-
-			key.stop();
-
-		}
+		this.synth.triggerRelease( pitches );
+		keys.forEach( ( key ) => ( key.release() ) );
 
 	}
 
 	stopKeys() {
 
-		this.keys.forEach( ( keyToStop ) => ( keyToStop.stop() ) );
+		this.keys.forEach( ( key ) => ( key.stop() ) );
 
 	}
 
@@ -256,6 +242,7 @@ class Keyboard extends React.Component {
 					index={ index }
 					code={ key.code }
 					note={ key.note }
+					synth={ this.synth }
 					octave={ octave }
 					context={ this.context }
 					ref={ ( self ) => ( this.keys[index] = self ) }

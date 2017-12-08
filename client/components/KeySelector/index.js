@@ -19,7 +19,7 @@ class KeySelector extends React.Component {
 		if ( !this.props.set ) return;
 
 		const form = event.target;
-		const root = form.form.value;
+		const root = form.root.value;
 		const key  = new MusicTheory.Key( root );
 
 		this.props.set( key );

@@ -15,27 +15,20 @@ class Key extends React.Component {
 			isPressed: false,
 		};
 
-		this.note = new MusicTheory.Note( props.note );
+		this.note  = new MusicTheory.Note( props.note );
+		this.pitch = `${ this.note.symbol() }${ this.props.octave }`;
 
 	}
 
-	play() {
+	press() {
 
-		if ( this.state.isPressed ) return;
-		this.setState( { isPressed: true } );
-		this.oscillator = this.props.context.createOscillator();
-		this.oscillator.frequency.value = this.note.frequency[ this.props.octave - 1 ];
-		this.oscillator.connect( this.props.context.destination );
-		this.oscillator.type = 'sine';
-		this.oscillator.start();
+		if ( !this.state.isPressed ) this.setState( { isPressed: true } );
 
 	}
 
-	stop() {
+	release() {
 
-		if ( !this.state.isPressed ) return;
-		this.setState( { isPressed: false } );
-		this.oscillator.stop();
+		if ( this.state.isPressed ) this.setState( { isPressed: false } );
 
 	}
 
@@ -69,9 +62,8 @@ class Key extends React.Component {
 }
 
 Key.propTypes = {
-	code:  PropTypes.number.isRequired,
-	note:  PropTypes.string.isRequired,
-	index: PropTypes.number.isRequired,
+	note:   PropTypes.string.isRequired,
+	octave: PropTypes.number.isRequired,
 };
 
 export default Key;
