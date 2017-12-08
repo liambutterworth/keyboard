@@ -1,11 +1,8 @@
-import React       from 'react';
-import PropTypes   from 'prop-types';
-import MusicTheory from 'music-theory';
-
-import Form, {
-	Button,
-	Select
-} from 'components/Form';
+import React                    from 'react';
+import PropTypes                from 'prop-types';
+import MusicTheory              from 'music-theory';
+import Grid, { Column }         from 'components/Grid';
+import Form, { Button, Select } from 'components/Form';
 
 class ScaleSelector extends React.Component {
 
@@ -22,8 +19,8 @@ class ScaleSelector extends React.Component {
 		if ( !this.props.set ) return;
 
 		const form  = event.target;
-		const root  = this.props.defineRoot ? form['root'].value : '';
-		const name  = form['scale'].value;
+		const root  = this.props.defineRoot ? form.root.value : '';
+		const name  = form.scale.value;
 		const scale = new MusicTheory.Scale( name, root );
 
 		this.props.set( scale );
@@ -40,21 +37,21 @@ class ScaleSelector extends React.Component {
 				<h2>Scale Selector</h2>
 
 				<Form onSubmit={ this.handleSubmit }>
-					{ this.props.defineRoot &&
-						<Select
-							name="root"
-							options={ rootOptions }
-							defaultValue={ this.props.root }
-						/>
-					}
+					<Grid>
+						{ this.props.defineRoot &&
+							<Column span="3">
+								<Select name="root" options={ rootOptions } defaultValue={ this.props.root } />
+							</Column>
+						}
 
-					<Select
-						name="scale"
-						options={ scaleOptions }
-						defaultValue={ this.props.scale }
-					/>
+						<Column span={ this.props.defineRoot ? '6' : '8' }>
+							<Select name="scale" options={ scaleOptions } defaultValue={ this.props.scale } />
+						</Column>
 
-					<Button type="submit" text="Set" />
+						<Column span={ this.props.defineRoot ? '3' : '4' }>
+							<Button type="submit" text="Set" />
+						</Column>
+					</Grid>
 				</Form>
 			</div>
 		);

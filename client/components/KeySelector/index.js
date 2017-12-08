@@ -1,12 +1,8 @@
-import React       from 'react';
-import PropTypes   from 'prop-types';
-import Prompt      from 'components/Prompt';
-import MusicTheory from 'music-theory';
-
-import Form, {
-	Button,
-	Select
-} from 'components/Form';
+import React                    from 'react';
+import PropTypes                from 'prop-types';
+import MusicTheory              from 'music-theory';
+import Grid, { Column }         from 'components/Grid';
+import Form, { Button, Select } from 'components/Form';
 
 class KeySelector extends React.Component {
 
@@ -23,7 +19,7 @@ class KeySelector extends React.Component {
 		if ( !this.props.set ) return;
 
 		const form = event.target;
-		const root = form['root'].value;
+		const root = form.form.value;
 		const key  = new MusicTheory.Key( root );
 
 		this.props.set( key );
@@ -39,18 +35,21 @@ class KeySelector extends React.Component {
 				<h2>Key Selector</h2>
 
 				<Form onSubmit={ this.handleSubmit }>
-					<Select
-						name="root"
-						options={ rootOptions }
-						defaultValue={ this.props.key }
-					/>
+					<Grid>
+						<Column span="8">
+							<Select name="root" options={ rootOptions } defaultValue={ this.props.root } />
+						</Column>
 
-					<Button type="submit" text="Set" />
+						<Column span="4">
+							<Button type="submit" text="Set" />
+						</Column>
+					</Grid>
 				</Form>
 			</div>
 		);
 
 	}
+
 }
 
 KeySelector.defaultProps = {

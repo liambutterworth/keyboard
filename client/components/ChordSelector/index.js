@@ -1,11 +1,8 @@
-import React       from 'react';
-import PropTypes   from 'prop-types';
-import MusicTheory from 'music-theory';
-
-import Form, {
-	Button,
-	Select,
-} from 'components/Form';
+import React                    from 'react';
+import PropTypes                from 'prop-types';
+import MusicTheory              from 'music-theory';
+import Grid, { Column }         from 'components/Grid';
+import Form, { Button, Select } from 'components/Form';
 
 class ChordSelector extends React.Component {
 
@@ -22,8 +19,8 @@ class ChordSelector extends React.Component {
 		if ( !this.props.set ) return;
 
 		const form   = event.target;
-		const root   = this.props.defineRoot ? form['root'].value : '';
-		const symbol = form['chord'].value;
+		const root   = this.props.defineRoot ? form.root.value : '';
+		const symbol = form.chord.value;
 		const chord  = new MusicTheory.Chord( `${ root }${ symbol }` );
 
 		this.props.set( chord );
@@ -40,21 +37,21 @@ class ChordSelector extends React.Component {
 				<h2>Chord Selector</h2>
 
 				<Form onSubmit={ this.handleSubmit }>
-					{ this.props.defineRoot &&
-						<Select
-							name="root"
-							options={ rootOptions }
-							defaultValue={ this.props.root }
-						/>
-					}
+					<Grid>
+						{ this.props.defineRoot &&
+							<Column span="3">
+								<Select name="root" options={ rootOptions } defaultValue={ this.props.root } />
+							</Column>
+						}
 
-					<Select
-						name="chord"
-						options={ chordOptions }
-						defaultValue={ this.props.chord }
-					/>
+						<Column span={ this.props.defineRoot ? '6' : '8' }>
+							<Select name="chord" options={ chordOptions } defaultValue={ this.props.chord } />
+						</Column>
 
-					<Button type="submit" text="Set" />
+						<Column span={ this.props.defineRoot ? '3' : '4' }>
+							<Button type="submit" text="Set" />
+						</Column>
+					</Grid>
 				</Form>
 			</div>
 		);
