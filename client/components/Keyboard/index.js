@@ -37,12 +37,14 @@ class Keyboard extends React.Component {
 			octave: props.octave,
 		};
 
-		this.keys = [];
+		this.keys  = [];
+		this.synth = new Tone.PolySynth().toMaster();
 
 		this.handleAction = this.handleAction.bind( this );
 		this.setHighlight = this.setHighlight.bind( this );
 		this.setModifier  = this.setModifier.bind( this );
 
+		// TODO remove
 		this.modifier = new MusicTheory.Key( 'C' );
 
 	}
@@ -53,15 +55,12 @@ class Keyboard extends React.Component {
 
 	componentWillMount() {
 
-		this.context = new AudioContext();
-		this.synth = new Tone.PolySynth().toMaster();
 		document.addEventListener( 'action', this.handleAction );
 
 	}
 
 	componentWillUnmount() {
 
-		this.context.close();
 		document.removeEventListener( 'action', this.handleAction );
 
 	}
