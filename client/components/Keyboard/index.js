@@ -37,8 +37,9 @@ class Keyboard extends React.Component {
 			octave: props.octave,
 		};
 
-		this.keys  = [];
-		this.synth = new Tone.PolySynth().toMaster();
+		this.keys         = [];
+		this.fingerprints = [];
+		this.synth        = new Tone.PolySynth().toMaster();
 
 		this.handleAction = this.handleAction.bind( this );
 		this.setHighlight = this.setHighlight.bind( this );
@@ -109,6 +110,8 @@ class Keyboard extends React.Component {
 
 	getChordKeys( root, chord ) {
 
+		if ( !chord ) return [ root ];
+
 		return chord.intervals.map( ( interval ) => {
 
 			const maxIndex    = this.keys.length - 1;
@@ -158,8 +161,15 @@ class Keyboard extends React.Component {
 		const keys    = this.modifier ? this.modifyKey( root ) : [ root ];
 		const pitches = keys.map( ( key ) => ( key.pitch ) );
 
-		this.synth.triggerAttack( pitches );
+		// add a pitch fingerprint to the fingerprints cache; solves the
+		// issue of keys being associated with multiple extended keys
+		this.fingerprints.push( pitches.join( '' ) );
+
+		// press each key in turn
 		keys.forEach( ( key ) => ( key.press() ) );
+
+		// trigger the key sounds with the Tone synth
+		this.synth.triggerAttack( pitches );
 
 	}
 
@@ -168,8 +178,39 @@ class Keyboard extends React.Component {
 		const keys    = this.modifier ? this.modifyKey( root ) : [ root ];
 		const pitches = keys.map( ( key ) => ( key.pitch ) );
 
+		// remove pitch fingerprint from the fingerprints cache
+		this.fingerprints.splice( this.fingerprints.indexOf( pitches.join( '' ) ), 1 );
+
+		// release each key in turn
+		keys.forEach( ( key ) => {
+
+			// find out if the pitch currently exists in the fingerprint cache
+			const index = this.fingerprints.findIndex( ( fingerprint ) => {
+
+				// run a regex test to see if the pitch exists in the fingerprint
+				const regexPitch = new RegExp( key.pitch );
+				return regexPitch.test( fingerprint );
+
+			} );
+
+			// pitch exists in the fingerprint cache
+			if ( index > -1 ) {
+
+				// remove pitch from array to be released
+				pitches.splice( pitches.indexOf( key.pitch ), 1 );
+
+			// pitch doesnt exist in the fingerprint cache
+			} else {
+
+				// indicate key has been released in the UI
+				key.release();
+
+			}
+
+		} );
+
+		// release all pitches that dont exist in the fingerprint cache
 		this.synth.triggerRelease( pitches );
-		keys.forEach( ( key ) => ( key.release() ) );
 
 	}
 
