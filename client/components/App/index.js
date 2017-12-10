@@ -11,7 +11,6 @@
 import React      from 'react';
 import PropTypes  from 'prop-types';
 import ClassNames from 'classnames';
-import actions    from 'actions.json';
 import Actions    from 'library/Actions';
 
 require( './style.css' );
@@ -96,17 +95,17 @@ class App extends React.Component {
 
 		let action;
 
-		if ( this.state.mode === 'INPUT' && this.actions.is( code, 'input' ) ) {
+		if ( this.state.mode === 'INPUT' && this.actions.isInput( code ) ) {
 
-			action = this.actions.get( code, 'input', { desc: 'play key' } );
+			action = this.actions.getInput( code, { desc: 'play key' } );
 
-		} else if ( this.state.mode === 'COMMAND' && this.actions.is( code, 'command' ) ) {
+		} else if ( this.state.mode === 'COMMAND' && this.actions.isCommand( code ) ) {
 
-			action = this.actions.get( code, 'command' );
+			action = this.actions.getCommand( code );
 
-		} else if ( this.actions.is( code, 'shortcut' ) ) {
+		} else if ( this.actions.isShortcut( code ) ) {
 
-			action = this.actions.get( code, 'shortcut' );
+			action = this.actions.getShortcut( code );
 
 		}
 
@@ -121,11 +120,11 @@ class App extends React.Component {
 		if (
 			event.metaKey ||
 			this.state.mode !== 'INPUT' ||
-			!this.actions.is( code, 'input' )
+			!this.actions.isInput( code )
 		) return;
 
 		event.preventDefault();
-		const action = this.actions.get( code, 'input', { desc: 'stop key' } );
+		const action = this.actions.getInput( code, { desc: 'stop key' } );
 		this.actions.dispatch( action );
 
 	}

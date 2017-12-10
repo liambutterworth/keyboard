@@ -4,8 +4,8 @@
 // :: All
 // :: Create Is Regex
 // :: Constructor
-// :: Is
-// :: Get
+// :: Is Methods
+// :: Get Methods
 // :: Dispatch
 
 import data from './data.json';
@@ -51,42 +51,38 @@ class Actions {
 	}
 
 	//
-	// Is
+	// Is Methods
 	//
 
-	is( code, type ) {
+	isAction( code ) {
 
-		let passed;
+		return this.isActionRegex.test( code );
 
-		switch ( type ) {
+	}
 
-			case 'input':
-				passed = this.isInputRegex.test( code );
-				break;
+	isInput( code ) {
 
-			case 'command':
-				passed = this.isCommandRegex.test( code );
-				break;
+		return this.isInputRegex.test( code );
 
-			case 'shortcut':
-				passed = this.isShortcutRegex.test( code );
-				break;
+	}
 
-			default:
-				passed = this.isActionRegex.test( code );
-				break;
+	isCommand( code ) {
 
-		}
+		return this.isCommandRegex( code );
 
-		return passed;
+	}
+
+	isShortcut( code ) {
+
+		return this.isShortcutRegex( code );
 
 	}
 
 	//
-	// Get
+	// Get Methods
 	//
 
-	get( code, type, options ) {
+	getAction( code, type, options ) {
 
 		const action = data.find( ( action ) => {
 
@@ -95,6 +91,27 @@ class Actions {
 		} );
 
 		return Object.assign( action, options || {} );
+
+	}
+
+	getInput( code, options ) {
+
+		const input = this.getAction( code, 'input', options )
+		return Object.assign( input, options || {} );
+
+	}
+
+	getCommand( code, options ) {
+
+		const command = this.getAction( code, 'command', options );
+		return Object.assign( command, options || {} );
+
+	}
+
+	getShortcut( code, options ) {
+
+		const shortcut = this.getAction( code, 'shortcut', options );
+		return Object.assign( shortcut, options || {} );
 
 	}
 

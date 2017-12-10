@@ -37,16 +37,13 @@ class Keyboard extends React.Component {
 			octave: props.octave,
 		};
 
-		this.keys         = [];
 		this.fingerprints = [];
+		this.keys         = [];
 		this.synth        = new Tone.PolySynth().toMaster();
 
 		this.handleAction = this.handleAction.bind( this );
 		this.setHighlight = this.setHighlight.bind( this );
 		this.setModifier  = this.setModifier.bind( this );
-
-		// TODO remove
-		this.modifier = new MusicTheory.Key( 'C' );
 
 	}
 
@@ -168,7 +165,7 @@ class Keyboard extends React.Component {
 		// press each key in turn
 		keys.forEach( ( key ) => ( key.press() ) );
 
-		// trigger the key sounds with the Tone synth
+		// trigger the synth playback
 		this.synth.triggerAttack( pitches );
 
 	}
@@ -184,39 +181,47 @@ class Keyboard extends React.Component {
 		// release each key in turn
 		keys.forEach( ( key ) => {
 
-			// find out if the pitch currently exists in the fingerprint cache
-			const index = this.fingerprints.findIndex( ( fingerprint ) => {
+			// find out if the pitch currently exists in another extended key
+			const index = this.fingerprints.findIndex( ( fingerprint ) => ( new RegExp( key.pitch ).test( fingerprint ) ) );
 
-				// run a regex test to see if the pitch exists in the fingerprint
-				const regexPitch = new RegExp( key.pitch );
-				return regexPitch.test( fingerprint );
-
-			} );
-
-			// pitch exists in the fingerprint cache
+			// pitch exists in another extended key
 			if ( index > -1 ) {
 
 				// remove pitch from array to be released
 				pitches.splice( pitches.indexOf( key.pitch ), 1 );
 
-			// pitch doesnt exist in the fingerprint cache
+			// pitch doesnt exist in another extended key
 			} else {
 
-				// indicate key has been released in the UI
+				// relase the key
 				key.release();
 
 			}
 
 		} );
 
-		// release all pitches that dont exist in the fingerprint cache
+		// stop all pitches that dont exist in the fingerprint cache
 		this.synth.triggerRelease( pitches );
 
 	}
 
 	stopKeys() {
 
-		this.keys.forEach( ( key ) => ( key.stop() ) );
+		const pitches = [];
+
+		this.keys.forEach( ( key ) => {
+
+			if ( key.state.isPressed ) {
+
+				key.release();
+				pitches.push( key.pitch );
+
+			}
+
+		} );
+
+		this.synth.triggerRelease( pitches );
+		this.fingerprints = [];
 
 	}
 
