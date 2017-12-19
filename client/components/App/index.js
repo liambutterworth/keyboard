@@ -29,11 +29,13 @@ class App extends React.Component {
 			mode: 'INPUT',
 		};
 
-		this.actions = new Actions();
+		Actions.add( [
+			{ type: 'shortcut', char: ' ', code: 32, desc: 'toggle mode' },
+		] );
 
-		this.handleAction  = this.handleAction.bind( this );
 		this.handleKeydown = this.handleKeydown.bind( this );
 		this.handleKeyup   = this.handleKeyup.bind( this );
+		this.handleAction  = this.handleAction.bind( this );
 
 	}
 
@@ -95,21 +97,21 @@ class App extends React.Component {
 
 		let action;
 
-		if ( this.state.mode === 'INPUT' && this.actions.isInput( code ) ) {
+		if ( this.state.mode === 'INPUT' && Actions.isInput( code ) ) {
 
-			action = this.actions.getInput( code, { desc: 'play key' } );
+			action = Actions.getInput( code, { delegator: 'keydown' } );
 
-		} else if ( this.state.mode === 'COMMAND' && this.actions.isCommand( code ) ) {
+		} else if ( this.state.mode === 'COMMAND' && Actions.isCommand( code ) ) {
 
-			action = this.actions.getCommand( code );
+			action = Actions.getCommand( code, { delegator: 'keydown' } );
 
-		} else if ( this.actions.isShortcut( code ) ) {
+		} else if ( Actions.isShortcut( code ) ) {
 
-			action = this.actions.getShortcut( code );
+			action = Actions.getShortcut( code, { delegator: 'keydown' } );
 
 		}
 
-		if ( action ) this.actions.dispatch( action );
+		if ( action ) Actions.dispatch( action );
 
 	}
 
@@ -120,12 +122,12 @@ class App extends React.Component {
 		if (
 			event.metaKey ||
 			this.state.mode !== 'INPUT' ||
-			!this.actions.isInput( code )
+			!Actions.isInput( code )
 		) return;
 
 		event.preventDefault();
-		const action = this.actions.getInput( code, { desc: 'stop key' } );
-		this.actions.dispatch( action );
+		const action = Actions.getInput( code, { delegator: 'keyup' } );
+		Actions.dispatch( action );
 
 	}
 

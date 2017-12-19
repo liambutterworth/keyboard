@@ -1,23 +1,18 @@
-$border-top: 40px;
-$border-sides: 20px;
-$keys-width: 1024px;
-$width: calc( $keys-width + ( $border-sides * 2 ) );
-
 .keyboard {
-	position: relative;
-	border-top: $border-top solid black;
-	border-right: $border-sides solid black;
-	border-left: $border-sides solid black;
-	border-bottom: 1px solid black;
-	border-radius: 3.14px;
-	margin: 20px auto;
-	width: $width;
-	z-index: 1;
+	background: black;
+	color: white;
+	height: 100%;
+	/* min-height: 768px; */
+	position: fixed;
+	width: 100%;
 }
 
 .keyboard-keys {
+	bottom: 0;
 	height: 256px;
-	width: $keys-width;
+	left: 0;
+	position: absolute;
+	width: 100%;
 
 	&::after {
 		content: "";

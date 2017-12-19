@@ -1,131 +1,100 @@
 //
 // Actions
 //
+// :: Cache
+// :: Add
+// :: Is
 // :: All
-// :: Create Is Regex
-// :: Constructor
-// :: Is Methods
-// :: Get Methods
+// :: Get
 // :: Dispatch
 
-import data from './data.json';
-
-class Actions {
+const Actions = {
 
 	//
-	// All
+	// Cache
 	//
 
-	static all( type ) {
+	cache: () => {
 
-		return data.filter( ( action ) => ( !type || action.type === type ) );
+		if ( !document.actions ) document.actions = [];
+		return document.actions;
 
-	}
-
-	//
-	// Constructor
-	//
-
-	constructor() {
-
-		this.data    = data;
-		this.element = document;
-
-		this.element.addAction = this.addAction.bind( this );
-
-	}
+	},
 
 	//
 	// Add
 	//
 
-	addAction( action ) {
+	add: ( actions ) => {
 
-		this.actions.push( action )
+		const cache = Actions.cache();
 
-	}
+		actions.forEach( ( action ) => {
+
+			if ( cache.indexOf( action ) === -1 ) cache.push( action );
+
+		} );
+
+	},
 
 	//
-	// Is Methods
+	// Is
 	//
 
-	createIsRegex( type ) {
+	is: ( code, type ) => {
 
-		const actions = this.data.filter( ( action ) => ( !type || action.type === type ) );
+		const cache   = Actions.cache();
+		const actions = cache.filter( ( action ) => ( !type || action.type === type ) );
 		const codes   = actions.map( ( action ) => ( action.code ) );
+		const regex   = new RegExp( `^(${ codes.join( '|' ) })$` );
 
-		return new RegExp( `^(${ codes.join( '|' ) })$` );
-
-	}
-
-	isAction( code, type ) {
-
-		const regex = this.createIsRegex( type );
 		return regex.test( code );
 
-	}
+	},
 
-	isInput( code ) {
-
-		return this.isAction( code, 'input' );
-
-	}
-
-	isCommand( code ) {
-
-		return this.isAction( code, 'command' );
-
-	}
-
-	isShortcut( code ) {
-
-		return this.isAction( code, 'shortcut' );
-
-	}
+	isInput:    ( code ) => ( Actions.is( code, 'input' ) ),
+	isCommand:  ( code ) => ( Actions.is( code, 'command' ) ),
+	isShortcut: ( code ) => ( Actions.is( code, 'shortcut' ) ),
 
 	//
-	// Get Methods
+	// All
 	//
 
-	getAction( code, type, options ) {
+	all: ( type ) => {
 
-		const action = this.data.find( ( entry ) => ( entry.code === code && ( !type || entry.type === type ) ) );
+		const cache = Actions.cache();
+		return cache.filter( ( action ) => ( !type || action.type === type ) );
+
+	},
+
+	//
+	// Get
+	//
+
+	get: ( code, type, options ) => {
+
+		const cache  = Actions.cache();
+		const action = cache.find( ( entry ) => ( entry.code === code && ( !type || entry.type === type ) ) );
+
 		return Object.assign( action, options || {} );
 
-	}
+	},
 
-	getInput( code, options ) {
-
-		const input = this.getAction( code, 'input', options );
-		return Object.assign( input, options || {} );
-
-	}
-
-	getCommand( code, options ) {
-
-		const command = this.getAction( code, 'command', options );
-		return Object.assign( command, options || {} );
-
-	}
-
-	getShortcut( code, options ) {
-
-		const shortcut = this.getAction( code, 'shortcut', options );
-		return Object.assign( shortcut, options || {} );
-
-	}
+	getInput:    ( code, options ) => ( Actions.get( code, 'input', options ) ),
+	getCommand:  ( code, options ) => ( Actions.get( code, 'command', options ) ),
+	getShortcut: ( code, options ) => ( Actions.get( code, 'shortcut', options ) ),
 
 	//
 	// Dispatch
 	//
 
-	dispatch( action ) {
+	dispatch: ( action ) => {
 
 		const customEvent = new CustomEvent( 'action', { detail: action } );
-		this.element.dispatchEvent( customEvent );
+		document.dispatchEvent( customEvent );
 
-	}
+	},
 
-}
+};
 
 export default Actions;

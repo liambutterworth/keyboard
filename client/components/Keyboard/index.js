@@ -21,6 +21,15 @@ import KeySelector   from 'components/KeySelector';
 import Actions       from 'library/Actions';
 import Key           from './Key';
 
+import Form, {
+	Button,
+	Checkboxes,
+	Checkbox,
+	Radios,
+	Radio,
+	Select
+} from 'components/Form';
+
 require( './style.css' );
 
 class Keyboard extends React.Component {
@@ -44,6 +53,38 @@ class Keyboard extends React.Component {
 		this.handleAction = this.handleAction.bind( this );
 		this.setHighlight = this.setHighlight.bind( this );
 		this.setModifier  = this.setModifier.bind( this );
+
+		Actions.add( [
+			{ type: 'shortcut', char: ',', code: 188, desc: 'octave down' },
+			{ type: 'shortcut', char: '.', code: 190, desc: 'octave up' },
+			{ type: 'command', char: 'm', code: 77, desc: 'toggle modifier prompt' },
+			{ type: 'command', char: 'h', code: 72, desc: 'toggle highlight prompt' },
+			{ type: 'input', char: '\t', code: 9, note: 'C', desc: 'toggle key' },
+			{ type: 'input', char: 'i', code: 49, note: 'Db', desc: 'toggle key' },
+			{ type: 'input', char: 'q', code: 81, note: 'D', desc: 'toggle key' },
+			{ type: 'input', char: '2', code: 50, note: 'Eb', desc: 'toggle key' },
+			{ type: 'input', char: 'w', code: 87, note: 'E', desc: 'toggle key' },
+			{ type: 'input', char: 'e', code: 69, note: 'F', desc: 'toggle key' },
+			{ type: 'input', char: '4', code: 52, note: 'Gb', desc: 'toggle key' },
+			{ type: 'input', char: 'r', code: 82, note: 'G', desc: 'toggle key' },
+			{ type: 'input', char: '5', code: 53, note: 'Ab', desc: 'toggle key' },
+			{ type: 'input', char: 't', code: 84, note: 'A', desc: 'toggle key' },
+			{ type: 'input', char: '6', code: 54, note: 'Bb', desc: 'toggle key' },
+			{ type: 'input', char: 'y', code: 89, note: 'B', desc: 'toggle key' },
+			{ type: 'input', char: 'u', code: 85, note: 'C', desc: 'toggle key' },
+			{ type: 'input', char: '8', code: 56, note: 'Db', desc: 'toggle key' },
+			{ type: 'input', char: 'i', code: 73, note: 'D', desc: 'toggle key' },
+			{ type: 'input', char: '9', code: 57, note: 'Eb', desc: 'toggle key' },
+			{ type: 'input', char: 'o', code: 79, note: 'E', desc: 'toggle key' },
+			{ type: 'input', char: 'p', code: 80, note: 'F', desc: 'toggle key' },
+			{ type: 'input', char: '-', code: 189, note: 'Gb', desc: 'toggle key' },
+			{ type: 'input', char: '[', code: 219, note: 'G', desc: 'toggle key' },
+			{ type: 'input', char: '=', code: 187, note: 'Ab', desc: 'toggle key' },
+			{ type: 'input', char: ']', code: 221, note: 'A', desc: 'toggle key' },
+			{ type: 'input', char: '\b', code: 8, note: 'Bb', desc: 'toggle key' },
+			{ type: 'input', char: '\\', code: 220, note: 'B', desc: 'toggle key' },
+			{ type: 'input', char: '\r', code: 13, note: 'C', desc: 'toggle key' },
+		] );
 
 	}
 
@@ -223,12 +264,16 @@ class Keyboard extends React.Component {
 
 		switch ( event.detail.desc ) {
 
-			case 'play key':
-				this.playKey( this.getKey( event.detail.code ) );
-				break;
+			case 'toggle key':
+				if ( event.detail.delegator === 'keydown' ) {
 
-			case 'stop key':
-				this.stopKey( this.getKey( event.detail.code ) );
+					this.playKey( this.getKey( event.detail.code ) );
+
+				} else if ( event.detail.delegator === 'keyup' ) {
+
+					this.stopKey( this.getKey( event.detail.code ) );
+
+				}
 				break;
 
 			case 'octave down':
@@ -297,6 +342,26 @@ class Keyboard extends React.Component {
 
 		return (
 			<div className="keyboard">
+				<Button text="Foobar" />
+
+				<Select name="foo" options={ [
+					{ label: 'foobar', value: 'foo' },
+					{ label: 'barbaz', value: 'bar' },
+					{ label: 'bazfoo', value: 'baz' },
+				] } />
+
+				<Radios name="radio-test" data={ [
+					{ label: 'Radio Test 1', value: '1' },
+					{ label: 'Radio Test 2', value: '2' },
+					{ label: 'Radio Test 3', value: '3' },
+				] } />
+
+				<Checkboxes name="checkbox-test" data={ [
+					{ name: 'checkbox-test-1', label: 'Checkbox Test 1', value: '1' },
+					{ name: 'checkbox-test-2', label: 'Checkbox Test 2', value: '2' },
+					{ name: 'checkbox-test-3', label: 'Checkbox Test 3', value: '3' },
+				] } />
+
 				<div className="keyboard-keys">
 					{ this.renderKeys() }
 				</div>

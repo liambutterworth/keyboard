@@ -1,5 +1,6 @@
-import React  from 'react';
-import Prompt from 'components/Prompt';
+import React   from 'react';
+import Prompt  from 'components/Prompt';
+import Actions from 'library/Actions';
 
 require( './style.css' );
 
@@ -8,6 +9,11 @@ class Legend extends React.Component {
 	constructor( props ) {
 
 		super( props );
+
+		Actions.add( [
+			{ type: 'shortcut', char: '/', code: 191, desc: 'toggle legend' }
+		] );
+
 		this.handleAction = this.handleAction.bind( this );
 
 	}
