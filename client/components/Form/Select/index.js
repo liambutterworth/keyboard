@@ -35,17 +35,22 @@ class Select extends React.Component {
 
 			const key = ShortID.generate();
 
-			if ( typeof option.value === 'array' ) {
+			let html;
 
-				return ( <optgroup key={ key } label={ option.label }>{ this.renderOptions( option.value ) }</optgroup> );
+			if ( option.value instanceof Array ) {
+
+				html = ( <optgroup key={ key } label={ option.label }>{ this.renderOptions( option.value ) }</optgroup> );
 
 			} else {
 
-				return ( <Option key={ key } { ...option } /> );
+				html = ( <Option key={ key } { ...option } /> );
 
 			}
 
+			return html;
+
 		} );
+
 	}
 
 	render() {
@@ -72,7 +77,7 @@ Select.defaultProps = {
 	multiple:     false,
 	disabled:     false,
 	onChange:     null,
-	defaultValue: "",
+	defaultValue: '',
 };
 
 Select.propTypes = {

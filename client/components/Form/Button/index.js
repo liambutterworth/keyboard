@@ -10,7 +10,7 @@ class Button extends React.Component {
 		super( props );
 
 		this.state = {
-			disabled: false,
+			disabled: this.props.disabled,
 		};
 
 	}
@@ -47,11 +47,11 @@ class Button extends React.Component {
 }
 
 Button.defaultProps = {
-	text:     "",
-	name:     "",
-	value:    "",
-	children: null,
+	text:     '',
+	name:     '',
+	value:    '',
 	disabled: false,
+	children: null,
 	onClick:  null,
 };
 
@@ -60,8 +60,8 @@ Button.propTypes = {
 	text:     PropTypes.string,
 	name:     PropTypes.string,
 	value:    PropTypes.string,
-	children: PropTypes.node,
 	disabled: PropTypes.bool,
+	children: PropTypes.node,
 	onClick:  PropTypes.func,
 };
 

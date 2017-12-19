@@ -57,6 +57,7 @@ class ChordSelector extends React.Component {
 		);
 
 	}
+
 }
 
 ChordSelector.defaultProps = {

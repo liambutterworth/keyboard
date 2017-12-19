@@ -3,15 +3,11 @@ import PropTypes from 'prop-types';
 
 require( './style.css' );
 
-const Column = ( props ) => {
-
-	return (
-		<div className={ `grid-column grid-column--span-${ props.span }` }>
-			{ props.children }
-		</div>
-	);
-
-};
+const Column = ( props ) => (
+	<div className={ `grid-column grid-column--span-${ props.span }` }>
+		{ props.children }
+	</div>
+);
 
 Column.defaultProps = {
 	children: null,

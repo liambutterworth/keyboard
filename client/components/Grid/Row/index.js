@@ -3,15 +3,11 @@ import PropTypes from 'prop-types';
 
 require( './style.css' );
 
-const Row = ( props ) => {
-
-	return (
-		<div className="grid-row">
-			{ props.children }
-		</div>
-	);
-
-};
+const Row = ( props ) => (
+	<div className="grid-row">
+		{ props.children }
+	</div>
+);
 
 Row.defaultProps = {
 	children: null,

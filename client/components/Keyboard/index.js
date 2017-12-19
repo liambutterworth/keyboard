@@ -74,16 +74,7 @@ class Keyboard extends React.Component {
 		this.keys.forEach( ( key ) => {
 
 			const symbol = key.note.symbol();
-
-			if ( symbols.includes( symbol ) ) {
-
-				key.highlight();
-
-			} else {
-
-				key.unhighlight();
-
-			}
+			if ( symbols.includes( symbol ) ) key.highlight(); else key.unhighlight();
 
 		} );
 
@@ -190,7 +181,6 @@ class Keyboard extends React.Component {
 				// remove pitch from array to be released
 				pitches.splice( pitches.indexOf( key.pitch ), 1 );
 
-			// pitch doesnt exist in another extended key
 			} else {
 
 				// relase the key

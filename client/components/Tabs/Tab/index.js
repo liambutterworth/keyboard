@@ -1,7 +1,6 @@
 import React      from 'react';
 import PropTypes  from 'prop-types';
 import ClassNames from 'classnames';
-import ShortID    from 'shortid';
 
 require( './style.css' );
 
@@ -29,18 +28,12 @@ class Tab extends React.Component {
 
 	}
 
-	handleClick( event ) {
-
-		console.log( this.props.index );
-
-	}
-
 	render() {
 
-		const classNames = ClassNames({
+		const classNames = ClassNames( {
 			'tabs-tab':       true,
 			'tabs-tab--show': this.state.show,
-		});
+		} );
 
 		return (
 			<li className={ classNames }>
@@ -52,14 +45,14 @@ class Tab extends React.Component {
 
 }
 
-Tab.defaultPropos = {
-	open: false,
+Tab.defaultProps = {
+	children: null,
+	show:     false,
 };
 
 Tab.propTypes = {
-	open:     PropTypes.bool,
-	title:    PropTypes.string.isRequired,
 	children: PropTypes.node,
+	show:     PropTypes.bool,
 };
 
 export default Tab;

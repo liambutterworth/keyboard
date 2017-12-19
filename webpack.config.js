@@ -49,7 +49,10 @@ module.exports = {
 
 	plugins: [
 		new ExtractTextPlugin( '[name].[hash].css' ),
-		new HtmlWebpackPlugin( { template: 'index.html' } ),
+
+		new HtmlWebpackPlugin( {
+			template: 'index.html',
+		} ),
 
 		new CleanWebpackPlugin( [ 'build' ], {
 			root:    __dirname,

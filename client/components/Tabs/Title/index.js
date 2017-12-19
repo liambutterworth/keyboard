@@ -1,7 +1,6 @@
 import React      from 'react';
 import PropTypes  from 'prop-types';
 import ClassNames from 'classnames';
-import ShortID    from 'shortid';
 
 require( './style.css' );
 
@@ -19,7 +18,7 @@ class Title extends React.Component {
 
 	}
 
-	handleClick( event ) {
+	handleClick() {
 
 		this.props.showTab( this.props.index );
 
@@ -39,15 +38,15 @@ class Title extends React.Component {
 
 	render() {
 
-		const classNames = ClassNames({
+		const classNames = ClassNames( {
 			'tabs-title':         true,
 			'tabs-title--active': this.state.active,
-		});
+		} );
 
 		return (
-			<li className={ classNames } onClick={ this.handleClick }>
+			<button className={ classNames } onClick={ this.handleClick }>
 				{ this.props.text }
-			</li>
+			</button>
 		);
 
 	}
@@ -59,8 +58,10 @@ Title.defaultProps = {
 };
 
 Title.propTypes = {
-	active: PropTypes.bool,
-	text:   PropTypes.string.isRequired,
-}
+	text:    PropTypes.string.isRequired,
+	index:   PropTypes.number.isRequired,
+	showTab: PropTypes.func.isRequired,
+	active:  PropTypes.bool,
+};
 
 export default Title;

@@ -31,11 +31,9 @@ class Checkboxes extends React.Component {
 
 	render() {
 
-		console.log( this.props.onChange );
 		return (
 			<div className="form-checkboxes">
-				{ this.props.data.map( ( box ) =>
-
+				{ this.props.data.map( ( box ) => (
 					<Checkbox
 						key={ ShortID.generate() }
 						name={ this.props.name }
@@ -43,8 +41,7 @@ class Checkboxes extends React.Component {
 						disabled={ this.props.disabled }
 						{ ...box }
 					/>
-
-				) }
+				) ) }
 			</div>
 		);
 
@@ -62,7 +59,7 @@ Checkboxes.propTypes = {
 	data:     PropTypes.array.isRequired,
 	disabled: PropTypes.bool,
 	onChange: PropTypes.func,
-}
+};
 
 export default Checkboxes;
 export { Checkbox };

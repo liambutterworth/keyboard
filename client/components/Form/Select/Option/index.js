@@ -45,12 +45,14 @@ class Option extends React.Component {
 
 Option.defaultProps = {
 	disabled: false,
+	selected: false,
 };
 
 Option.propTypes = {
 	label:    PropTypes.string.isRequired,
 	value:    PropTypes.string.isRequired,
 	disabled: PropTypes.bool,
+	selected: PropTypes.bool,
 };
 
 export default Option;

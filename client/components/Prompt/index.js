@@ -20,6 +20,8 @@ class Prompt extends React.Component {
 
 		super( props );
 
+		this.element = document;
+
 		this.state = {
 			open: props.open,
 		};
@@ -34,13 +36,13 @@ class Prompt extends React.Component {
 
 	componentWillMount() {
 
-		document.addEventListener( 'close-prompts', this.handleClosePrompts );
+		this.element.addEventListener( 'close-prompts', this.handleClosePrompts );
 
 	}
 
 	componentWillUnmount() {
 
-		document.remoevEventListener( 'close-prompts', this.handleClosePrompts );
+		this.element.remoevEventListener( 'close-prompts', this.handleClosePrompts );
 
 	}
 
@@ -63,7 +65,7 @@ class Prompt extends React.Component {
 	closeAll() {
 
 		const event = new Event( 'close-prompts' );
-		document.dispatchEvent( event );
+		this.element.dispatchEvent( event );
 
 	}
 
@@ -118,12 +120,13 @@ class Prompt extends React.Component {
 //
 
 Prompt.defaultProps = {
-	open: false,
+	children: null,
+	open:     false,
 };
 
 Prompt.propTypes = {
-	open:     PropTypes.bool,
 	children: PropTypes.node,
+	open:     PropTypes.bool,
 };
 
 export default Prompt;

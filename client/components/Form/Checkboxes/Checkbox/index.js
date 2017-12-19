@@ -53,7 +53,7 @@ class Checkbox extends React.Component {
 
 Checkbox.defaultProps = {
 	disabled: false,
-	onChange:  null,
+	onChange: null,
 };
 
 Checkbox.propTypes = {

@@ -23,30 +23,25 @@ class Actions {
 	}
 
 	//
-	// Create Is Regex
-	//
-
-	_createIsRegex( type ) {
-
-		const results = data.filter( ( action ) => ( !type || action.type === type ) );
-		const codes   = results.map( ( action ) => ( action.code ) );
-
-		return new RegExp( `^(${ codes.join( '|' ) })$` );
-
-	}
-
-	//
 	// Constructor
 	//
 
 	constructor() {
 
-		this.isActionRegex   = this._createIsRegex();
-		this.isInputRegex    = this._createIsRegex( 'input' );
-		this.isCommandRegex  = this._createIsRegex( 'command' );
-		this.isShortcutRegex = this._createIsRegex( 'shortcut' );
+		this.data    = data;
+		this.element = document;
 
-		this.is = this.is.bind( this );
+		this.element.addAction = this.addAction.bind( this );
+
+	}
+
+	//
+	// Add
+	//
+
+	addAction( action ) {
+
+		this.actions.push( action )
 
 	}
 
@@ -54,27 +49,37 @@ class Actions {
 	// Is Methods
 	//
 
-	isAction( code ) {
+	createIsRegex( type ) {
 
-		return this.isActionRegex.test( code );
+		const actions = this.data.filter( ( action ) => ( !type || action.type === type ) );
+		const codes   = actions.map( ( action ) => ( action.code ) );
+
+		return new RegExp( `^(${ codes.join( '|' ) })$` );
+
+	}
+
+	isAction( code, type ) {
+
+		const regex = this.createIsRegex( type );
+		return regex.test( code );
 
 	}
 
 	isInput( code ) {
 
-		return this.isInputRegex.test( code );
+		return this.isAction( code, 'input' );
 
 	}
 
 	isCommand( code ) {
 
-		return this.isCommandRegex( code );
+		return this.isAction( code, 'command' );
 
 	}
 
 	isShortcut( code ) {
 
-		return this.isShortcutRegex( code );
+		return this.isAction( code, 'shortcut' );
 
 	}
 
@@ -84,19 +89,14 @@ class Actions {
 
 	getAction( code, type, options ) {
 
-		const action = data.find( ( action ) => {
-
-			return action.code === code && ( !type || action.type === type );
-
-		} );
-
+		const action = this.data.find( ( entry ) => ( entry.code === code && ( !type || entry.type === type ) ) );
 		return Object.assign( action, options || {} );
 
 	}
 
 	getInput( code, options ) {
 
-		const input = this.getAction( code, 'input', options )
+		const input = this.getAction( code, 'input', options );
 		return Object.assign( input, options || {} );
 
 	}
@@ -122,7 +122,7 @@ class Actions {
 	dispatch( action ) {
 
 		const customEvent = new CustomEvent( 'action', { detail: action } );
-		document.dispatchEvent( customEvent );
+		this.element.dispatchEvent( customEvent );
 
 	}
 

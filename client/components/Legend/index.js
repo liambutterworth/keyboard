@@ -1,6 +1,5 @@
-import React     from 'react';
-import PropTypes from 'prop-types';
-import Prompt    from 'components/Prompt';
+import React  from 'react';
+import Prompt from 'components/Prompt';
 
 require( './style.css' );
 
@@ -50,13 +49,5 @@ class Legend extends React.Component {
 	}
 
 }
-
-Legend.defaultProps = {
-	open: false,
-};
-
-Legend.propTypes = {
-	open: PropTypes.bool,
-};
 
 export default Legend;

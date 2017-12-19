@@ -32,7 +32,7 @@ class Radio extends React.Component {
 
 		const uuid = ShortID.generate();
 
-		return ( 
+		return (
 			<div className="form-radio">
 				<input
 					type="radio"
@@ -55,9 +55,9 @@ Radio.defaultProps = {
 };
 
 Radio.propTypes = {
-	name:  PropTypes.string.isRequired,
-	label: PropTypes.string.isRequired,
-	value: PropTypes.string.isRequired,
+	name:     PropTypes.string.isRequired,
+	label:    PropTypes.string.isRequired,
+	value:    PropTypes.string.isRequired,
 	disabled: PropTypes.bool,
 };
 

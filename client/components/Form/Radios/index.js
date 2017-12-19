@@ -1,6 +1,6 @@
 import React     from 'react';
 import PropTypes from 'prop-types';
-import ShortID   from 'shortid'
+import ShortID   from 'shortid';
 import Radio     from './Radio';
 
 require( './style.css' );
@@ -33,18 +33,17 @@ class Radios extends React.Component {
 
 		return (
 			<div className="form-radios">
-				{ this.props.data.map( ( button ) =>
-
+				{ this.props.data.map( ( button ) => (
 					<Radio
 						key={ ShortID.generate() }
 						name={ this.props.name }
 						disabled={ this.props.disabled }
 						{ ...button }
 					/>
-
-	 			) }
+				) ) }
 			</div>
 		);
+
 	}
 
 }
