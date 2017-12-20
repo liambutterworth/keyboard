@@ -25,7 +25,7 @@ module.exports = {
 	},
 
 	module: {
-		loaders: [{
+		loaders: [ {
 			test:    /\.js$/,
 			exclude: /node_modules/,
 			use:     'babel-loader',
@@ -34,17 +34,17 @@ module.exports = {
 			exclude: /node_modules/,
 
 			use: ExtractTextPlugin.extract( {
-				use: [ 'css-loader', 'postcss-loader' ],
+				use: 'css-loader!postcss-loader',
 			} ),
 		}, {
-			test:    /\.(jpe?g|png|woff|woff2|eot|ttf)(\?.*$|$)/,
+			test:    /\.(jpe?g|png|woff(2)?|eot|ttf)(\?[a-z0-9]+)?$/,
 			exclude: /node_modules/,
 			use:     'url-loader?limit=8192&name=[path][name].[hash].[ext]',
 		}, {
 			test:    /\.svg$/,
 			exclude: /node_modules/,
 			use:     'svg-inline-loader',
-		}],
+		} ],
 	},
 
 	plugins: [

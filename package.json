@@ -23,7 +23,6 @@
   "dependencies": {
     "classnames": "^2.2.5",
     "clean-webpack-plugin": "^0.1.17",
-    "font-awesome": "^4.7.0",
     "koa": "^2.3.0",
     "koa-static": "^4.0.1",
     "prop-types": "^15.5.10",
@@ -59,6 +58,7 @@
     "postcss-loader": "^2.0.6",
     "postcss-nested": "^2.1.2",
     "postcss-simple-vars": "^4.1.0",
+    "style-loader": "^0.19.1",
     "stylelint": "^8.1.1",
     "stylelint-config-standard": "^17.0.0",
     "svg-inline-loader": "^0.8.0",

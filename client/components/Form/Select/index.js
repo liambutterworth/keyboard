@@ -57,8 +57,6 @@ class Select extends React.Component {
 
 		return (
 			<div className="form-select">
-				<i className="fa fa-car" />
-
 				<select
 					name={ this.props.name }
 					defaultValue={ this.props.defaultValue }
