@@ -56,16 +56,20 @@ class Select extends React.Component {
 	render() {
 
 		return (
-			<select
-				name={ this.props.name }
-				defaultValue={ this.props.defaultValue }
-				required={ this.props.required }
-				multiple={ this.props.multiple }
-				disabled={ this.state.disabled }
-				onChange={ this.props.onChange }
-			>
-				{ this.renderOptions( this.props.options ) }
-			</select>
+			<div className="form-select">
+				<i className="fa fa-car" />
+
+				<select
+					name={ this.props.name }
+					defaultValue={ this.props.defaultValue }
+					required={ this.props.required }
+					multiple={ this.props.multiple }
+					disabled={ this.state.disabled }
+					onChange={ this.props.onChange }
+				>
+					{ this.renderOptions( this.props.options ) }
+				</select>
+			</div>
 		);
 
 	}

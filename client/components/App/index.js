@@ -14,6 +14,7 @@ import ClassNames from 'classnames';
 import Actions    from 'library/Actions';
 
 require( './style.css' );
+require( 'font-awesome/css/font-awesome.css' );
 
 class App extends React.Component {
 

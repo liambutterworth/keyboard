@@ -37,7 +37,7 @@ module.exports = {
 				use: [ 'css-loader', 'postcss-loader' ],
 			} ),
 		}, {
-			test:    /\.(jpe?g|png)$/,
+			test:    /\.(jpe?g|png|woff|woff2|eot|ttf)(\?.*$|$)/,
 			exclude: /node_modules/,
 			use:     'url-loader?limit=8192&name=[path][name].[hash].[ext]',
 		}, {
