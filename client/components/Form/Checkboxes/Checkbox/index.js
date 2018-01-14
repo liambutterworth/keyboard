@@ -43,7 +43,10 @@ class Checkbox extends React.Component {
 					onClick={ this.props.onChange }
 				/>
 
-				<label htmlFor={ uuid }>{ this.props.label }</label>
+				<label htmlFor={ uuid }>
+					<span className="form-checkbox-box" />
+					{ this.props.label }
+				</label>
 			</div>
 		);
 

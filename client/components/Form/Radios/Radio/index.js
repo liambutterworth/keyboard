@@ -42,7 +42,10 @@ class Radio extends React.Component {
 					disabled={ this.props.disabled }
 				/>
 
-				<label htmlFor={ uuid }>{ this.props.label }</label>
+				<label htmlFor={ uuid }>
+					<span className="form-radio-box" />
+					{ this.props.label }
+				</label>
 			</div>
 		);
 

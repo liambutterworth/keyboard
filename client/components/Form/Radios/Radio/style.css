@@ -1,0 +1,29 @@
+.form-radio {
+	margin: lines( 0.5 ) 0;
+
+	input[type=radio] {
+		display: none;
+	}
+
+	.form-radio-box {
+		border: 1px solid white;
+		border-radius: 200px;
+		display: inline-block;
+		height: lines( 1 );
+		width: lines( 1 );
+		margin: 0 lines( 0.25 ) 0 0;
+		vertical-align: bottom;
+		position: relative;
+	}
+
+	:checked + label .form-radio-box::after {
+		background: red;
+		border-radius: 200px;
+		content: "";
+		position: absolute;
+		top: 12.5%;
+		left: 12.5%;
+		height: 75%;
+		width: 75%;
+	}
+}
