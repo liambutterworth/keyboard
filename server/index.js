@@ -13,4 +13,4 @@ const app = new Koa();
 app.use( serve( path.resolve( __dirname, '../build' ) ) );
 
 // listen for requests
-app.listen( 4000 );
+app.listen( process.env.PORT );
