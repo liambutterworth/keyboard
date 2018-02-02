@@ -393,6 +393,8 @@ class Keyboard extends React.Component {
 					{ name: 'checkbox-test-3', label: 'Checkbox Test 3', value: '3' },
 				] } />
 
+				<input type="range" />
+
 				<div className="keyboard-keys">
 					{ this.renderKeys() }
 				</div>
