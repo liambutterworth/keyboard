@@ -1,13 +1,6 @@
 version: '3'
 
 services:
-  editor:
-    image: wbbutterworth/devenv:latest
-    volumes:
-      - .:/home/editor/app
-    working_dir: /home/editor/app
-    stdin_open: true
-    tty: true
   node:
     image: 'node:9'
     user: 'node'
