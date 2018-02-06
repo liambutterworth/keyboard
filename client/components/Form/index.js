@@ -33,4 +33,5 @@ export {
 	Radio,
 	Checkboxes,
 	Checkbox,
+	Range,
 };

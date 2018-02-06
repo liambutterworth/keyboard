@@ -27,7 +27,8 @@ import Form, {
 	Checkbox,
 	Radios,
 	Radio,
-	Select
+	Select,
+	Range,
 } from 'components/Form';
 
 require( './style.css' );
@@ -375,6 +376,8 @@ class Keyboard extends React.Component {
 			<div className="keyboard">
 				<Button text="Foobar" />
 
+				<Range />
+
 				<Select name="foo" options={ [
 					{ label: 'foobar', value: 'foo' },
 					{ label: 'barbaz', value: 'bar' },
@@ -392,8 +395,6 @@ class Keyboard extends React.Component {
 					{ name: 'checkbox-test-2', label: 'Checkbox Test 2', value: '2' },
 					{ name: 'checkbox-test-3', label: 'Checkbox Test 3', value: '3' },
 				] } />
-
-				<input type="range" />
 
 				<div className="keyboard-keys">
 					{ this.renderKeys() }
