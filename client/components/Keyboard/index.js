@@ -28,7 +28,8 @@ import Form, {
 	Radios,
 	Radio,
 	Select,
-	Range,
+	Slider,
+	Knob,
 } from 'components/Form';
 
 require( './style.css' );
@@ -376,7 +377,7 @@ class Keyboard extends React.Component {
 			<div className="keyboard">
 				<Button text="Foobar" />
 
-				<Range />
+				<Slider />
 
 				<Select name="foo" options={ [
 					{ label: 'foobar', value: 'foo' },

@@ -1,0 +1,32 @@
+$height: lines( 10 );
+
+.keyboard-keys { display: none; }
+
+.form-slider {
+	background: blue;
+	height: $height;
+
+	input[type=range] {
+		-webkit-appearance: none;
+		cursor: pointer;
+		height: 2px;
+		outline: none;
+		transform: rotate( -90deg );
+		transform-origin: top left;
+		width: $height;
+
+		&::-webkit-slider-runnable-track {
+			background-color: red;
+			border: none;
+			height: 2px;
+		}
+
+		&::-webkit-slider-thumb {
+			-webkit-appearance: none;
+			background-color: grey;
+			height: 20px;
+			width: 30px;
+			margin-top: -10px;
+		}
+	}
+}

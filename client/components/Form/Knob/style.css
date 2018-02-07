@@ -1,0 +1,38 @@
+.form-knob {
+	input[type=range] {
+		-webkit-appearance: none;
+
+		&::-webkit-slider-runnable-track {
+			background-color: red;
+			border: none;
+			height: 1px;
+		}
+	}
+}
+
+/* .form-knob input { */
+/* 	/1* display: block; *1/ */
+/* 	/1* position: absolute; *1/ */
+/* 	/1* left: 50%; *1/ */
+/* 	/1* top: 50%; *1/ */
+/* 	/1* transform: rotate( 270deg ); *1/ */
+/* 	/1* width: 100px; *1/ */
+/* 	-webkit-appearance: none; */
+/* } */
+
+/* .form-knob input::-webkit-slider-runnable-track { */
+/* 	background-color: red; */
+/* 	border: none; */
+/* 	height: 1px; */
+/* } */
+/* .form-knob input::-moz-range-track { */
+/* 	background-color: green; */
+/* } */
+
+/* .form-knob input::-webkit-slider-thumb { */
+/* 	/1* border: none; *1/ */
+/* 	/1* border-radius: 50%; *1/ */
+/* 	/1* -webkit-appearance: red; *1/ */
+/* 	/1* background: red; *1/ */
+/* 	/1* cursor: pointer; *1/ */
+/* } */

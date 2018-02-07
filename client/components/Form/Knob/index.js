@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 require( './style.css' );
 
-class Range extends React.Component {
+class Knob extends React.Component {
 
 	constructor( props ) {
 
@@ -13,6 +13,8 @@ class Range extends React.Component {
 		this.state = {
 			disabled: props.disabled,
 		};
+
+		this.adjust = this.adjust.bind( this );
 
 	}
 
@@ -28,12 +30,17 @@ class Range extends React.Component {
 
 	}
 
+	adjust( event ) {
+		console.log( event.target.value );
+	}
+
 	render() {
 
 		return (
-			<div className="form-range">
+			<div className="form-knob">
 				<input
 					type="range"
+					onChange={ this.adjust }
 					disabled={ this.state.disabled }
 				/>
 			</div>
@@ -43,12 +50,12 @@ class Range extends React.Component {
 
 }
 
-Range.defaultProps = {
+Knob.defaultProps = {
 	disabled: false,
 };
 
-Range.propTypes = {
+Knob.propTypes = {
 	disabled: PropTypes.bool,
 };
 
-export default Range;
+export default Knob;

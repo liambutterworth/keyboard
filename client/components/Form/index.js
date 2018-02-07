@@ -2,9 +2,10 @@ import React                    from 'react';
 import PropTypes                from 'prop-types';
 import Button                   from './Button';
 import Select                   from './Select';
-import Range                    from './Range';
 import Radios, { Radio }        from './Radios';
 import Checkboxes, { Checkbox } from './Checkboxes';
+import Slider                   from './Slider';
+import Knob                     from './Knob';
 
 require( './style.css' );
 
@@ -33,5 +34,6 @@ export {
 	Radio,
 	Checkboxes,
 	Checkbox,
-	Range,
+	Slider,
+	Knob,
 };
