@@ -377,7 +377,11 @@ class Keyboard extends React.Component {
 			<div className="keyboard">
 				<Button text="Foobar" />
 
-				<Slider />
+				<div>
+					<Slider />
+					&nbsp;
+					<Knob />
+				</div>
 
 				<Select name="foo" options={ [
 					{ label: 'foobar', value: 'foo' },

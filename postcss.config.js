@@ -1,5 +1,6 @@
 const style        = require( './client/style.js' );
 const autoprefixer = require( 'autoprefixer' );
+const mixins       = require( 'postcss-mixins' );
 const nested       = require( 'postcss-nested' );
 const color        = require( 'postcss-color-function' );
 const calc         = require( 'postcss-calc' );
@@ -16,6 +17,7 @@ const bassline = require( 'postcss-bassline' )( {
 module.exports = {
 	plugins: [
 		autoprefixer,
+		mixins,
 		nested,
 		variables,
 		bassline,

@@ -1,38 +1,49 @@
-.form-knob {
-	input[type=range] {
-		-webkit-appearance: none;
+$knob-diameter: lines( 5 );
+$multiplier: 1.5;
+$dimension: $knob-diameter * $multiplier;
 
-		&::-webkit-slider-runnable-track {
-			background-color: red;
-			border: none;
-			height: 1px;
-		}
-	}
+@define-mixin track {
+	background-color: red;
+	border: none;
+	height: $knob-diameter;
 }
 
-/* .form-knob input { */
-/* 	/1* display: block; *1/ */
-/* 	/1* position: absolute; *1/ */
-/* 	/1* left: 50%; *1/ */
-/* 	/1* top: 50%; *1/ */
-/* 	/1* transform: rotate( 270deg ); *1/ */
-/* 	/1* width: 100px; *1/ */
-/* 	-webkit-appearance: none; */
-/* } */
+@define-mixin thumb {
+	-webkit-appearance: none;
+	background-color: grey;
+	height: $knob-diameter;
+	/* width: 30px; */
+	width: 10px;
+	/* margin: calc( $thumb-height / -2 ) 0 0; */
+}
 
-/* .form-knob input::-webkit-slider-runnable-track { */
-/* 	background-color: red; */
-/* 	border: none; */
-/* 	height: 1px; */
-/* } */
-/* .form-knob input::-moz-range-track { */
-/* 	background-color: green; */
-/* } */
+.form-knob {
+	background: blue;
+	border-radius: 100%;
+	display: inline-block;
+	height: $knob-diameter;
+	width: $knob-diameter;
+	position: relative;
+	overflow: hidden;
 
-/* .form-knob input::-webkit-slider-thumb { */
-/* 	/1* border: none; *1/ */
-/* 	/1* border-radius: 50%; *1/ */
-/* 	/1* -webkit-appearance: red; *1/ */
-/* 	/1* background: red; *1/ */
-/* 	/1* cursor: pointer; *1/ */
-/* } */
+	input[type=range] {
+		-webkit-appearance: none;
+		cursor: pointer;
+		height: $dimension;
+		outline: none;
+		transform: rotate( -270deg );
+		width: $dimension;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		margin-top: calc( $dimension / -2 );
+		margin-left: calc( $dimension / -2 );
+
+		&::-webkit-slider-runnable-track { @mixin track; }
+		&::-webkit-slider-thumb { @mixin thumb; }
+		&::-moz-range-track { @mixin track; }
+		&::-moz-range-thumb { @mixin thumb; }
+		&::-ms-track { @mixin track; }
+		&::-ms-thumb { @mixin thumb; }
+	}
+}

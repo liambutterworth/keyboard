@@ -14,7 +14,14 @@ class Knob extends React.Component {
 			disabled: props.disabled,
 		};
 
+		this.currentValue = this.props.defaultValue;
+
 		this.adjust = this.adjust.bind( this );
+		this.click  = this.click.bind( this );
+		this.input  = this.input.bind( this );
+
+		this.setDiff = this.setDiff.bind( this );
+		this.applyDiff = this.applyDiff.bind( this );
 
 	}
 
@@ -31,7 +38,34 @@ class Knob extends React.Component {
 	}
 
 	adjust( event ) {
-		console.log( event.target.value );
+		// console.log( event.target.value );
+	}
+
+	click( event ) {
+		// console.log( 'click' );
+		// console.log( event.target.value );
+	}
+
+	input( event ) {
+		// event.preventDefault();
+		// console.log( 'input' );
+		// console.log( event );
+	}
+
+	setDiff() {
+		// console.log( 'mouse down: ' + this.currentValue );
+		// this.currentValue = this.element.value;
+		// console.log( this.currentValue, this.element.value );
+	}
+
+	applyDiff() {
+		// console.log( 'mouse up' );
+		// console.log( 'mouse up: ' + this.element.value );
+	}
+
+	componentDidMount() {
+		this.currentValue = this.element.value;
+		console.log( this.element.shadowRoot );
 	}
 
 	render() {
@@ -40,8 +74,14 @@ class Knob extends React.Component {
 			<div className="form-knob">
 				<input
 					type="range"
+					value={ this.props.value }
 					onChange={ this.adjust }
+					onInput={ this.input }
+					onClick={ this.click }
+					onMouseDown={ this.setDiff }
+					onMouseUp={ this.applyDiff }
 					disabled={ this.state.disabled }
+					ref={ ( element ) => { this.element = element } }
 				/>
 			</div>
 		);
@@ -51,11 +91,13 @@ class Knob extends React.Component {
 }
 
 Knob.defaultProps = {
-	disabled: false,
+	disabled:     false,
+	defaultValue: 50,
 };
 
 Knob.propTypes = {
-	disabled: PropTypes.bool,
+	disabled:     PropTypes.bool,
+	defaultValue: PropTypes.number,
 };
 
 export default Knob;
