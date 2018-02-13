@@ -5,11 +5,11 @@ services:
     image: 'node:9'
     user: 'node'
     volumes:
-      - .:/home/node/app
+      - ./:/home/node/app
     working_dir: /home/node/app
     environment:
       - NODE_ENV=production
       - PORT=3000
     ports:
       - 3000:3000
-    entrypoint: [ 'bash', 'docker-entrypoint.sh' ]
+    entrypoint: ./docker-entrypoint.sh
