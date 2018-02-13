@@ -1,6 +1,6 @@
 $knob-diameter: lines( 5 );
-$multiplier: 1.5;
-$dimension: $knob-diameter * $multiplier;
+$range-height: $knob-diameter;
+$range-width: calc( $knob-diameter * 2 );
 
 @define-mixin track {
 	background-color: red;
@@ -12,9 +12,8 @@ $dimension: $knob-diameter * $multiplier;
 	-webkit-appearance: none;
 	background-color: grey;
 	height: $knob-diameter;
-	/* width: 30px; */
-	width: 10px;
-	/* margin: calc( $thumb-height / -2 ) 0 0; */
+	width: $knob-diameter;
+	border-radius: 100%;
 }
 
 .form-knob {
@@ -26,18 +25,22 @@ $dimension: $knob-diameter * $multiplier;
 	position: relative;
 	overflow: hidden;
 
+	&.form-knob--adjustable {
+		overflow: visible;
+	}
+
 	input[type=range] {
 		-webkit-appearance: none;
 		cursor: pointer;
-		height: $dimension;
+		height: $range-height;
 		outline: none;
 		transform: rotate( -270deg );
-		width: $dimension;
+		width: $range-width;
 		position: absolute;
 		top: 50%;
 		left: 50%;
-		margin-top: calc( $dimension / -2 );
-		margin-left: calc( $dimension / -2 );
+		margin-top: calc( $range-height / -2 );
+		margin-left: calc( $range-width / -2 );
 
 		&::-webkit-slider-runnable-track { @mixin track; }
 		&::-webkit-slider-thumb { @mixin thumb; }

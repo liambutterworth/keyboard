@@ -1,6 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-// import ShortID from 'shortid';
+import React      from 'react';
+import PropTypes  from 'prop-types';
+import ClassNames from 'classnames';
 
 require( './style.css' );
 
@@ -11,17 +11,15 @@ class Knob extends React.Component {
 		super( props );
 
 		this.state = {
-			disabled: props.disabled,
+			disabled:   props.disabled,
+			adjustable: false,
 		};
 
-		this.currentValue = this.props.defaultValue;
+		this.defaultValue = 50;
 
-		this.adjust = this.adjust.bind( this );
-		this.click  = this.click.bind( this );
-		this.input  = this.input.bind( this );
-
-		this.setDiff = this.setDiff.bind( this );
-		this.applyDiff = this.applyDiff.bind( this );
+		this.adjust       = this.adjust.bind( this );
+		this.enableScrub  = this.enableScrub.bind( this );
+		this.disableScrub = this.disableScrub.bind( this );
 
 	}
 
@@ -41,47 +39,35 @@ class Knob extends React.Component {
 		// console.log( event.target.value );
 	}
 
-	click( event ) {
-		// console.log( 'click' );
-		// console.log( event.target.value );
+	enableScrub( event ) {
+
+		if ( !this.state.adjustable ) this.setState( { adjustable: true } );
+
 	}
 
-	input( event ) {
-		// event.preventDefault();
-		// console.log( 'input' );
-		// console.log( event );
-	}
+	disableScrub( event ) {
 
-	setDiff() {
-		// console.log( 'mouse down: ' + this.currentValue );
-		// this.currentValue = this.element.value;
-		// console.log( this.currentValue, this.element.value );
-	}
+		if ( this.state.adjustable ) this.setState( { adjustable: false } );
+		this.element.value = this.defaultvalue;
 
-	applyDiff() {
-		// console.log( 'mouse up' );
-		// console.log( 'mouse up: ' + this.element.value );
-	}
-
-	componentDidMount() {
-		this.currentValue = this.element.value;
-		console.log( this.element.shadowRoot );
 	}
 
 	render() {
 
+		const classNames = ClassNames( {
+			'form-knob':             true,
+			'form-knob--adjustable': this.state.adjustable,
+		} );
+
 		return (
-			<div className="form-knob">
+			<div className={ classNames }>
 				<input
 					type="range"
-					value={ this.props.value }
-					onChange={ this.adjust }
-					onInput={ this.input }
-					onClick={ this.click }
-					onMouseDown={ this.setDiff }
-					onMouseUp={ this.applyDiff }
+					onInput={ this.adjust }
 					disabled={ this.state.disabled }
-					ref={ ( element ) => { this.element = element } }
+					onMouseDown={ this.enableScrub }
+					onMouseUp={ this.disableScrub }
+					ref={ ( element ) => ( this.element = element ) }
 				/>
 			</div>
 		);
@@ -91,13 +77,11 @@ class Knob extends React.Component {
 }
 
 Knob.defaultProps = {
-	disabled:     false,
-	defaultValue: 50,
+	disabled: false,
 };
 
 Knob.propTypes = {
-	disabled:     PropTypes.bool,
-	defaultValue: PropTypes.number,
+	disabled: PropTypes.bool,
 };
 
 export default Knob;
