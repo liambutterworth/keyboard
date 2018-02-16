@@ -15,11 +15,12 @@ class Knob extends React.Component {
 			adjustable: false,
 		};
 
-		this.defaultValue = 50;
+		this.value  = this.props.value;
+		this.median = 50;
 
-		this.adjust       = this.adjust.bind( this );
-		this.enableScrub  = this.enableScrub.bind( this );
-		this.disableScrub = this.disableScrub.bind( this );
+		this.adjust     = this.adjust.bind( this );
+		this.activate   = this.activate.bind( this );
+		this.deactivate = this.deactivate.bind( this );
 
 	}
 
@@ -36,19 +37,22 @@ class Knob extends React.Component {
 	}
 
 	adjust( event ) {
-		// console.log( event.target.value );
+
+		this.value = event.target.value - this.median;
+
 	}
 
-	enableScrub( event ) {
+	activate() {
 
 		if ( !this.state.adjustable ) this.setState( { adjustable: true } );
 
 	}
 
-	disableScrub( event ) {
+	deactivate() {
 
 		if ( this.state.adjustable ) this.setState( { adjustable: false } );
-		this.element.value = this.defaultvalue;
+		this.element.value = this.median;
+		if ( this.props.onUpdate ) this.props.onUpdate( this.value );
 
 	}
 
@@ -65,8 +69,8 @@ class Knob extends React.Component {
 					type="range"
 					onInput={ this.adjust }
 					disabled={ this.state.disabled }
-					onMouseDown={ this.enableScrub }
-					onMouseUp={ this.disableScrub }
+					onMouseDown={ this.activate }
+					onMouseUp={ this.deactivate }
 					ref={ ( element ) => ( this.element = element ) }
 				/>
 			</div>
@@ -78,10 +82,14 @@ class Knob extends React.Component {
 
 Knob.defaultProps = {
 	disabled: false,
+	value:    50,
+	onUpdate: false,
 };
 
 Knob.propTypes = {
 	disabled: PropTypes.bool,
+	value:    PropTypes.number,
+	onUpdate: PropTypes.func,
 };
 
 export default Knob;
