@@ -11,16 +11,15 @@ class Knob extends React.Component {
 		super( props );
 
 		this.state = {
-			disabled:   props.disabled,
 			adjustable: false,
+			disabled:   props.disabled,
 		};
 
-		this.value  = this.props.value;
-		this.median = 50;
-
-		this.adjust     = this.adjust.bind( this );
-		this.activate   = this.activate.bind( this );
-		this.deactivate = this.deactivate.bind( this );
+		this.value           = this.props.value;
+		this.median          = this.props.max / 2;
+		this.handleMouseDown = this.handleMouseDown.bind( this );
+		this.handleMouseUp   = this.handleMouseUp.bind( this );
+		this.handleInput     = this.handleInput.bind( this );
 
 	}
 
@@ -36,23 +35,27 @@ class Knob extends React.Component {
 
 	}
 
-	adjust( event ) {
+	handleInput() {
 
-		this.value = event.target.value - this.median;
+		this.value = this.element.value - this.median;
+		console.log( this.value );
 
 	}
 
-	activate() {
+	handleMouseDown() {
 
+		this.element.value = this.median;
 		if ( !this.state.adjustable ) this.setState( { adjustable: true } );
 
 	}
 
-	deactivate() {
+	handleMouseUp() {
+
+		this.offset        = false;
+		this.element.value = this.median;
 
 		if ( this.state.adjustable ) this.setState( { adjustable: false } );
-		this.element.value = this.median;
-		if ( this.props.onUpdate ) this.props.onUpdate( this.value );
+		// if ( this.props.onChange ) this.props.onChange( this.state.value );
 
 	}
 
@@ -67,10 +70,12 @@ class Knob extends React.Component {
 			<div className={ classNames }>
 				<input
 					type="range"
-					onInput={ this.adjust }
+					min={ this.props.min }
+					max={ this.props.max }
 					disabled={ this.state.disabled }
-					onMouseDown={ this.activate }
-					onMouseUp={ this.deactivate }
+					onMouseDown={ this.handleMouseDown }
+					onMouseUp={ this.handleMouseUp }
+					onInput={ this.handleInput }
 					ref={ ( element ) => ( this.element = element ) }
 				/>
 			</div>
@@ -81,15 +86,19 @@ class Knob extends React.Component {
 }
 
 Knob.defaultProps = {
+	onChange: false,
 	disabled: false,
 	value:    50,
-	onUpdate: false,
+	min:      0,
+	max:      200,
 };
 
 Knob.propTypes = {
+	onChange: PropTypes.func,
 	disabled: PropTypes.bool,
 	value:    PropTypes.number,
-	onUpdate: PropTypes.func,
+	min:      PropTypes.number,
+	max:      PropTypes.number,
 };
 
 export default Knob;

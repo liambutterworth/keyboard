@@ -371,6 +371,10 @@ class Keyboard extends React.Component {
 
 	}
 
+	foo( x ) {
+		// console.log( x );
+	}
+
 	render() {
 
 		return (
@@ -380,7 +384,7 @@ class Keyboard extends React.Component {
 				<div>
 					<Slider />
 					&nbsp;
-					<Knob />
+					<Knob onChange={ this.foo } />
 				</div>
 
 				<Select name="foo" options={ [
