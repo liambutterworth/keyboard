@@ -12,4 +12,5 @@ services:
       - PORT=3000
     ports:
       - 3000:3000
-    entrypoint: ./docker-entrypoint.sh
+    command: 'npm start'
+# entrypoint: ./docker-entrypoint.sh
