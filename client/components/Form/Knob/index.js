@@ -37,25 +37,35 @@ class Knob extends React.Component {
 
 	handleInput() {
 
-		this.value = this.element.value - this.median;
-		console.log( this.value );
+		if ( !this.initialValue ) this.initialValue = this.element.value;
+		this.relativeValue = this.element.value - this.initialValue;
 
 	}
 
 	handleMouseDown() {
 
-		this.element.value = this.median;
 		if ( !this.state.adjustable ) this.setState( { adjustable: true } );
 
 	}
 
 	handleMouseUp() {
 
-		this.offset        = false;
-		this.element.value = this.median;
+		this.value         = this.value + this.relativeValue;
+		this.initialValue  = undefined;
+		this.relativeValue = undefined;
+
+		if ( this.value < this.props.min ) {
+
+			this.value = this.props.min;
+
+		} else if ( this.value > this.props.max ) {
+
+			this.value = this.props.max;
+
+		}
 
 		if ( this.state.adjustable ) this.setState( { adjustable: false } );
-		// if ( this.props.onChange ) this.props.onChange( this.state.value );
+		if ( this.onUpdate ) this.onUpdate( this.value );
 
 	}
 
@@ -88,9 +98,9 @@ class Knob extends React.Component {
 Knob.defaultProps = {
 	onChange: false,
 	disabled: false,
-	value:    50,
+	value:    0,
 	min:      0,
-	max:      200,
+	max:      100,
 };
 
 Knob.propTypes = {
