@@ -1,23 +1,21 @@
-$knob-diameter: lines( 5 );
+$padding: lines( 1.25 );
+$knob-diameter: lines( 4 );
+$knob-radius: calc( $knob-diameter / 2 );
 $range-height: $knob-diameter;
 $range-width: calc( $knob-diameter * 2 );
 
 @define-mixin track {
-	background-color: red;
+	background-color: transparent;
 	border: none;
 	height: $knob-diameter;
 }
 
 @define-mixin thumb {
 	-webkit-appearance: none;
-	background-color: grey;
-	/* height: 10px; */
+	background-color: transparent;
 	height: $knob-diameter;
-	/* width: $knob-diameter; */
-	/* width: 10px; */
 	width: lines( 0.25 );
-	/* border-radius: 100%; */
-	
+
 	&::after {
 		display: block;
 		content: "";
@@ -28,36 +26,98 @@ $range-width: calc( $knob-diameter * 2 );
 }
 
 .form-knob {
-	background: blue;
-	border-radius: 100%;
 	display: inline-block;
-	height: $knob-diameter;
-	width: $knob-diameter;
 	position: relative;
-	/* overflow: hidden; */
+	padding: $padding;
 
-	&.form-knob--adjustable {
-		overflow: visible;
+	ul {
+		height: 100%;
+		width: 100%;
+
+		li {
+			display: block;
+			text-align: center;
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 2em;
+			z-index: 2;
+			margin-left: -1em;
+		}
 	}
 
-	input[type=range] {
-		-webkit-appearance: none;
-		cursor: pointer;
-		height: $range-height;
-		outline: none;
-		transform: rotate( -90deg );
-		width: $range-width;
+	.form-knob-5 { left: 50%; }
+
+	.form-knob-4,
+	.form-knob-6 { top: lines( 0.5 ); }
+	.form-knob-4 { left: 25%; }
+	.form-knob-6 { left: 75%; }
+
+	.form-knob-3,
+	.form-knob-7 { top: lines( 1.75 ); }
+	.form-knob-3 { left: 12.5%; }
+	.form-knob-7 { left: 87.5%; }
+
+	.form-knob-2,
+	.form-knob-8 { top: lines( 3.25 ); }
+	.form-knob-2 { left: 10%; }
+	.form-knob-8 { left: 90%; }
+
+	.form-knob-1,
+	.form-knob-9 { top: lines( 4.5 ); }
+	.form-knob-1 { left: 17.5%; }
+	.form-knob-9 { left: 82.5%; }
+
+	.form-knob-0,
+	.form-knob-10 { top: lines( 5.45 ); }
+	.form-knob-0 { left: 32.5%; }
+	.form-knob-10 { left: 67.6%; }
+
+	.form-knob-marker {
+		height: 2px;
+		width: $knob-radius;
 		position: absolute;
 		top: 50%;
-		left: 50%;
-		margin-top: calc( $range-height / -2 );
-		margin-left: calc( $range-width / -2 );
+		left: $padding;
+		margin-top: -1px;
+		background: white;
+		transform: rotate( -65deg );
+		transform-origin: top right;
+		z-index: 1;
+	}
 
-		&::-webkit-slider-runnable-track { @mixin track; }
-		&::-webkit-slider-thumb { @mixin thumb; }
-		&::-moz-range-track { @mixin track; }
-		&::-moz-range-thumb { @mixin thumb; }
-		&::-ms-track { @mixin track; }
-		&::-ms-thumb { @mixin thumb; }
+	.form-knob-cap {
+		background: blue;
+		border-radius: 100%;
+		height: $knob-diameter;
+		width: $knob-diameter;
+		position: relative;
+		overflow: hidden;
+
+		&.form-knob--adjustable {
+			overflow: visible;
+		}
+
+		input[type=range] {
+			-webkit-appearance: none;
+			cursor: pointer;
+			height: $range-height;
+			opacity: 0;
+			outline: none;
+			transform: rotate( -90deg );
+			width: $range-width;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin-top: calc( $range-height / -2 );
+			margin-left: calc( $range-width / -2 );
+
+			&::-webkit-slider-runnable-track { @mixin track; }
+			&::-webkit-slider-thumb { @mixin thumb; }
+			&::-moz-range-track { @mixin track; }
+			&::-moz-range-thumb { @mixin thumb; }
+			&::-ms-track { @mixin track; }
+			&::-ms-thumb { @mixin thumb; }
+		}
 	}
 }

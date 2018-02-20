@@ -64,8 +64,10 @@ class Knob extends React.Component {
 
 		}
 
+		console.log( this.value );
+
 		if ( this.state.adjustable ) this.setState( { adjustable: false } );
-		if ( this.onUpdate ) this.onUpdate( this.value );
+		if ( this.props.onChange ) this.props.onChange( this.value );
 
 	}
 
@@ -78,16 +80,34 @@ class Knob extends React.Component {
 
 		return (
 			<div className={ classNames }>
-				<input
-					type="range"
-					min={ this.props.min }
-					max={ this.props.max }
-					disabled={ this.state.disabled }
-					onMouseDown={ this.handleMouseDown }
-					onMouseUp={ this.handleMouseUp }
-					onInput={ this.handleInput }
-					ref={ ( element ) => ( this.element = element ) }
-				/>
+				<ul className="form-knob-numbers">
+					<li className="form-knob-0">0</li>
+					<li className="form-knob-1">1</li>
+					<li className="form-knob-2">2</li>
+					<li className="form-knob-3">3</li>
+					<li className="form-knob-4">4</li>
+					<li className="form-knob-5">5</li>
+					<li className="form-knob-6">6</li>
+					<li className="form-knob-7">7</li>
+					<li className="form-knob-8">8</li>
+					<li className="form-knob-9">9</li>
+					<li className="form-knob-10">10</li>
+				</ul>
+
+				<div className="form-knob-marker" />
+
+				<div className="form-knob-cap">
+					<input
+						type="range"
+						min={ this.props.min }
+						max={ this.props.max }
+						disabled={ this.state.disabled }
+						onMouseDown={ this.handleMouseDown }
+						onMouseUp={ this.handleMouseUp }
+						onInput={ this.handleInput }
+						ref={ ( element ) => ( this.element = element ) }
+					/>
+				</div>
 			</div>
 		);
 
