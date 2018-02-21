@@ -1,5 +1,4 @@
 import React      from 'react';
-import ReactDOM   from 'react-dom';
 import PropTypes  from 'prop-types';
 import ClassNames from 'classnames';
 
@@ -18,7 +17,9 @@ class Knob extends React.Component {
 
 		this.minDegree       = -65;
 		this.maxDegree       = 250;
-		this.resistance      = 0.05;
+		this.resistance      = 0.12;
+		this.initialValue    = 0;
+		this.previousValue   = 0;
 		this.value           = this.props.value;
 		this.median          = this.props.max / 2;
 		this.handleMouseDown = this.handleMouseDown.bind( this );
@@ -39,30 +40,35 @@ class Knob extends React.Component {
 
 	}
 
-	spinCap() {
-
-		const percent = ( this.value - this.props.min ) / ( this.props.max - this.props.min );
-		const degree  = percent * ( this.maxDegree - this.minDegree ) + this.minDegree;
-
-		this.marker.style.transform = `rotate( ${ degree }deg )`;
-
-	}
-
 	handleInput() {
 
-		if ( !this.initialValue ) this.initialValue = this.range.value;
+		this.initialValue = this.initialValue || parseInt( this.range.value, 10 );
 
 		const relativeValue = this.range.value - this.initialValue;
+		const currentValue  = this.initialValue + relativeValue;
 		const updatedValue  = this.value + ( relativeValue * this.resistance );
 
 		if (
-			this.props.min <= updatedValue &&
-			this.props.max >= updatedValue
-		) this.value = updatedValue;
+			updatedValue < this.props.min ||
+			updatedValue > this.props.max ||
+			( this.initialValue < currentValue && currentValue < this.previousValue ) ||
+			( this.previousValue < currentValue && currentValue < this.initialValue )
+		) {
 
-		console.log( this.value );
+			this.initialValue  = 0;
+			this.previousValue = 0;
 
-		this.spinCap();
+		} else {
+
+			this.previousValue = currentValue;
+			this.value         = Math.round( updatedValue * 100 ) / 100;
+
+			const percent = ( this.value - this.props.min ) / ( this.props.max - this.props.min );
+			const degree  = percent * ( this.maxDegree - this.minDegree ) + this.minDegree;
+
+			this.marker.style.transform = `rotate( ${ degree }deg )`;
+
+		}
 
 	}
 

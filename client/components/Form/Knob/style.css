@@ -2,17 +2,17 @@ $padding: lines( 1.25 );
 $knob-diameter: lines( 4 );
 $knob-radius: calc( $knob-diameter / 2 );
 $range-height: $knob-diameter;
-$range-width: calc( $knob-diameter * 2 );
+$range-width: calc( $knob-diameter * 4 );
 
 @define-mixin track {
-	background-color: transparent;
+	background-color: red;
 	border: none;
 	height: $knob-diameter;
 }
 
 @define-mixin thumb {
 	-webkit-appearance: none;
-	background-color: transparent;
+	background-color: blue;
 	height: $knob-diameter;
 	width: lines( 0.25 );
 
