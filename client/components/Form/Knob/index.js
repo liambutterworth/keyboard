@@ -1,4 +1,5 @@
 import React      from 'react';
+import ReactDOM   from 'react-dom';
 import PropTypes  from 'prop-types';
 import ClassNames from 'classnames';
 
@@ -15,6 +16,9 @@ class Knob extends React.Component {
 			disabled:   props.disabled,
 		};
 
+		this.minDegree       = -65;
+		this.maxDegree       = 250;
+		this.resistance      = 0.05;
 		this.value           = this.props.value;
 		this.median          = this.props.max / 2;
 		this.handleMouseDown = this.handleMouseDown.bind( this );
@@ -35,10 +39,30 @@ class Knob extends React.Component {
 
 	}
 
+	spinCap() {
+
+		const percent = ( this.value - this.props.min ) / ( this.props.max - this.props.min );
+		const degree  = percent * ( this.maxDegree - this.minDegree ) + this.minDegree;
+
+		this.marker.style.transform = `rotate( ${ degree }deg )`;
+
+	}
+
 	handleInput() {
 
-		if ( !this.initialValue ) this.initialValue = this.element.value;
-		this.relativeValue = this.element.value - this.initialValue;
+		if ( !this.initialValue ) this.initialValue = this.range.value;
+
+		const relativeValue = this.range.value - this.initialValue;
+		const updatedValue  = this.value + ( relativeValue * this.resistance );
+
+		if (
+			this.props.min <= updatedValue &&
+			this.props.max >= updatedValue
+		) this.value = updatedValue;
+
+		console.log( this.value );
+
+		this.spinCap();
 
 	}
 
@@ -50,22 +74,7 @@ class Knob extends React.Component {
 
 	handleMouseUp() {
 
-		this.value         = this.value + this.relativeValue;
-		this.initialValue  = undefined;
-		this.relativeValue = undefined;
-
-		if ( this.value < this.props.min ) {
-
-			this.value = this.props.min;
-
-		} else if ( this.value > this.props.max ) {
-
-			this.value = this.props.max;
-
-		}
-
-		console.log( this.value );
-
+		this.initialValue = 0;
 		if ( this.state.adjustable ) this.setState( { adjustable: false } );
 		if ( this.props.onChange ) this.props.onChange( this.value );
 
@@ -94,7 +103,10 @@ class Knob extends React.Component {
 					<li className="form-knob-10">10</li>
 				</ul>
 
-				<div className="form-knob-marker" />
+				<div
+					className="form-knob-marker"
+					ref={ ( marker ) => ( this.marker = marker ) }
+				/>
 
 				<div className="form-knob-cap">
 					<input
@@ -105,7 +117,7 @@ class Knob extends React.Component {
 						onMouseDown={ this.handleMouseDown }
 						onMouseUp={ this.handleMouseUp }
 						onInput={ this.handleInput }
-						ref={ ( element ) => ( this.element = element ) }
+						ref={ ( range ) => ( this.range = range ) }
 					/>
 				</div>
 			</div>

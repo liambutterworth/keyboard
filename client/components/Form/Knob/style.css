@@ -81,6 +81,7 @@ $range-width: calc( $knob-diameter * 2 );
 		left: $padding;
 		margin-top: -1px;
 		background: white;
+		pointer-events: none;
 		transform: rotate( -65deg );
 		transform-origin: top right;
 		z-index: 1;
