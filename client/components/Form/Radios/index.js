@@ -3,6 +3,12 @@ import PropTypes from 'prop-types';
 import ShortID   from 'shortid';
 import Radio     from './Radio';
 
+// <Radios name="foo" options={ [
+// 	{ label: 'foobar', value: 'foo' },
+// 	{ label: 'barbaz', value: 'bar' },
+// 	{ label: 'bazfoo', value: 'baz' }
+// ] } />
+
 require( './style.css' );
 
 class Radios extends React.Component {

@@ -1,4 +1,21 @@
 .tabs-title {
+	cursor: pointer;
+	font-size: font-size( 14px );
+	padding: lines( 0.25 ) lines( 0.5 );
+	outline: none;
+
+	&:first-child {
+		border-radius: 4px 0 0 4px;
+	}
+
+	&:last-child {
+		border-radius: 0 4px 4px 0;
+	}
+
+	& + .tabs-title {
+		border-left: 1px solid grey;
+	}
+
 	&.tabs-title--active {
 		color: red;
 	}

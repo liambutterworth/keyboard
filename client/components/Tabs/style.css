@@ -1,0 +1,6 @@
+.tabs {
+	.tabs-titles {
+		padding: lines( 0.5 ) 0;
+		text-align: center;
+	}
+}

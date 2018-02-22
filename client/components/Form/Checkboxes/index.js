@@ -3,6 +3,12 @@ import PropTypes from 'prop-types';
 import ShortID   from 'shortid';
 import Checkbox  from './Checkbox';
 
+// <Checkboxes name="checkbox-test" data={ [
+// 	{ name: 'checkbox-test-1', label: 'Checkbox Test 1', value: '1' },
+// 	{ name: 'checkbox-test-2', label: 'Checkbox Test 2', value: '2' },
+// 	{ name: 'checkbox-test-3', label: 'Checkbox Test 3', value: '3' },
+// ] } />
+
 require( './style.css' );
 
 class Checkboxes extends React.Component {

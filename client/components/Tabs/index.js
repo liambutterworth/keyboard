@@ -4,6 +4,8 @@ import ShortID   from 'shortid';
 import Title     from './Title';
 import Tab       from './Tab';
 
+require( './style.css' );
+
 class Tabs extends React.Component {
 
 	constructor( props ) {

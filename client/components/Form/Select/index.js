@@ -3,6 +3,12 @@ import PropTypes from 'prop-types';
 import ShortID   from 'shortid';
 import Option    from './Option';
 
+// <Select name="foo" options={ [
+// 	{ label: 'foobar', value: 'foo' },
+// 	{ label: 'barbaz', value: 'bar' },
+// 	{ label: 'bazfoo', value: 'baz' },
+// ] } />
+
 require( './style.css' );
 
 class Select extends React.Component {

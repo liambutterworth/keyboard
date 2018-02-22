@@ -371,39 +371,21 @@ class Keyboard extends React.Component {
 
 	}
 
-	foo( x ) {
-		// console.log( x );
-	}
-
 	render() {
 
 		return (
 			<div className="keyboard">
-				<Button text="Foobar" />
+				<Tabs>
+					<Tab title="Foo">
+						<Knob />
+						<Knob />
+					</Tab>
 
-				<div>
-					<Slider />
-					&nbsp;
-					<Knob onChange={ this.foo } />
-				</div>
-
-				<Select name="foo" options={ [
-					{ label: 'foobar', value: 'foo' },
-					{ label: 'barbaz', value: 'bar' },
-					{ label: 'bazfoo', value: 'baz' },
-				] } />
-
-				<Radios name="radio-test" data={ [
-					{ label: 'Radio Test 1', value: '1' },
-					{ label: 'Radio Test 2', value: '2' },
-					{ label: 'Radio Test 3', value: '3' },
-				] } />
-
-				<Checkboxes name="checkbox-test" data={ [
-					{ name: 'checkbox-test-1', label: 'Checkbox Test 1', value: '1' },
-					{ name: 'checkbox-test-2', label: 'Checkbox Test 2', value: '2' },
-					{ name: 'checkbox-test-3', label: 'Checkbox Test 3', value: '3' },
-				] } />
+					<Tab title="Bar">
+						<Slider />
+						<Slider />
+					</Tab>
+				</Tabs>
 
 				<div className="keyboard-keys">
 					{ this.renderKeys() }

@@ -86,15 +86,11 @@ class Knob extends React.Component {
 
 	}
 
-	render() {
+	renderNumbers() {
 
-		const classNames = ClassNames( {
-			'form-knob':             true,
-			'form-knob--adjustable': this.state.adjustable,
-		} );
+		if ( this.props.numbered ) {
 
-		return (
-			<div className={ classNames }>
+			return (
 				<ul className="form-knob-numbers">
 					<li className="form-knob-0">0</li>
 					<li className="form-knob-1">1</li>
@@ -108,23 +104,44 @@ class Knob extends React.Component {
 					<li className="form-knob-9">9</li>
 					<li className="form-knob-10">10</li>
 				</ul>
+			);
 
-				<div
-					className="form-knob-marker"
-					ref={ ( marker ) => ( this.marker = marker ) }
-				/>
+		}
 
-				<div className="form-knob-cap">
-					<input
-						type="range"
-						min={ this.props.min }
-						max={ this.props.max }
-						disabled={ this.state.disabled }
-						onMouseDown={ this.handleMouseDown }
-						onMouseUp={ this.handleMouseUp }
-						onInput={ this.handleInput }
-						ref={ ( range ) => ( this.range = range ) }
-					/>
+	}
+
+	render() {
+
+		const classNames = ClassNames( {
+			'form-knob':             true,
+			'form-knob--adjustable': this.state.adjustable,
+			'form-knob--numbered':   this.props.numbered,
+		} );
+
+		return (
+			<div className={ classNames }>
+				<label className="form-knob-label">Foobar</label>
+
+				<div className="form-knob-body">
+					{ this.renderNumbers() }
+
+					<div className="form-knob-cap">
+						<div
+							className="form-knob-marker"
+							ref={ ( marker ) => ( this.marker = marker ) }
+						/>
+
+						<input
+							type="range"
+							min={ this.props.min }
+							max={ this.props.max }
+							disabled={ this.state.disabled }
+							onMouseDown={ this.handleMouseDown }
+							onMouseUp={ this.handleMouseUp }
+							onInput={ this.handleInput }
+							ref={ ( range ) => ( this.range = range ) }
+						/>
+					</div>
 				</div>
 			</div>
 		);
@@ -136,6 +153,7 @@ class Knob extends React.Component {
 Knob.defaultProps = {
 	onChange: false,
 	disabled: false,
+	numbered: false,
 	value:    0,
 	min:      0,
 	max:      100,
@@ -143,6 +161,7 @@ Knob.defaultProps = {
 
 Knob.propTypes = {
 	onChange: PropTypes.func,
+	numbered: PropTypes.bool,
 	disabled: PropTypes.bool,
 	value:    PropTypes.number,
 	min:      PropTypes.number,
