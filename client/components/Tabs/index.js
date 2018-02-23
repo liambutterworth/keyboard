@@ -4,6 +4,11 @@ import ShortID   from 'shortid';
 import Title     from './Title';
 import Tab       from './Tab';
 
+// <Tabs>
+// 	<Tab title="foo"></Tab>
+// 	<Tab title="bar"></Tab>
+// </Tabs>
+
 require( './style.css' );
 
 class Tabs extends React.Component {

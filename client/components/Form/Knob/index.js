@@ -40,6 +40,15 @@ class Knob extends React.Component {
 
 	}
 
+	adjust() {
+
+		const percent = ( this.value - this.props.min ) / ( this.props.max - this.props.min );
+		const degree  = percent * ( this.maxDegree - this.minDegree ) + this.minDegree;
+
+		this.marker.style.transform = `rotate( ${ degree }deg )`;
+
+	}
+
 	handleInput() {
 
 		this.initialValue = this.initialValue || parseInt( this.range.value, 10 );
@@ -63,10 +72,7 @@ class Knob extends React.Component {
 			this.previousValue = currentValue;
 			this.value         = Math.round( updatedValue * 100 ) / 100;
 
-			const percent = ( this.value - this.props.min ) / ( this.props.max - this.props.min );
-			const degree  = percent * ( this.maxDegree - this.minDegree ) + this.minDegree;
-
-			this.marker.style.transform = `rotate( ${ degree }deg )`;
+			this.adjust();
 
 		}
 
@@ -83,6 +89,12 @@ class Knob extends React.Component {
 		this.initialValue = 0;
 		if ( this.state.adjustable ) this.setState( { adjustable: false } );
 		if ( this.props.onChange ) this.props.onChange( this.value );
+
+	}
+
+	componentDidMount() {
+
+		this.adjust();
 
 	}
 
@@ -120,7 +132,11 @@ class Knob extends React.Component {
 
 		return (
 			<div className={ classNames }>
-				<label className="form-knob-label">Foobar</label>
+				{ this.props.label &&
+					<label className="form-knob-label" htmlFor={ this.props.name }>
+						{ this.props.label }
+					</label>
+				}
 
 				<div className="form-knob-body">
 					{ this.renderNumbers() }
@@ -133,6 +149,8 @@ class Knob extends React.Component {
 
 						<input
 							type="range"
+							name={ this.props.name }
+							id={ this.props.name }
 							min={ this.props.min }
 							max={ this.props.max }
 							disabled={ this.state.disabled }
@@ -154,6 +172,7 @@ Knob.defaultProps = {
 	onChange: false,
 	disabled: false,
 	numbered: false,
+	label:    '',
 	value:    0,
 	min:      0,
 	max:      100,
@@ -163,6 +182,8 @@ Knob.propTypes = {
 	onChange: PropTypes.func,
 	numbered: PropTypes.bool,
 	disabled: PropTypes.bool,
+	name:     PropTypes.string.isRequired,
+	label:    PropTypes.string,
 	value:    PropTypes.number,
 	min:      PropTypes.number,
 	max:      PropTypes.number,

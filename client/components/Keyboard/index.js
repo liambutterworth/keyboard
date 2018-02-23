@@ -8,29 +8,14 @@
 // :: Render Methods
 // :: Properties
 
-import React         from 'react';
-import PropTypes     from 'prop-types';
-import ShortID       from 'shortid';
-import MusicTheory   from 'music-theory';
-import Tone          from 'tone';
-import Prompt        from 'components/Prompt';
-import Tabs, { Tab } from 'components/Tabs';
-import ChordSelector from 'components/ChordSelector';
-import ScaleSelector from 'components/ScaleSelector';
-import KeySelector   from 'components/KeySelector';
-import Actions       from 'library/Actions';
-import Key           from './Key';
-
-import Form, {
-	Button,
-	Checkboxes,
-	Checkbox,
-	Radios,
-	Radio,
-	Select,
-	Slider,
-	Knob,
-} from 'components/Form';
+import React       from 'react';
+import PropTypes   from 'prop-types';
+import ShortID     from 'shortid';
+import MusicTheory from 'music-theory';
+import Tone        from 'tone';
+import Actions     from 'library/Actions';
+import Key         from './Key';
+import Controls    from './Controls';
 
 require( './style.css' );
 
@@ -52,9 +37,9 @@ class Keyboard extends React.Component {
 		this.keys         = [];
 		this.synth        = new Tone.PolySynth().toMaster();
 
-		this.handleAction = this.handleAction.bind( this );
-		this.setHighlight = this.setHighlight.bind( this );
 		this.setModifier  = this.setModifier.bind( this );
+		this.setHighlight = this.setHighlight.bind( this );
+		this.handleAction = this.handleAction.bind( this );
 
 		Actions.add( [
 			{ type: 'shortcut', char: ',', code: 188, desc: 'octave down' },
@@ -91,32 +76,6 @@ class Keyboard extends React.Component {
 			{ type: 'input', char: 'o', code: 79, note: 'D', desc: 'toggle key' },
 			{ type: 'input', char: '0', code: 48, note: 'Eb', desc: 'toggle key' },
 			{ type: 'input', char: 'p', code: 80, note: 'E', desc: 'toggle key' },
-
-			// { type: 'input', char: '\t', code: 9, note: 'C', desc: 'toggle key' },
-			// { type: 'input', char: 'i', code: 49, note: 'Db', desc: 'toggle key' },
-			// { type: 'input', char: 'q', code: 81, note: 'D', desc: 'toggle key' },
-			// { type: 'input', char: '2', code: 50, note: 'Eb', desc: 'toggle key' },
-			// { type: 'input', char: 'w', code: 87, note: 'E', desc: 'toggle key' },
-			// { type: 'input', char: 'e', code: 69, note: 'F', desc: 'toggle key' },
-			// { type: 'input', char: '4', code: 52, note: 'Gb', desc: 'toggle key' },
-			// { type: 'input', char: 'r', code: 82, note: 'G', desc: 'toggle key' },
-			// { type: 'input', char: '5', code: 53, note: 'Ab', desc: 'toggle key' },
-			// { type: 'input', char: 't', code: 84, note: 'A', desc: 'toggle key' },
-			// { type: 'input', char: '6', code: 54, note: 'Bb', desc: 'toggle key' },
-			// { type: 'input', char: 'y', code: 89, note: 'B', desc: 'toggle key' },
-			// { type: 'input', char: 'u', code: 85, note: 'C', desc: 'toggle key' },
-			// { type: 'input', char: '8', code: 56, note: 'Db', desc: 'toggle key' },
-			// { type: 'input', char: 'i', code: 73, note: 'D', desc: 'toggle key' },
-			// { type: 'input', char: '9', code: 57, note: 'Eb', desc: 'toggle key' },
-			// { type: 'input', char: 'o', code: 79, note: 'E', desc: 'toggle key' },
-			// { type: 'input', char: 'p', code: 80, note: 'F', desc: 'toggle key' },
-			// { type: 'input', char: '-', code: 189, note: 'Gb', desc: 'toggle key' },
-			// { type: 'input', char: '[', code: 219, note: 'G', desc: 'toggle key' },
-			// { type: 'input', char: '=', code: 187, note: 'Ab', desc: 'toggle key' },
-			// { type: 'input', char: ']', code: 221, note: 'A', desc: 'toggle key' },
-			// { type: 'input', char: '\b', code: 8, note: 'Bb', desc: 'toggle key' },
-			// { type: 'input', char: '\\', code: 220, note: 'B', desc: 'toggle key' },
-			// { type: 'input', char: '\r', code: 13, note: 'C', desc: 'toggle key' },
 		] );
 
 	}
@@ -375,36 +334,11 @@ class Keyboard extends React.Component {
 
 		return (
 			<div className="keyboard">
-				<Tabs>
-					<Tab title="Foo">
-						<Knob />
-						<Knob />
-					</Tab>
-
-					<Tab title="Bar">
-						<Slider />
-						<Slider />
-					</Tab>
-				</Tabs>
+				<Controls synth={ this.synth } />
 
 				<div className="keyboard-keys">
 					{ this.renderKeys() }
 				</div>
-
-				<Prompt ref={ ( self ) => ( this.modifierPrompt = self ) }>
-					<Tabs>
-						<Tab title="Chord"><ChordSelector set={ this.setModifier } defineRoot={ false } /></Tab>
-						<Tab title="Key"><KeySelector set={ this.setModifier } /></Tab>
-					</Tabs>
-				</Prompt>
-
-				<Prompt ref={ ( self ) => ( this.highlightPrompt = self ) }>
-					<Tabs>
-						<Tab title="Chord"><ChordSelector set={ this.setHighlight } /></Tab>
-						<Tab title="Key"><KeySelector set={ this.setHighlight } /></Tab>
-						<Tab title="Scale"><ScaleSelector set={ this.setHighlight } /></Tab>
-					</Tabs>
-				</Prompt>
 			</div>
 		);
 
