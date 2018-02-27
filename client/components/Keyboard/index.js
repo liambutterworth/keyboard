@@ -16,6 +16,8 @@ import Tone        from 'tone';
 import Actions     from 'library/Actions';
 import Key         from './Key';
 import Controls    from './Controls';
+import Oscillator  from './Oscillator';
+import AmpEnvelope from './AmpEnvelope';
 
 require( './style.css' );
 
@@ -26,7 +28,6 @@ class Keyboard extends React.Component {
 	//
 
 	constructor( props ) {
-
 		super( props );
 
 		this.state = {
@@ -34,12 +35,14 @@ class Keyboard extends React.Component {
 		};
 
 		this.fingerprints = [];
+		this.oscillators  = [];
 		this.keys         = [];
-		this.synth        = new Tone.PolySynth().toMaster();
+		// this.synth        = new Tone.PolySynth( 1, Tone.DuoSynth ).toMaster();
 
-		this.setModifier  = this.setModifier.bind( this );
-		this.setHighlight = this.setHighlight.bind( this );
-		this.handleAction = this.handleAction.bind( this );
+		this.setModifier    = this.setModifier.bind( this );
+		this.setHighlight   = this.setHighlight.bind( this );
+		this.handleAction   = this.handleAction.bind( this );
+		this.getOscillators = this.getOscillators.bind( this );
 
 		Actions.add( [
 			{ type: 'shortcut', char: ',', code: 188, desc: 'octave down' },
@@ -77,7 +80,6 @@ class Keyboard extends React.Component {
 			{ type: 'input', char: '0', code: 48, note: 'Eb', desc: 'toggle key' },
 			{ type: 'input', char: 'p', code: 80, note: 'E', desc: 'toggle key' },
 		] );
-
 	}
 
 	//
@@ -85,15 +87,15 @@ class Keyboard extends React.Component {
 	//
 
 	componentWillMount() {
-
 		document.addEventListener( 'action', this.handleAction );
-
 	}
 
 	componentWillUnmount() {
-
 		document.removeEventListener( 'action', this.handleAction );
+	}
 
+	componentDidMount() {
+		// this.ampEnvelope.connect( Tone.Master );
 	}
 
 	//
@@ -101,22 +103,16 @@ class Keyboard extends React.Component {
 	//
 
 	setHighlight( highlight ) {
-
 		const symbols = highlight.notes.symbols();
 
 		this.keys.forEach( ( key ) => {
-
 			const symbol = key.note.symbol();
 			if ( symbols.includes( symbol ) ) key.highlight(); else key.unhighlight();
-
 		} );
-
 	}
 
 	setModifier( modifier ) {
-
 		this.modifier = modifier;
-
 	}
 
 	//
@@ -124,127 +120,120 @@ class Keyboard extends React.Component {
 	//
 
 	getKey( code ) {
-
 		return this.keys.find( ( key ) => ( key.props.code === code ) );
-
 	}
 
 	getChordKeys( root, chord ) {
-
 		if ( !chord ) return [ root ];
 
 		return chord.intervals.map( ( interval ) => {
-
 			const maxIndex    = this.keys.length - 1;
 			const targetIndex = root.props.index + interval.steps;
 
 			let key;
 
 			if ( targetIndex <= maxIndex ) {
-
 				key = this.keys[targetIndex];
-
 			} else {
-
 				const invertedInverval = interval.invert();
 				const invertedIndex    = root.props.index - invertedInverval.steps;
 
 				key = this.keys[invertedIndex];
-
 			}
 
 			return key;
-
 		} );
 
 	}
 
 	modifyKey( root ) {
-
 		let chord;
 
 		if ( this.modifier instanceof MusicTheory.Key ) {
-
 			chord = this.modifier.getChordFromNote( root.note );
-
 		} else if ( this.modifier instanceof MusicTheory.Chord ) {
-
 			chord = this.modifier;
-
 		}
 
 		return this.getChordKeys( root, chord );
-
 	}
 
 	playKey( root ) {
-
-		const keys    = this.modifier ? this.modifyKey( root ) : [ root ];
-		const pitches = keys.map( ( key ) => ( key.pitch ) );
-
-		// add a pitch fingerprint to the fingerprints cache; solves the
-		// issue of keys being associated with multiple extended keys
-		this.fingerprints.push( pitches.join( '' ) );
-
-		// press each key in turn
+		const keys = this.modifier ? this.modifyKey( root ) : [ root ];
 		keys.forEach( ( key ) => ( key.press() ) );
 
-		// trigger the synth playback
-		this.synth.triggerAttack( pitches );
+// 		const keys    = this.modifier ? this.modifyKey( root ) : [ root ];
+// 		const pitches = keys.map( ( key ) => ( key.pitch ) );
+
+// 		// add a pitch fingerprint to the fingerprints cache; solves the
+// 		// issue of keys being associated with multiple extended keys
+// 		this.fingerprints.push( pitches.join( '' ) );
+
+// 		// press each key in turn
+// 		keys.forEach( ( key ) => ( key.press() ) );
+
+// 		// trigger the synth playback
+// 		this.synth.triggerAttack( pitches );
 
 	}
 
 	stopKey( root ) {
 
-		const keys    = this.modifier ? this.modifyKey( root ) : [ root ];
-		const pitches = keys.map( ( key ) => ( key.pitch ) );
+		const keys = this.modifier ? this.modifyKey( root ) : [ root ];
+		keys.forEach( ( key ) => ( key.release() ) );
 
-		// remove pitch fingerprint from the fingerprints cache
-		this.fingerprints.splice( this.fingerprints.indexOf( pitches.join( '' ) ), 1 );
+// 		const keys    = this.modifier ? this.modifyKey( root ) : [ root ];
+// 		const pitches = keys.map( ( key ) => ( key.pitch ) );
 
-		// release each key in turn
-		keys.forEach( ( key ) => {
+// 		// remove pitch fingerprint from the fingerprints cache
+// 		this.fingerprints.splice( this.fingerprints.indexOf( pitches.join( '' ) ), 1 );
 
-			// find out if the pitch currently exists in another extended key
-			const index = this.fingerprints.findIndex( ( fingerprint ) => ( new RegExp( key.pitch ).test( fingerprint ) ) );
+// 		// release each key in turn
+// 		keys.forEach( ( key ) => {
 
-			// pitch exists in another extended key
-			if ( index > -1 ) {
+// 			// find out if the pitch currently exists in another extended key
+// 			const index = this.fingerprints.findIndex( ( fingerprint ) => ( new RegExp( key.pitch ).test( fingerprint ) ) );
 
-				// remove pitch from array to be released
-				pitches.splice( pitches.indexOf( key.pitch ), 1 );
+// 			// pitch exists in another extended key
+// 			if ( index > -1 ) {
 
-			} else {
+// 				// remove pitch from array to be released
+// 				pitches.splice( pitches.indexOf( key.pitch ), 1 );
 
-				// relase the key
-				key.release();
+// 			} else {
 
-			}
+// 				// relase the key
+// 				key.release();
 
-		} );
+// 			}
 
-		// stop all pitches that dont exist in the fingerprint cache
-		this.synth.triggerRelease( pitches );
+// 		} );
+
+// 		// stop all pitches that dont exist in the fingerprint cache
+// 		this.synth.triggerRelease( pitches );
 
 	}
 
 	stopKeys() {
-
-		const pitches = [];
-
 		this.keys.forEach( ( key ) => {
-
-			if ( key.state.isPressed ) {
-
-				key.release();
-				pitches.push( key.pitch );
-
-			}
-
+			if ( key.state.isPressed ) key.release();
 		} );
 
-		this.synth.triggerRelease( pitches );
-		this.fingerprints = [];
+// 		const pitches = [];
+
+// 		this.keys.forEach( ( key ) => {
+
+// 			if ( key.state.isPressed ) {
+
+// 				key.release();
+// 				pitches.push( key.pitch );
+
+// 			}
+
+// 		} );
+
+// 		this.synth.triggerRelease( pitches );
+// 		this.fingerprints = [];
 
 	}
 
@@ -255,16 +244,11 @@ class Keyboard extends React.Component {
 	handleAction( event ) {
 
 		switch ( event.detail.desc ) {
-
 			case 'toggle key':
 				if ( event.detail.delegator === 'keydown' ) {
-
 					this.playKey( this.getKey( event.detail.code ) );
-
 				} else if ( event.detail.delegator === 'keyup' ) {
-
 					this.stopKey( this.getKey( event.detail.code ) );
-
 				}
 				break;
 
@@ -279,21 +263,12 @@ class Keyboard extends React.Component {
 				this.stopKeys();
 				this.setState( { octave: this.state.octave + 1 } );
 				break;
-
-			case 'open prompt':
-				this.prompt.toggle();
-				break;
-
-			case 'toggle modifier prompt':
-				this.modifierPrompt.toggle();
-				break;
-
-			case 'toggle highlight prompt':
-				this.highlightPrompt.toggle();
-				break;
-
 		}
 
+	}
+
+	getOscillators( pitch ) {
+		return this.oscillators.map( ( oscillator ) => ( oscillator.get( pitch, this.ampEnvelope ) ) );
 	}
 
 	//
@@ -301,13 +276,11 @@ class Keyboard extends React.Component {
 	//
 
 	renderKeys() {
-
 		const inputs = Actions.all( 'input' );
 
 		let octave = this.state.octave;
 
 		return inputs.map( ( key, index ) => {
-
 			const component = (
 				<Key
 					key={ ShortID.generate() }
@@ -317,6 +290,7 @@ class Keyboard extends React.Component {
 					synth={ this.synth }
 					octave={ octave }
 					context={ this.context }
+					getOscillators={ this.getOscillators }
 					ref={ ( self ) => ( this.keys[index] = self ) }
 				/>
 			);
@@ -325,25 +299,23 @@ class Keyboard extends React.Component {
 			if ( ( index + 1 ) % 12 === 0 ) octave += 1;
 
 			return component;
-
 		} );
 
 	}
 
 	render() {
-
 		return (
 			<div className="keyboard">
-				<Controls synth={ this.synth } />
+				<Oscillator ref={ ( oscillator ) => ( this.oscillators.push( oscillator ) ) } />
+				<Oscillator ref={ ( oscillator ) => ( this.oscillators.push( oscillator ) ) } />
+				<AmpEnvelope ref={ ( ampEnvelope ) => ( this.ampEnvelope = ampEnvelope ) } />
 
 				<div className="keyboard-keys">
 					{ this.renderKeys() }
 				</div>
 			</div>
 		);
-
 	}
-
 }
 
 //

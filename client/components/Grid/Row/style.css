@@ -1,9 +1,0 @@
-.grid-row {
-	margin: 0 -1rem;
-
-	&::after {
-		content: "";
-		display: table;
-		clear: both;
-	}
-}

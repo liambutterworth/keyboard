@@ -1,3 +1,297 @@
+/**
+ * Form
+ *
+ * :: Button
+ * :: Select
+ * :: Checkbox
+ * :: Radio
+ * :: Knob
+ * :: Slider
+ */
+
 label {
 	cursor: pointer;
+}
+
+/**
+ * Button
+ */
+
+.form-button {
+	padding: lines( 1 ) lines( 2 );
+}
+
+/**
+ * Select
+ */
+
+.form-select {
+	border: 1px solid white;
+	margin: lines( 0.5 ) 0;
+
+	select {
+		appearance: none;
+		background: transparent;
+		border: none;
+		color: white;
+		cursor: pointer;
+		font-size: font-size( 18px );
+		line-height: line-height( 18px );
+		height: 100%;
+		padding: lines( 0.5, 1px ) lines( 0.75, 1px );
+		width: 100%;
+	}
+}
+
+/**
+ * Checkbox
+ */
+
+.form-checkbox {
+	margin: lines( 0.5 ) 0;
+
+	input[type=checkbox] {
+		display: none;
+	}
+
+	.form-checkbox-box {
+		border: 1px solid white;
+		border-radius: 2px;
+		display: inline-block;
+		height: lines( 1 );
+		width: lines( 1, 2px );
+		margin: 0 lines( 0.25 ) 0 0;
+		vertical-align: bottom;
+		position: relative;
+	}
+
+	:checked + label .form-checkbox-box::after {
+		background: red;
+		border-radius: 2px;
+		content: "";
+		position: absolute;
+		top: 12.5%;
+		left: 12.5%;
+		height: 75%;
+		width: 75%;
+	}
+}
+
+/**
+ * Radio
+ */
+
+.form-radio {
+	margin: lines( 0.5 ) 0;
+
+	input[type=radio] {
+		display: none;
+	}
+
+	.form-radio-box {
+		border: 1px solid white;
+		border-radius: 200px;
+		display: inline-block;
+		height: lines( 1 );
+		width: lines( 1 );
+		margin: 0 lines( 0.25 ) 0 0;
+		vertical-align: bottom;
+		position: relative;
+	}
+
+	:checked + label .form-radio-box::after {
+		background: red;
+		border-radius: 200px;
+		content: "";
+		position: absolute;
+		top: 12.5%;
+		left: 12.5%;
+		height: 75%;
+		width: 75%;
+	}
+}
+
+/**
+ * Knob
+ */
+
+$padding: lines( 1.25 );
+$knob-diameter: lines( 4 );
+$knob-radius: calc( $knob-diameter / 2 );
+$range-height: $knob-diameter;
+$range-width: calc( $knob-diameter * 4 );
+
+@define-mixin track {
+	background-color: red;
+	border: none;
+	height: $knob-diameter;
+}
+
+@define-mixin thumb {
+	-webkit-appearance: none;
+	background-color: blue;
+	height: $knob-diameter;
+	width: lines( 0.25 );
+
+	&::after {
+		display: block;
+		content: "";
+		background: red;
+		height: 20px;
+		width: 20px;
+	}
+}
+
+.form-knob {
+	display: inline-block;
+	position: relative;
+
+	&.form-knob--numbered .form-knob-body {
+		padding: $padding;
+		position: relative;
+	}
+
+	.form-knob-label {
+		display: block;
+		text-align: center;
+		margin-bottom: lines( 0.5 );
+	}
+
+	ul {
+		height: 100%;
+		width: 100%;
+
+		li {
+			display: block;
+			text-align: center;
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 2em;
+			z-index: 2;
+			margin-left: -1em;
+		}
+	}
+
+	.form-knob-5 { left: 50%; }
+
+	.form-knob-4,
+	.form-knob-6 { top: lines( 0.5 ); }
+	.form-knob-4 { left: 25%; }
+	.form-knob-6 { left: 75%; }
+
+	.form-knob-3,
+	.form-knob-7 { top: lines( 1.75 ); }
+	.form-knob-3 { left: 12.5%; }
+	.form-knob-7 { left: 87.5%; }
+
+	.form-knob-2,
+	.form-knob-8 { top: lines( 3.25 ); }
+	.form-knob-2 { left: 10%; }
+	.form-knob-8 { left: 90%; }
+
+	.form-knob-1,
+	.form-knob-9 { top: lines( 4.5 ); }
+	.form-knob-1 { left: 17.5%; }
+	.form-knob-9 { left: 82.5%; }
+
+	.form-knob-0,
+	.form-knob-10 { top: lines( 5.45 ); }
+	.form-knob-0 { left: 32.5%; }
+	.form-knob-10 { left: 67.6%; }
+
+	.form-knob-marker {
+		height: 2px;
+		width: $knob-radius;
+		position: absolute;
+		top: 50%;
+		left: 0;
+		margin-top: -1px;
+		background: white;
+		pointer-events: none;
+		transform: rotate( -65deg );
+		transform-origin: top right;
+		z-index: 1;
+	}
+
+	.form-knob-cap {
+		background: blue;
+		border-radius: 100%;
+		height: $knob-diameter;
+		width: $knob-diameter;
+		position: relative;
+		overflow: hidden;
+
+		&.form-knob--adjustable {
+			overflow: visible;
+		}
+
+		input[type=range] {
+			-webkit-appearance: none;
+			cursor: pointer;
+			height: $range-height;
+			opacity: 0;
+			outline: none;
+			transform: rotate( -90deg );
+			width: $range-width;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin-top: calc( $range-height / -2 );
+			margin-left: calc( $range-width / -2 );
+
+			&::-webkit-slider-runnable-track { @mixin track; }
+			&::-webkit-slider-thumb { @mixin thumb; }
+			&::-moz-range-track { @mixin track; }
+			&::-moz-range-thumb { @mixin thumb; }
+			&::-ms-track { @mixin track; }
+			&::-ms-thumb { @mixin thumb; }
+		}
+	}
+}
+
+/**
+ * Slider
+ */
+
+$slider-height: lines( 10 );
+$thumb-height: lines( 1.25 );
+
+@define-mixin track {
+	background-color: red;
+	border: none;
+	height: 2px;
+}
+
+@define-mixin thumb {
+	-webkit-appearance: none;
+	background-color: grey;
+	height: $thumb-height;
+	width: 30px;
+	margin: calc( $thumb-height / -2 ) 0 0;
+}
+
+.form-slider {
+	background: blue;
+	display: inline-block;
+	height: $slider-height;
+	width: $thumb-height;
+
+	input[type=range] {
+		-webkit-appearance: none;
+		cursor: pointer;
+		height: 2px;
+		margin: 0 0 0 calc( $thumb-height / 2 );
+		outline: none;
+		transform: rotate( -270deg ) translateX( -11px );
+		transform-origin: top left;
+		width: $slider-height;
+
+		&::-webkit-slider-runnable-track { @mixin track; }
+		&::-webkit-slider-thumb { @mixin thumb; }
+		&::-moz-range-track { @mixin track; }
+		&::-moz-range-thumb { @mixin thumb; }
+		&::-ms-track { @mixin track; }
+		&::-ms-thumb { @mixin thumb; }
+	}
 }
