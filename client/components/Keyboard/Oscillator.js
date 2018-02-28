@@ -9,32 +9,30 @@ import {
 class Oscillator extends React.Component {
 
 	constructor( props ) {
-
 		super( props );
 
-		this.type   = this.props.type;
-		this.detune = this.props.detune;
-
+		this.instances = [];
+		this.type      = this.props.type;
+		this.detune    = this.props.detune;
 	}
 
-	get( pitch, node ) {
-
-		return new Tone.Oscillator( {
+	create( frequency ) {
+		const oscillator = new Tone.Oscillator({
 			type:      this.type,
 			detune:    this.detune,
-			frequency: pitch,
-		} ).connect( node );
+			frequency: frequency,
+		});
 
+		this.instances.push( oscillator );
+		return oscillator;
 	}
 
 	render() {
-
 		return (
 			<div>
 				<h4>Oscillator</h4>
 			</div>
 		);
-
 	}
 
 }

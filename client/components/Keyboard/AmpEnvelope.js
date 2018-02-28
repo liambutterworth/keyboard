@@ -6,12 +6,23 @@ class AmpEnvelope extends React.Component {
 	constructor( props ) {
 		super( props );
 
-		this.ampEnvelope = new Tone.AmplitudeEnvelope({
-			attack:  this.props.attack,
-			decay:   this.props.decay,
-			sustain: this.props.sustain,
-			release: this.props.release,
-		}).toMaster();
+		this.instances = [];
+		this.attack    = this.props.attack;
+		this.decay     = this.props.decay;
+		this.sustain   = this.props.sustain;
+		this.release   = this.props.release;
+	}
+
+	create() {
+		const ampEnvelope = new Tone.AmplitudeEnvelope({
+			attack:  this.attack,
+			decay:   this.decay,
+			sustain: this.sustain,
+			release: this.release,
+		});
+
+		this.instances.push( ampEnvelope );
+		return ampEnvelope;
 	}
 
 	render() {

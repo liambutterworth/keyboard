@@ -2,6 +2,7 @@ import React       from 'react';
 import PropTypes   from 'prop-types';
 import ClassNames  from 'classnames';
 import MusicTheory from 'music-theory';
+import Tone        from 'tone';
 
 class Key extends React.Component {
 
@@ -14,22 +15,36 @@ class Key extends React.Component {
 		};
 
 		this.note  = new MusicTheory.Note( props.note );
-		this.pitch = `${ this.note.symbol() }${ this.props.octave }`;
+		this.pitch = `${ this.note.symbol() }${ props.octave }`;
+	}
 
+	componentDidMount() {
+		this.oscillator1 = this.props.controls.oscillator1.create( this.pitch );
+		this.oscillator2 = this.props.controls.oscillator2.create( this.pitch );
+		this.ampEnvelope = this.props.controls.ampEnvelope.create();
+
+		this.oscillator1.connect( this.ampEnvelope ).start();
+		this.oscillator2.connect( this.ampEnvelope ).start();
+		this.ampEnvelope.connect( Tone.Master );
+	}
+
+	componentWillUnmount() {
+		this.oscillator1.dispose();
+		this.oscillator2.dispose();
+		this.ampEnvelope.dispose();
 	}
 
 	press() {
 
 		if ( !this.state.isPressed ) this.setState( { isPressed: true } );
-		this.oscillators = this.props.getOscillators( this.pitch );
-		this.oscillators.forEach( ( oscillator ) => ( oscillator.start() ) );
+		this.ampEnvelope.triggerAttack();
 
 	}
 
 	release() {
 
 		if ( this.state.isPressed ) this.setState( { isPressed: false } );
-		this.oscillators.forEach( ( oscillator ) => ( oscillator.stop().dispose() ) );
+		this.ampEnvelope.triggerRelease();
 
 	}
 

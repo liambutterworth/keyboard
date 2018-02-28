@@ -35,14 +35,12 @@ class Keyboard extends React.Component {
 		};
 
 		this.fingerprints = [];
-		this.oscillators  = [];
+		this.controls     = {};
 		this.keys         = [];
-		// this.synth        = new Tone.PolySynth( 1, Tone.DuoSynth ).toMaster();
 
 		this.setModifier    = this.setModifier.bind( this );
 		this.setHighlight   = this.setHighlight.bind( this );
 		this.handleAction   = this.handleAction.bind( this );
-		this.getOscillators = this.getOscillators.bind( this );
 
 		Actions.add( [
 			{ type: 'shortcut', char: ',', code: 188, desc: 'octave down' },
@@ -92,10 +90,6 @@ class Keyboard extends React.Component {
 
 	componentWillUnmount() {
 		document.removeEventListener( 'action', this.handleAction );
-	}
-
-	componentDidMount() {
-		// this.ampEnvelope.connect( Tone.Master );
 	}
 
 	//
@@ -178,7 +172,6 @@ class Keyboard extends React.Component {
 	}
 
 	stopKey( root ) {
-
 		const keys = this.modifier ? this.modifyKey( root ) : [ root ];
 		keys.forEach( ( key ) => ( key.release() ) );
 
@@ -211,7 +204,6 @@ class Keyboard extends React.Component {
 
 // 		// stop all pitches that dont exist in the fingerprint cache
 // 		this.synth.triggerRelease( pitches );
-
 	}
 
 	stopKeys() {
@@ -267,10 +259,6 @@ class Keyboard extends React.Component {
 
 	}
 
-	getOscillators( pitch ) {
-		return this.oscillators.map( ( oscillator ) => ( oscillator.get( pitch, this.ampEnvelope ) ) );
-	}
-
 	//
 	// Render Methods
 	//
@@ -290,7 +278,7 @@ class Keyboard extends React.Component {
 					synth={ this.synth }
 					octave={ octave }
 					context={ this.context }
-					getOscillators={ this.getOscillators }
+					controls={ this.controls }
 					ref={ ( self ) => ( this.keys[index] = self ) }
 				/>
 			);
@@ -306,9 +294,9 @@ class Keyboard extends React.Component {
 	render() {
 		return (
 			<div className="keyboard">
-				<Oscillator ref={ ( oscillator ) => ( this.oscillators.push( oscillator ) ) } />
-				<Oscillator ref={ ( oscillator ) => ( this.oscillators.push( oscillator ) ) } />
-				<AmpEnvelope ref={ ( ampEnvelope ) => ( this.ampEnvelope = ampEnvelope ) } />
+				<Oscillator ref={ ( self ) => ( this.controls.oscillator1 = self ) } />
+				<Oscillator ref={ ( self ) => ( this.controls.oscillator2 = self ) } />
+				<AmpEnvelope ref={ ( self ) => ( this.controls.ampEnvelope = self ) } />
 
 				<div className="keyboard-keys">
 					{ this.renderKeys() }
