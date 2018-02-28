@@ -1,3 +1,12 @@
+//
+// Key
+//
+// :: Constructor
+// :: Mount Methods
+// :: State Methods
+// :: Render
+// :: Properties
+
 import React       from 'react';
 import PropTypes   from 'prop-types';
 import ClassNames  from 'classnames';
@@ -6,8 +15,11 @@ import Tone        from 'tone';
 
 class Key extends React.Component {
 
-	constructor( props ) {
+	//
+	// Constructor
+	//
 
+	constructor( props ) {
 		super( props );
 
 		this.state = {
@@ -17,6 +29,10 @@ class Key extends React.Component {
 		this.note  = new MusicTheory.Note( props.note );
 		this.pitch = `${ this.note.symbol() }${ props.octave }`;
 	}
+
+	//
+	// Mount Methods
+	//
 
 	componentDidMount() {
 		this.oscillator1 = this.props.controls.oscillator1.create( this.pitch );
@@ -28,40 +44,33 @@ class Key extends React.Component {
 		this.ampEnvelope.connect( Tone.Master );
 	}
 
-	componentWillUnmount() {
-		this.oscillator1.dispose();
-		this.oscillator2.dispose();
-		this.ampEnvelope.dispose();
-	}
+	//
+	// State Methods
+	//
 
 	press() {
-
 		if ( !this.state.isPressed ) this.setState( { isPressed: true } );
 		this.ampEnvelope.triggerAttack();
-
 	}
 
 	release() {
-
 		if ( this.state.isPressed ) this.setState( { isPressed: false } );
 		this.ampEnvelope.triggerRelease();
-
 	}
 
 	highlight() {
-
 		this.setState( { isHighlighted: true } );
-
 	}
 
 	unhighlight() {
-
 		this.setState( { isHighlighted: false } );
-
 	}
 
-	render() {
+	//
+	// Render
+	//
 
+	render() {
 		const classNames = ClassNames( {
 			'keyboard-key':                 true,
 			'keyboard-key--accidental':     this.note.isAccidental,
@@ -72,10 +81,12 @@ class Key extends React.Component {
 		return (
 			<div className={ classNames } />
 		);
-
 	}
-
 }
+
+//
+// Properties
+//
 
 Key.propTypes = {
 	note:   PropTypes.string.isRequired,

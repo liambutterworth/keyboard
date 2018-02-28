@@ -1,3 +1,11 @@
+//
+// Select
+//
+// :: Constructor
+// :: State Methods
+// :: Render
+// :: Properties
+
 import React     from 'react';
 import PropTypes from 'prop-types';
 import ShortID   from 'shortid';
@@ -11,54 +19,50 @@ import Option    from './Option';
 
 class Select extends React.Component {
 
-	constructor( props ) {
+	//
+	// Constructor
+	//
 
+	constructor( props ) {
 		super( props );
 
 		this.state = {
 			disabled: props.disabled,
 		};
-
 	}
 
+	//
+	// State Methods
+	//
+
 	disable() {
-
 		if ( !this.state.disabled ) this.setState( { disabled: true } );
-
 	}
 
 	enable() {
-
 		if ( this.state.disabled ) this.setState( { disabled: false } );
-
 	}
 
+	//
+	// Render
+	//
+
 	renderOptions( options ) {
-
 		return options.map( ( option ) => {
-
 			const key = ShortID.generate();
-
 			let html;
 
 			if ( option.value instanceof Array ) {
-
 				html = ( <optgroup key={ key } label={ option.label }>{ this.renderOptions( option.value ) }</optgroup> );
-
 			} else {
-
 				html = ( <Option key={ key } { ...option } /> );
-
 			}
 
 			return html;
-
 		} );
-
 	}
 
 	render() {
-
 		return (
 			<div className="form-select">
 				<select
@@ -73,10 +77,12 @@ class Select extends React.Component {
 				</select>
 			</div>
 		);
-
 	}
-
 }
+
+//
+// Properties
+//
 
 Select.defaultProps = {
 	required:     false,

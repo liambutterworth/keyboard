@@ -8,16 +8,17 @@
 // :: Render Methods
 // :: Properties
 
-import React       from 'react';
-import PropTypes   from 'prop-types';
-import ShortID     from 'shortid';
-import MusicTheory from 'music-theory';
-import Tone        from 'tone';
-import Actions     from 'library/Actions';
-import Key         from './Key';
-import Controls    from './Controls';
-import Oscillator  from './Oscillator';
-import AmpEnvelope from './AmpEnvelope';
+import React            from 'react';
+import PropTypes        from 'prop-types';
+import ShortID          from 'shortid';
+import MusicTheory      from 'music-theory';
+import Tone             from 'tone';
+import Grid, { Column } from 'components/Grid';
+import Wrapper          from 'components/Wrapper';
+import Actions          from 'library/Actions';
+import Key              from './Key';
+import Oscillator       from './Oscillator';
+import AmpEnvelope      from './AmpEnvelope';
 
 require( './style.css' );
 
@@ -37,17 +38,15 @@ class Keyboard extends React.Component {
 		this.fingerprints = [];
 		this.controls     = {};
 		this.keys         = [];
-
-		this.setModifier    = this.setModifier.bind( this );
-		this.setHighlight   = this.setHighlight.bind( this );
-		this.handleAction   = this.handleAction.bind( this );
+		this.setModifier  = this.setModifier.bind( this );
+		this.setHighlight = this.setHighlight.bind( this );
+		this.handleAction = this.handleAction.bind( this );
 
 		Actions.add( [
 			{ type: 'shortcut', char: ',', code: 188, desc: 'octave down' },
 			{ type: 'shortcut', char: '.', code: 190, desc: 'octave up' },
 			{ type: 'command', char: 'm', code: 77, desc: 'toggle modifier prompt' },
 			{ type: 'command', char: 'h', code: 72, desc: 'toggle highlight prompt' },
-
 			{ type: 'input', char: 'z', code: 90, note: 'C', desc: 'toggle key' },
 			{ type: 'input', char: 's', code: 83, note: 'Db', desc: 'toggle key' },
 			{ type: 'input', char: 'x', code: 88, note: 'D', desc: 'toggle key' },
@@ -99,10 +98,15 @@ class Keyboard extends React.Component {
 	setHighlight( highlight ) {
 		const symbols = highlight.notes.symbols();
 
-		this.keys.forEach( ( key ) => {
+		this.keys.forEach(( key ) => {
 			const symbol = key.note.symbol();
-			if ( symbols.includes( symbol ) ) key.highlight(); else key.unhighlight();
-		} );
+
+			if ( symbols.includes( symbol ) ) {
+				key.highlight();
+			} else {
+				key.unhighlight();
+			}
+		});
 	}
 
 	setModifier( modifier ) {
@@ -183,7 +187,6 @@ class Keyboard extends React.Component {
 
 // 		// release each key in turn
 // 		keys.forEach( ( key ) => {
-
 // 			// find out if the pitch currently exists in another extended key
 // 			const index = this.fingerprints.findIndex( ( fingerprint ) => ( new RegExp( key.pitch ).test( fingerprint ) ) );
 
@@ -192,49 +195,39 @@ class Keyboard extends React.Component {
 
 // 				// remove pitch from array to be released
 // 				pitches.splice( pitches.indexOf( key.pitch ), 1 );
-
 // 			} else {
-
 // 				// relase the key
 // 				key.release();
-
 // 			}
-
 // 		} );
 
 // 		// stop all pitches that dont exist in the fingerprint cache
 // 		this.synth.triggerRelease( pitches );
 	}
 
-	stopKeys() {
-		this.keys.forEach( ( key ) => {
-			if ( key.state.isPressed ) key.release();
-		} );
+// 	stopKeys() {
+// 		this.keys.forEach( ( key ) => {
+// 			if ( key.state.isPressed ) key.release();
+// 		} );
 
 // 		const pitches = [];
 
 // 		this.keys.forEach( ( key ) => {
-
 // 			if ( key.state.isPressed ) {
-
 // 				key.release();
 // 				pitches.push( key.pitch );
-
 // 			}
-
 // 		} );
 
 // 		this.synth.triggerRelease( pitches );
 // 		this.fingerprints = [];
-
-	}
+// 	}
 
 	//
 	// Event Handlers
 	//
 
 	handleAction( event ) {
-
 		switch ( event.detail.desc ) {
 			case 'toggle key':
 				if ( event.detail.delegator === 'keydown' ) {
@@ -244,19 +237,20 @@ class Keyboard extends React.Component {
 				}
 				break;
 
-			case 'octave down':
-				if ( this.state.octave === 1 ) return;
-				this.stopKeys();
-				this.setState( { octave: this.state.octave - 1 } );
-				break;
+			// case 'octave down':
+			// 	if ( this.state.octave === 1 ) return;
+			// 	this.stopKeys();
+			// 	this.removeKeys();
+			// 	this.setState( { octave: this.state.octave - 1 } );
+			// 	break;
 
-			case 'octave up':
-				if ( this.state.octave === 9 ) return;
-				this.stopKeys();
-				this.setState( { octave: this.state.octave + 1 } );
-				break;
+			// case 'octave up':
+			// 	if ( this.state.octave === 9 ) return;
+			// 	this.stopKeys();
+			// 	this.removeKeys();
+			// 	this.setState( { octave: this.state.octave + 1 } );
+			// 	break;
 		}
-
 	}
 
 	//
@@ -265,7 +259,6 @@ class Keyboard extends React.Component {
 
 	renderKeys() {
 		const inputs = Actions.all( 'input' );
-
 		let octave = this.state.octave;
 
 		return inputs.map( ( key, index ) => {
@@ -283,20 +276,36 @@ class Keyboard extends React.Component {
 				/>
 			);
 
-			// increment the index by one every twelve notes
 			if ( ( index + 1 ) % 12 === 0 ) octave += 1;
-
 			return component;
 		} );
-
 	}
 
 	render() {
 		return (
 			<div className="keyboard">
-				<Oscillator ref={ ( self ) => ( this.controls.oscillator1 = self ) } />
-				<Oscillator ref={ ( self ) => ( this.controls.oscillator2 = self ) } />
-				<AmpEnvelope ref={ ( self ) => ( this.controls.ampEnvelope = self ) } />
+				<Wrapper>
+					<Grid>
+						<Column span="2">
+							<Oscillator
+								heading="Oscillator 1"
+								ref={ ( self ) => ( this.controls.oscillator1 = self ) }
+							/>
+
+							<Oscillator
+								heading="Oscillator 2"
+								ref={ ( self ) => ( this.controls.oscillator2 = self ) }
+							/>
+						</Column>
+
+						<Column span="4">
+							<AmpEnvelope
+								heading="Amp Envelope"
+								ref={ ( self ) => ( this.controls.ampEnvelope = self ) }
+							/>
+						</Column>
+					</Grid>
+				</Wrapper>
 
 				<div className="keyboard-keys">
 					{ this.renderKeys() }
@@ -311,7 +320,7 @@ class Keyboard extends React.Component {
 //
 
 Keyboard.defaultProps = {
-	octave: 4,
+	octave: 3,
 };
 
 Keyboard.propTypes = {

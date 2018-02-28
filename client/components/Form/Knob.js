@@ -15,7 +15,7 @@ class Knob extends React.Component {
 
 		this.minDegree       = -65;
 		this.maxDegree       = 250;
-		this.resistance      = 0.12;
+		this.resistance      = 0.5;
 		this.initialValue    = 0;
 		this.previousValue   = 0;
 		this.value           = this.props.value;
