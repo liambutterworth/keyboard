@@ -147,13 +147,12 @@ class Oscillator extends React.Component {
 Oscillator.defaultProps = {
 	type:   'sine',
 	detune: 0,
-	heading: 'Oscillator',
 };
 
 Oscillator.propTypes = {
+	heading: PropTypes.string.isRequired,
 	type:    PropTypes.string,
 	detune:  PropTypes.number,
-	heading: PropTypes.string,
 };
 
 export default Oscillator;

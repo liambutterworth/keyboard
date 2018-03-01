@@ -1,6 +1,7 @@
 import React      from 'react';
 import PropTypes  from 'prop-types';
 import ClassNames from 'classnames';
+import ShortID    from 'shortid';
 
 class Knob extends React.Component {
 
@@ -15,9 +16,9 @@ class Knob extends React.Component {
 
 		this.minDegree       = -65;
 		this.maxDegree       = 250;
-		this.resistance      = 0.5;
 		this.initialValue    = 0;
 		this.previousValue   = 0;
+		this.resistance      = 0.5;
 		this.value           = this.props.value;
 		this.median          = this.props.max / 2;
 		this.handleMouseDown = this.handleMouseDown.bind( this );
@@ -122,6 +123,8 @@ class Knob extends React.Component {
 
 	render() {
 
+		const id = ShortID.generate();
+
 		const classNames = ClassNames( {
 			'form-knob':             true,
 			'form-knob--adjustable': this.state.adjustable,
@@ -131,7 +134,7 @@ class Knob extends React.Component {
 		return (
 			<div className={ classNames }>
 				{ this.props.label &&
-					<label className="form-knob-label" htmlFor={ this.props.name }>
+					<label className="form-knob-label" htmlFor={ id }>
 						{ this.props.label }
 					</label>
 				}
@@ -146,9 +149,9 @@ class Knob extends React.Component {
 						/>
 
 						<input
+							id={ id }
 							type="range"
 							name={ this.props.name }
-							id={ this.props.name }
 							min={ this.props.min }
 							max={ this.props.max }
 							disabled={ this.state.disabled }
@@ -167,24 +170,26 @@ class Knob extends React.Component {
 }
 
 Knob.defaultProps = {
-	onChange: false,
-	disabled: false,
-	numbered: false,
-	label:    '',
-	value:    0,
-	min:      0,
-	max:      100,
+	onChange:   false,
+	disabled:   false,
+	numbered:   false,
+	resistance: 0.5,
+	label:      '',
+	value:      0,
+	min:        0,
+	max:        100,
 };
 
 Knob.propTypes = {
-	onChange: PropTypes.func,
-	numbered: PropTypes.bool,
-	disabled: PropTypes.bool,
-	name:     PropTypes.string.isRequired,
-	label:    PropTypes.string,
-	value:    PropTypes.number,
-	min:      PropTypes.number,
-	max:      PropTypes.number,
+	onChange:   PropTypes.func,
+	numbered:   PropTypes.bool,
+	disabled:   PropTypes.bool,
+	resistance: PropTypes.number,
+	name:       PropTypes.string.isRequired,
+	label:      PropTypes.string,
+	value:      PropTypes.number,
+	min:        PropTypes.number,
+	max:        PropTypes.number,
 };
 
 export default Knob;

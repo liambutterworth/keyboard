@@ -1,5 +1,5 @@
 //
-// Amp Envelope
+// Envelope
 //
 // :: Constructor
 // :: CRUD Methods
@@ -12,7 +12,7 @@ import PropTypes from 'prop-types';
 import Tone      from 'tone';
 import { Knob }  from 'components/Form';
 
-class AmpEnvelope extends React.Component {
+class Envelope extends React.Component {
 
 	//
 	// Constructor
@@ -27,9 +27,9 @@ class AmpEnvelope extends React.Component {
 		this.sustain             = this.props.sustain;
 		this.release             = this.props.release;
 		this.handleAttackChange  = this.handleAttackChange.bind( this );
-		this.handleDecayChange   = this.handleAttackChange.bind( this );
-		this.handleSustainChange = this.handleAttackChange.bind( this );
-		this.handleReleaseChange = this.handleAttackChange.bind( this );
+		this.handleDecayChange   = this.handleDecayChange.bind( this );
+		this.handleSustainChange = this.handleSustainChange.bind( this );
+		this.handleReleaseChange = this.handleReleaseChange.bind( this );
 	}
 
 	//
@@ -37,15 +37,15 @@ class AmpEnvelope extends React.Component {
 	//
 
 	create() {
-		const ampEnvelope = new Tone.AmplitudeEnvelope({
+		const envelope = new Tone.Envelope({
 			attack:  this.attack,
 			decay:   this.decay,
 			sustain: this.sustain,
 			release: this.release,
 		});
 
-		this.instances.push( ampEnvelope );
-		return ampEnvelope;
+		this.instances.push( envelope );
+		return envelope;
 	}
 
 	//
@@ -56,7 +56,6 @@ class AmpEnvelope extends React.Component {
 		this.attack = value;
 		this.instances.forEach(( instance ) => ( instance.attack = this.attack ));
 	}
-
 
 	handleDecayChange( value ) {
 		this.decay = value;
@@ -70,7 +69,7 @@ class AmpEnvelope extends React.Component {
 
 	handleReleaseChange( value ) {
 		this.release = value;
-		this.instances.forEach(( instance ) => ( instance.release = this.release ));
+		this.instances.forEach(( intance ) => ( instance.release = this.release ));
 	}
 
 	//
@@ -84,7 +83,7 @@ class AmpEnvelope extends React.Component {
 
 				<Knob
 					label="Attack"
-					name="attack"
+					name={ `${ this.props.prefix }-attack` }
 					max={ 10 }
 					value={ this.attack }
 					onChange={ this.handleAttackChange }
@@ -92,7 +91,7 @@ class AmpEnvelope extends React.Component {
 
 				<Knob
 					label="Decay"
-					name="decay"
+					name={ `${ this.props.prefix }-decay` }
 					max={ 10 }
 					value={ this.decay }
 					onChange={ this.handleDecayChange }
@@ -100,7 +99,7 @@ class AmpEnvelope extends React.Component {
 
 				<Knob
 					label="Sustain"
-					name="sustain"
+					name={ `${ this.props.prefix }-sustain` }
 					max={ 10 }
 					value={ this.sustain }
 					onChange={ this.handleSustainChange }
@@ -108,13 +107,13 @@ class AmpEnvelope extends React.Component {
 
 				<Knob
 					label="Release"
-					name="release"
+					name={ `${ this.props.prefix }-release` }
 					max={ 10 }
 					value={ this.release }
 					onChange={ this.handleReleaseChange }
 				/>
 			</div>
-		)
+		);
 	}
 }
 
@@ -122,20 +121,21 @@ class AmpEnvelope extends React.Component {
 // Properties
 //
 
-AmpEnvelope.defaultProps = {
+Envelope.defaultProps = {
+	prefix:  'envelope',
 	attack:  0.1,
 	decay:   0.2,
 	sustain: 1,
 	release: 0.8,
-	heading: 'Amplifier Envelope',
 };
 
-AmpEnvelope.PropTypes = {
+Envelope.propTypes = {
+	heading: PropTypes.string.isRequired,
+	prefix:  PropTypes.string,
 	attack:  PropTypes.number,
 	decay:   PropTypes.number,
 	sustain: PropTypes.number,
 	release: PropTypes.number,
-	heading: PropTypes.string,
-}
+};
 
-export default AmpEnvelope;
+export default Envelope;

@@ -18,7 +18,9 @@ import Wrapper          from 'components/Wrapper';
 import Actions          from 'library/Actions';
 import Key              from './Key';
 import Oscillator       from './Oscillator';
-import AmpEnvelope      from './AmpEnvelope';
+import Envelope         from './Envelope';
+import Filter           from './Filter';
+import Volume           from './Volume';
 
 require( './style.css' );
 
@@ -298,10 +300,22 @@ class Keyboard extends React.Component {
 							/>
 						</Column>
 
-						<Column span="4">
-							<AmpEnvelope
-								heading="Amp Envelope"
-								ref={ ( self ) => ( this.controls.ampEnvelope = self ) }
+						<Column span="5">
+							<Filter
+								heading="Filter"
+								ref={ ( self ) => ( this.controls.filter = self ) }
+							/>
+						</Column>
+
+						<Column span="5">
+							<Envelope
+								heading="Amplifier"
+								ref={ ( self ) => ( this.controls.envelope = self ) }
+							/>
+
+							<Volume
+								heading="Volume"
+								ref={ ( self ) => ( this.controls.volume = self ) }
 							/>
 						</Column>
 					</Grid>

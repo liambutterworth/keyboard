@@ -37,11 +37,19 @@ class Key extends React.Component {
 	componentDidMount() {
 		this.oscillator1 = this.props.controls.oscillator1.create( this.pitch );
 		this.oscillator2 = this.props.controls.oscillator2.create( this.pitch );
-		this.ampEnvelope = this.props.controls.ampEnvelope.create();
+		this.filter      = this.props.controls.filter.create();
+		this.envelope    = this.props.controls.envelope.create();
+		this.volume      = this.props.controls.volume.get();
 
-		this.oscillator1.connect( this.ampEnvelope ).start();
-		this.oscillator2.connect( this.ampEnvelope ).start();
-		this.ampEnvelope.connect( Tone.Master );
+		const chain = [
+			this.filter,
+			this.envelope,
+			this.volume,
+			Tone.Master,
+		];
+
+		this.oscillator1.chain( ...chain ).start();
+		this.oscillator2.chain( ...chain ).start();
 	}
 
 	//
@@ -50,12 +58,14 @@ class Key extends React.Component {
 
 	press() {
 		if ( !this.state.isPressed ) this.setState( { isPressed: true } );
-		this.ampEnvelope.triggerAttack();
+		this.envelope.triggerAttack();
+		this.filter.envelope.triggerAttack();
 	}
 
 	release() {
 		if ( this.state.isPressed ) this.setState( { isPressed: false } );
-		this.ampEnvelope.triggerRelease();
+		this.envelope.triggerRelease();
+		this.filter.envelope.triggerRelease();
 	}
 
 	highlight() {
