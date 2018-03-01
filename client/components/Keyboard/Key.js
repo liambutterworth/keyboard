@@ -28,6 +28,8 @@ class Key extends React.Component {
 
 		this.note  = new MusicTheory.Note( props.note );
 		this.pitch = `${ this.note.symbol() }${ props.octave }`;
+		this.frequency = Tone.Frequency( this.pitch ).toFrequency();
+
 	}
 
 	//
@@ -35,9 +37,9 @@ class Key extends React.Component {
 	//
 
 	componentDidMount() {
-		this.oscillator1 = this.props.controls.oscillator1.create( this.pitch );
-		this.oscillator2 = this.props.controls.oscillator2.create( this.pitch );
-		this.filter      = this.props.controls.filter.create();
+		this.oscillator1 = this.props.controls.oscillator1.create( this.frequency );
+		this.oscillator2 = this.props.controls.oscillator2.create( this.frequency );
+		this.filter      = this.props.controls.filter.create( this.frequency );
 		this.envelope    = this.props.controls.envelope.create();
 		this.volume      = this.props.controls.volume.get();
 

@@ -1,6 +1,6 @@
 //
-// Checkbox
-// 
+// Counter
+//
 // :: Constructor
 // :: State Methods
 // :: Render
@@ -10,7 +10,7 @@ import React     from 'react';
 import PropTypes from 'prop-types';
 import ShortID   from 'shortid';
 
-class Checkbox extends React.Component {
+class Counter extends React.Component {
 
 	//
 	// Constructor
@@ -29,11 +29,11 @@ class Checkbox extends React.Component {
 	//
 
 	disable() {
-		if ( !this.state.disabled ) this.setState( { disabled: true } );
+		if ( !this.state.disabled ) this.setState({ disabled: true });
 	}
 
 	enable() {
-		if ( this.state.disabled ) this.setState( { disabled: false } );
+		if ( this.state.disabled ) this.setState({ disabled: false });
 	}
 
 	//
@@ -44,20 +44,18 @@ class Checkbox extends React.Component {
 		const id = ShortID.generate();
 
 		return (
-			<div className="form-checkbox">
+			<div className="form-number">
+				<label htmlFor={ id }>{ this.props.label }</label>
+
 				<input
-					type="checkbox"
+					type="number"
 					id={ id }
+					step={ this.props.step }
 					name={ this.props.name }
 					value={ this.props.value }
 					disabled={ this.props.disabled }
 					onChange={ this.props.onChange }
 				/>
-
-				<label htmlFor={ uuid }>
-					<span className="form-checkbox-box" />
-					{ this.props.label }
-				</label>
 			</div>
 		);
 	}
@@ -67,17 +65,23 @@ class Checkbox extends React.Component {
 // Properties
 //
 
-Checkbox.defaultProps = {
+Counter.defaultProps = {
+	step:     1,
 	disabled: false,
-	onChange: null,
+	onChange: function() {},
 };
 
-Checkbox.propTypes = {
+Counter.propTypes = {
 	name:     PropTypes.string.isRequired,
 	label:    PropTypes.string.isRequired,
-	value:    PropTypes.string.isRequired,
+	step:     PropTypes.number,
 	disabled: PropTypes.bool,
 	onChange: PropTypes.func,
+
+	value: PropTypes.oneOfType([
+		PropTypes.string,
+		PropTypes.number,
+	]),
 };
 
-export default Checkbox;
+export default Counter;

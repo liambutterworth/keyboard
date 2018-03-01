@@ -4,6 +4,7 @@ import Button                   from './Button';
 import Select                   from './Select';
 import Radios, { Radio }        from './Radios';
 import Checkboxes, { Checkbox } from './Checkboxes';
+import Counter                  from './Counter';
 import Slider                   from './Slider';
 import Knob                     from './Knob';
 
@@ -34,6 +35,7 @@ export {
 	Radio,
 	Checkboxes,
 	Checkbox,
+	Counter,
 	Slider,
 	Knob,
 };

@@ -34,9 +34,7 @@ class Oscillator extends React.Component {
 	// CRUD Methods
 	//
 
-	create( pitch ) {
-		const frequency = Tone.Frequency( pitch ).toFrequency();
-
+	create( frequency ) {
 		const oscillator = new Tone.Oscillator({
 			type:      this.type,
 			detune:    this.detune,
@@ -52,27 +50,22 @@ class Oscillator extends React.Component {
 	// Event Handlers
 	//
 
-	handleOctaveChange( event ) {
-		const octave = parseInt( event.target.value, 10 );
-		const factor = Math.abs( octave ) * 2 || 1; // if 0 set to 1
+	handleOctaveChange( value ) {
+		const factor = Math.abs( value ) * 2 || 1; // if 0 set to 1
 
 		this.instances.forEach(( instance ) => {
 			const frequency = instance.frequency.reference;
-			instance.frequency.value = octave > 0 ? frequency * factor : frequency / factor;
+			instance.frequency.value = value > 0 ? frequency * factor : frequency / factor;
 		});
 	}
 
-	handleDetuneChange( event ) {
-		const value = parseInt( event.target.value, 10 ) * 100;
-
+	handleDetuneChange( value ) {
 		this.instances.forEach(( instance ) => {
-			instance.detune.value = value;
+			instance.detune.value = value * 100;
 		});
 	}
 
-	handleWaveformChange( event ) {
-		const value = event.target.value;
-
+	handleWaveformChange( value ) {
 		this.instances.forEach(( instance ) => {
 			instance.type = value;
 		});
@@ -89,6 +82,7 @@ class Oscillator extends React.Component {
 
 				<Select
 					name="octave"
+					returnType="number"
 					defaultValue={ '0' }
 					onChange={ this.handleOctaveChange }
 					options={[
@@ -102,6 +96,7 @@ class Oscillator extends React.Component {
 
 				<Select
 					name="detune"
+					returnType="number"
 					defaultValue={ '0' }
 					onChange={ this.handleDetuneChange }
 					options={[

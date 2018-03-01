@@ -3,6 +3,7 @@
 //
 // :: Constructor
 // :: State Methods
+// :: Event Handlers
 // :: Render
 // :: Properties
 
@@ -29,6 +30,8 @@ class Select extends React.Component {
 		this.state = {
 			disabled: props.disabled,
 		};
+
+		this.handleChange = this.handleChange.bind( this );
 	}
 
 	//
@@ -41,6 +44,15 @@ class Select extends React.Component {
 
 	enable() {
 		if ( this.state.disabled ) this.setState( { disabled: false } );
+	}
+
+	//
+	// Event Handlers
+	//
+
+	handleChange( event ) {
+		const value = this.props.returnType === 'number' ? parseInt( event.target.value, 10 ) : event.target.value;
+		this.props.onChange( value );
 	}
 
 	//
@@ -71,7 +83,7 @@ class Select extends React.Component {
 					required={ this.props.required }
 					multiple={ this.props.multiple }
 					disabled={ this.state.disabled }
-					onChange={ this.props.onChange }
+					onChange={ this.handleChange }
 				>
 					{ this.renderOptions( this.props.options ) }
 				</select>
@@ -88,18 +100,28 @@ Select.defaultProps = {
 	required:     false,
 	multiple:     false,
 	disabled:     false,
-	onChange:     null,
+	onChange:     function() {},
+	returnType:   'string',
 	defaultValue: '',
 };
 
 Select.propTypes = {
-	name:         PropTypes.string.isRequired,
-	options:      PropTypes.array.isRequired,
-	required:     PropTypes.bool,
-	multiple:     PropTypes.bool,
-	disabled:     PropTypes.bool,
-	onChange:     PropTypes.func,
-	defaultValue: PropTypes.string,
+	name:     PropTypes.string.isRequired,
+	options:  PropTypes.array.isRequired,
+	required: PropTypes.bool,
+	multiple: PropTypes.bool,
+	disabled: PropTypes.bool,
+	onChange: PropTypes.func,
+
+	returnType: PropTypes.oneOf([
+		'string',
+		'number',
+	]),
+
+	defaultValue: PropTypes.oneOfType([
+		PropTypes.string,
+		PropTypes.number,
+	]),
 };
 
 export default Select;

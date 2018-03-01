@@ -1,3 +1,13 @@
+//
+// Knob
+//
+// :: Constructor
+// :: Mount Methods
+// :: State Methods
+// :: Event Handlers
+// :: Render
+// :: Properties
+
 import React      from 'react';
 import PropTypes  from 'prop-types';
 import ClassNames from 'classnames';
@@ -5,8 +15,11 @@ import ShortID    from 'shortid';
 
 class Knob extends React.Component {
 
-	constructor( props ) {
+	//
+	// Constructor
+	//
 
+	constructor( props ) {
 		super( props );
 
 		this.state = {
@@ -24,32 +37,40 @@ class Knob extends React.Component {
 		this.handleMouseDown = this.handleMouseDown.bind( this );
 		this.handleMouseUp   = this.handleMouseUp.bind( this );
 		this.handleInput     = this.handleInput.bind( this );
-
 	}
 
+	//
+	// Mount Methods
+	//
+
+	componentDidMount() {
+		this.adjust();
+	}
+
+	//
+	// State Methods
+	//
+
 	disable() {
-
 		if ( !this.state.disabled ) this.setState( { disabled: true } );
-
 	}
 
 	enable() {
-
 		if ( this.state.disabled ) this.setState( { disabled: false } );
-
 	}
 
 	adjust() {
-
 		const percent = ( this.value - this.props.min ) / ( this.props.max - this.props.min );
 		const degree  = percent * ( this.maxDegree - this.minDegree ) + this.minDegree;
 
 		this.marker.style.transform = `rotate( ${ degree }deg )`;
-
 	}
 
-	handleInput() {
+	//
+	// Event Handlers
+	//
 
+	handleInput() {
 		this.initialValue = this.initialValue || parseInt( this.range.value, 10 );
 
 		const relativeValue = this.range.value - this.initialValue;
@@ -62,45 +83,32 @@ class Knob extends React.Component {
 			( this.initialValue < currentValue && currentValue < this.previousValue ) ||
 			( this.previousValue < currentValue && currentValue < this.initialValue )
 		) {
-
 			this.initialValue  = 0;
 			this.previousValue = 0;
-
 		} else {
-
 			this.previousValue = currentValue;
 			this.value         = Math.round( updatedValue * 100 ) / 100;
 
 			this.adjust();
-
 		}
-
 	}
 
 	handleMouseDown() {
-
 		if ( !this.state.adjustable ) this.setState( { adjustable: true } );
-
 	}
 
 	handleMouseUp() {
-
 		this.initialValue = 0;
 		if ( this.state.adjustable ) this.setState( { adjustable: false } );
 		if ( this.props.onChange ) this.props.onChange( this.value );
-
 	}
 
-	componentDidMount() {
-
-		this.adjust();
-
-	}
+	//
+	// Render
+	//
 
 	renderNumbers() {
-
 		if ( this.props.numbered ) {
-
 			return (
 				<ul className="form-knob-numbers">
 					<li className="form-knob-0">0</li>
@@ -116,13 +124,10 @@ class Knob extends React.Component {
 					<li className="form-knob-10">10</li>
 				</ul>
 			);
-
 		}
-
 	}
 
 	render() {
-
 		const id = ShortID.generate();
 
 		const classNames = ClassNames( {
@@ -164,10 +169,12 @@ class Knob extends React.Component {
 				</div>
 			</div>
 		);
-
 	}
-
 }
+
+//
+// Properties
+//
 
 Knob.defaultProps = {
 	onChange:   false,
