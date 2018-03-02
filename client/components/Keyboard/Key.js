@@ -23,13 +23,13 @@ class Key extends React.Component {
 		super( props );
 
 		this.state = {
-			isPressed: false,
+			isPressed:     false,
+			isHighlighted: false,
 		};
 
-		this.note  = new MusicTheory.Note( props.note );
-		this.pitch = `${ this.note.symbol() }${ props.octave }`;
+		this.note      = new MusicTheory.Note( props.note );
+		this.pitch     = `${ this.note.symbol() }${ props.octave }`;
 		this.frequency = Tone.Frequency( this.pitch ).toFrequency();
-
 	}
 
 	//
@@ -59,23 +59,25 @@ class Key extends React.Component {
 	//
 
 	press() {
-		if ( !this.state.isPressed ) this.setState( { isPressed: true } );
-		this.envelope.triggerAttack();
+		if ( this.state.isPressed ) return;
+		this.setState({ isPressed: true });
 		this.filter.envelope.triggerAttack();
+		this.envelope.triggerAttack();
 	}
 
 	release() {
-		if ( this.state.isPressed ) this.setState( { isPressed: false } );
-		this.envelope.triggerRelease();
+		if ( !this.state.isPressed ) return;
+		this.setState({ isPressed: false });
 		this.filter.envelope.triggerRelease();
+		this.envelope.triggerRelease();
 	}
 
 	highlight() {
-		this.setState( { isHighlighted: true } );
+		if ( !this.state.isHighlighted ) this.setState( { isHighlighted: true } );
 	}
 
 	unhighlight() {
-		this.setState( { isHighlighted: false } );
+		if ( this.state.isHighlighted ) this.setState( { isHighlighted: false } );
 	}
 
 	//
