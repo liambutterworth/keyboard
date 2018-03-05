@@ -1,0 +1,81 @@
+/**
+ * Notes
+ *
+ * :: Circle
+ * :: Chords
+ */
+
+/**
+ * Circle
+ */
+
+.notes-circle {
+	display: inline-block;
+	padding: lines( 2 );
+	position: relative;
+
+	&::before {
+		border: 1px solid white;
+		border-radius: 100%;
+		content: "";
+		display: block;
+		height: lines( 10 );
+		width: lines( 10 );
+	}
+
+	li {
+		display: inline-block;
+		width: lines( 2 );
+		height: lines( 2 );
+		line-height: lines( 2 );
+		position: absolute;
+		text-align: center;
+		margin-left: lines( -1 );
+		left: 0;
+		top: 0;
+	}
+
+	/* rows */
+	.notes-circle-330,
+	.notes-circle-30 { top: lines( 2 ); }
+	.notes-circle-300,
+	.notes-circle-60 { top: lines( 4 ); }
+	.notes-circle-270,
+	.notes-circle-90 { top: lines( 6 ); }
+	.notes-circle-240,
+	.notes-circle-120 { top: lines( 8 ); }
+	.notes-circle-210,
+	.notes-circle-150 { top: lines( 10 ); }
+	.notes-circle-180 { top: lines( 12 ); }
+
+	/* columns */
+	.notes-circle-270 { left: lines( 1 ); }
+	.notes-circle-300,
+	.notes-circle-240 { left: lines( 3 ); }
+	.notes-circle-330,
+	.notes-circle-210 { left: lines( 5 ); }
+	.notes-circle-0,
+	.notes-circle-180 { left: lines( 7 ); }
+	.notes-circle-30,
+	.notes-circle-150 { left: lines( 9 ); }
+	.notes-circle-60,
+	.notes-circle-120 { left: lines( 11 ); }
+	.notes-circle-90 { left: lines( 13 ); }
+
+	/* adjustents */
+	.notes-circle-30,
+	.notes-circle-60 { transform: translate( lines( 1 ), lines( -1 ) ); }
+	.notes-circle-330,
+	.notes-circle-300 { transform: translate( lines( -1 ), lines( -1 ) ); }
+	.notes-circle-240,
+	.notes-circle-210 { transform: translate( lines( -1 ), lines( 1 ) ); }
+	.notes-circle-120,
+	.notes-circle-150 { transform: translate( lines( 1 ), lines( 1 ) ); }
+}
+
+/**
+ * Chords
+ */
+
+.notes-chords {
+}

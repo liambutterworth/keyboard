@@ -13,6 +13,7 @@ import PropTypes        from 'prop-types';
 import ShortID          from 'shortid';
 import MusicTheory      from 'music-theory';
 import Tone             from 'tone';
+import Notes            from 'components/Notes';
 import Grid, { Column } from 'components/Grid';
 import Wrapper          from 'components/Wrapper';
 import Actions          from 'library/Actions';
@@ -165,6 +166,7 @@ class Keyboard extends React.Component {
 		return (
 			<div className="keyboard">
 				<Wrapper>
+					{/*
 					<Grid>
 						<Column span="2">
 							<Oscillator
@@ -197,6 +199,9 @@ class Keyboard extends React.Component {
 							/>
 						</Column>
 					</Grid>
+					*/}
+
+					<Notes />
 				</Wrapper>
 
 				<div className="keyboard-keys">
