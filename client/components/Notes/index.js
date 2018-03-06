@@ -2,12 +2,15 @@
 // Notes
 //
 // :: Constructor
+// :: Event Handlers
 // :: Render
-// :: Properties
 
-import React     from 'react';
-import PropTypes from 'prop-types';
-import Theory    from 'music-theory';
+import React            from 'react';
+import PropTypes        from 'prop-types';
+import Theory           from 'music-theory';
+import ShortID          from 'shortid';
+import ClassNames       from 'classnames';
+import Grid, { Column } from 'components/Grid';
 
 require( './style.css' );
 
@@ -19,86 +22,105 @@ class Notes extends React.Component {
 
 	constructor( props ) {
 		super( props );
+
+		this.state = {
+			root: false,
+		};
+
+		this.handleNoteClick  = this.handleNoteClick.bind( this );
+		this.handleChordClick = this.handleChordClick.bind( this );
+	}
+
+	//
+	// Event Handlers
+	//
+
+	handleNoteClick( event ) {
+		const root = event.target.dataset.value;
+		this.setState({ root: root })
+	}
+
+	handleChordClick( event ) {
+		const chord = event.target.dataset.value;
+		this.setState({ chord: chord });
 	}
 
 	//
 	// Render
 	//
 
+	renderDisplay() {
+		const text = `${ this.state.root || '' }${ this.state.chord || '' }`;
+		return ( <div className="notes__display">{ text }</div> );
+	}
+
+	renderFifth( note, degree ) {
+		const classNames = ClassNames({
+			'notes__fifth':                  true,
+			[ `notes__fifth--${ degree }` ]: true,
+			'notes--selected':               this.state.root === note,
+		});
+
+		return ( <li
+			key        = { ShortID.generate() }
+			className  = { classNames }
+			data-value = { note }
+			onClick    = { this.handleNoteClick }
+		>{ note }</li> );
+	}
+
+	renderCircleOfFifths() {
+		const notes = [ 'C', 'G', 'D', 'A', 'E', 'B', 'Gb', 'Db', 'Ab', 'Eb', 'Bb', 'F' ];
+		const items = notes.map(( note, index ) => ( this.renderFifth( note, index * 30 ) ))
+		return ( <ul className="notes__circle-of-fifths">{ items }</ul> );
+	}
+
+	renderChordCell( quality, extension ) {
+		const chord = `${ quality }${ extension }`;
+
+		const classNames = ClassNames({
+			'notes__chord-cell': true,
+			'notes--selected':   this.state.chord === chord,
+		});
+
+		if ( chord ) return ( <li
+			key        = { ShortID.generate() }
+			className  = { classNames }
+			data-value = { chord }
+			onClick    = { this.handleChordClick }
+		>{ extension || quality }</li> );
+	}
+
+	renderChordRow( qualities, extensions ) {
+		return qualities.map(( quality ) => {
+			const items = extensions.map(( extension ) => (
+				this.renderChordCell( quality, extension )
+			));
+
+			return( <ul key={ ShortID.generate() } className="notes__chord-row">{ items }</ul> );
+		});
+	}
+
+	renderChordTable() {
+		const qualities  = [ 'maj', '', 'm', 'dim', 'aug' ];
+		const extensions = [ '', 7, 9, 11, 13 ];
+		return ( <div className="notes__chord-table">{ this.renderChordRow( qualities, extensions ) }</div> );
+	}
+
 	render() {
 		return (
 			<div className="notes">
-				<ul className="notes-circle">
-					<li className="notes-circle-0"   data-value="C">C</li>
-					<li className="notes-circle-30"  data-value="G">G</li>
-					<li className="notes-circle-60"  data-value="D">D</li>
-					<li className="notes-circle-90"  data-value="A">A</li>
-					<li className="notes-circle-120" data-value="E">E</li>
-					<li className="notes-circle-150" data-value="B">B</li>
-					<li className="notes-circle-180" data-value="F#">F#</li>
-					<li className="notes-circle-210" data-value="Db">Db</li>
-					<li className="notes-circle-240" data-value="Ab">Ab</li>
-					<li className="notes-circle-270" data-value="Eb">Eb</li>
-					<li className="notes-circle-300" data-value="Bb">Bb</li>
-					<li className="notes-circle-330" data-value="F">F</li>
-				</ul>
+				<div className="notes__root">
+					{ this.renderDisplay() }
+					{ this.renderCircleOfFifths() }
+				</div>
 
-				<table className="notes-chords">
-					<tr>
-						<td>maj</td>
-						<td>7</td>
-						<td>9</td>
-						<td>11</td>
-						<td>13</td>
-					</tr>
-
-					<tr>
-						<td></td>
-						<td>7</td>
-						<td>9</td>
-						<td>11</td>
-						<td>13</td>
-					</tr>
-
-					<tr>
-						<td>m</td>
-						<td>7</td>
-						<td>9</td>
-						<td>11</td>
-						<td>13</td>
-					</tr>
-
-					<tr>
-						<td>dim</td>
-						<td>7</td>
-						<td>9</td>
-						<td>11</td>
-						<td>13</td>
-					</tr>
-
-					<tr>
-						<td>dim</td>
-						<td>7</td>
-						<td>9</td>
-						<td>11</td>
-						<td>13</td>
-					</tr>
-				</table>
+				<div className="notes__chord">
+					{ this.renderChordTable() }
+				</div>
 			</div>
 		);
 	}
 }
-
-//
-// Properties
-//
-
-Notes.defaultProps = {
-
-};
-
-Notes.defaultProps = {
-
-};
 
 export default Notes;
