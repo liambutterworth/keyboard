@@ -11,8 +11,6 @@
 import React            from 'react';
 import PropTypes        from 'prop-types';
 import ShortID          from 'shortid';
-import MusicTheory      from 'music-theory';
-import Tone             from 'tone';
 import Notes            from 'components/Notes';
 import Grid, { Column } from 'components/Grid';
 import Wrapper          from 'components/Wrapper';
@@ -34,9 +32,10 @@ class Keyboard extends React.Component {
 	constructor( props ) {
 		super( props );
 
-		this.controls     = {};
-		this.keys         = [];
-		this.handleAction = this.handleAction.bind( this );
+		this.controls          = {};
+		this.keys              = [];
+		this.handleAction      = this.handleAction.bind( this );
+		this.handleNotesChange = this.handleNotesChange.bind( this );
 
 		Actions.add( [
 			{ type: 'input', char: 'z', code: 90, note: 'C',  desc: 'toggle key' },
@@ -105,20 +104,6 @@ class Keyboard extends React.Component {
 		this.keys.forEach(( key ) => ( key.release() ));
 	}
 
-	highlightKey( highlight ) {
-		const symbols = highlight.notes.symbols();
-
-		this.keys.forEach(( key ) => {
-			const symbol = key.note.symbol();
-
-			if ( symbols.includes( symbol ) ) {
-				key.highlight();
-			} else {
-				key.unhighlight();
-			}
-		});
-	}
-
 	//
 	// Event Handlers
 	//
@@ -133,6 +118,20 @@ class Keyboard extends React.Component {
 				}
 				break;
 		}
+	}
+
+	handleNotesChange( highlight, notes ) {
+		const symbols = notes.symbols();
+
+		this.keys.forEach(( key ) => {
+			const symbol = key.note.symbol();
+
+			if ( symbols.includes( symbol ) ) {
+				key.highlight();
+			} else {
+				key.unhighlight();
+			}
+		});
 	}
 
 	//
@@ -166,7 +165,8 @@ class Keyboard extends React.Component {
 		return (
 			<div className="keyboard">
 				<Wrapper>
-					{/*
+					<Notes onChange={ this.handleNotesChange } />
+
 					<Grid>
 						<Column span="2">
 							<Oscillator
@@ -199,9 +199,6 @@ class Keyboard extends React.Component {
 							/>
 						</Column>
 					</Grid>
-					*/}
-
-					<Notes />
 				</Wrapper>
 
 				<div className="keyboard-keys">

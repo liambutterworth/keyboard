@@ -2,8 +2,10 @@
 // Notes
 //
 // :: Constructor
+// :: Component Methods
 // :: Event Handlers
 // :: Render
+// :: Properties
 
 import React            from 'react';
 import PropTypes        from 'prop-types';
@@ -24,11 +26,28 @@ class Notes extends React.Component {
 		super( props );
 
 		this.state = {
-			root: false,
+			root:  '',
+			chord: '',
 		};
 
 		this.handleNoteClick  = this.handleNoteClick.bind( this );
 		this.handleChordClick = this.handleChordClick.bind( this );
+	}
+
+	//
+	// Component Methods
+	//
+
+	componentDidUpdate() {
+		if ( this.state.root && this.state.chord ) {
+			const chord = new Theory.Chord( `${ this.state.root }${ this.state.chord }` );
+			this.props.onChange( chord, chord.notes );
+		} else if ( this.state.root ) {
+			const note = new Theory.Note( this.state.root );
+			this.props.onChange( note, new Theory.Note.Collection([ note ]) );
+		} else {
+			this.props.onChange( null, new Theory.Note.Collection() );
+		}
 	}
 
 	//
@@ -37,12 +56,22 @@ class Notes extends React.Component {
 
 	handleNoteClick( event ) {
 		const root = event.target.dataset.value;
-		this.setState({ root: root })
+
+		if ( root === this.state.root ) {
+			this.setState({ root: '' });
+		} else {
+			this.setState({ root: root });
+		}
 	}
 
 	handleChordClick( event ) {
 		const chord = event.target.dataset.value;
-		this.setState({ chord: chord });
+
+		if ( chord === this.state.chord ) {
+			this.setState({ chord: '' });
+		} else {
+			this.setState({ chord: chord });
+		}
 	}
 
 	//
@@ -55,18 +84,16 @@ class Notes extends React.Component {
 	}
 
 	renderFifth( note, degree ) {
+		const key      = ShortID.generate();
+		const callback = this.handleNoteClick;
+
 		const classNames = ClassNames({
 			'notes__fifth':                  true,
 			[ `notes__fifth--${ degree }` ]: true,
 			'notes--selected':               this.state.root === note,
 		});
 
-		return ( <li
-			key        = { ShortID.generate() }
-			className  = { classNames }
-			data-value = { note }
-			onClick    = { this.handleNoteClick }
-		>{ note }</li> );
+		return ( <li key= { key } className= { classNames } data-value= { note } onClick= { callback }>{ note }</li> );
 	}
 
 	renderCircleOfFifths() {
@@ -76,35 +103,39 @@ class Notes extends React.Component {
 	}
 
 	renderChordCell( quality, extension ) {
-		const chord = `${ quality }${ extension }`;
+		const chord    = `${ quality }${ extension }`;
+		const key      = ShortID.generate();
+		const text     = extension || quality;
+		const callback = this.handleChordClick;
 
 		const classNames = ClassNames({
 			'notes__chord-cell': true,
 			'notes--selected':   this.state.chord === chord,
 		});
 
-		if ( chord ) return ( <li
-			key        = { ShortID.generate() }
-			className  = { classNames }
-			data-value = { chord }
-			onClick    = { this.handleChordClick }
-		>{ extension || quality }</li> );
+		if ( chord ) {
+			return ( <li key={ key } className={ classNames } data-value={ chord } onClick={ callback } >{ text }</li> );
+		} else {
+			return ( <li key={ key } className={ classNames } /> );
+		}
 	}
 
-	renderChordRow( qualities, extensions ) {
-		return qualities.map(( quality ) => {
-			const items = extensions.map(( extension ) => (
-				this.renderChordCell( quality, extension )
-			));
-
-			return( <ul key={ ShortID.generate() } className="notes__chord-row">{ items }</ul> );
-		});
+	renderChordRow( row ) {
+		const items = row.map(( cell, index ) => ( this.renderChordCell( row[0], index === 0 ? '' : row[index] ) ));
+		return ( <ul key={ ShortID.generate() } className="notes__chord-row">{ items }</ul> );
 	}
 
 	renderChordTable() {
-		const qualities  = [ 'maj', '', 'm', 'dim', 'aug' ];
-		const extensions = [ '', 7, 9, 11, 13 ];
-		return ( <div className="notes__chord-table">{ this.renderChordRow( qualities, extensions ) }</div> );
+		const rows = [
+			[ 'maj', 7, 9, 11, 13 ],
+			[ '',    7, 9, 11, 13 ],
+			[ 'm',   7, 9, 11, 13 ],
+			[ 'dim', 7 ],
+			[ 'aug', 7 ],
+		];
+
+		const lists = rows.map(( row ) => ( this.renderChordRow( row ) ));
+		return ( <div className="notes__chord-table">{ lists }</div> );
 	}
 
 	render() {
@@ -122,5 +153,17 @@ class Notes extends React.Component {
 		);
 	}
 }
+
+//
+// Properties
+//
+
+Notes.defaultProps = {
+	onChange: function() {},
+};
+
+Notes.propTypes = {
+	onChange: PropTypes.func,
+};
 
 export default Notes;

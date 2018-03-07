@@ -52,7 +52,6 @@ $chord-row-lines: 3;
 .notes__chord-table {
 	.notes__chord-row {
 		border-bottom: 1px solid white;
-		text-align: right;
 		height: lines( $chord-row-lines, 1px );
 
 		&:last-child {

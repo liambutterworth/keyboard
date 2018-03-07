@@ -67,5 +67,9 @@ $black-pressed-color: color( $black-color whiteness( 15% ) );
 		&.keyboard-key--is-pressed {
 			background: $black-pressed-color;
 		}
+
+		&.keyboard-key--is-highlighted {
+			background: red;
+		}
 	}
 }
