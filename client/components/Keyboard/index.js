@@ -13,6 +13,7 @@ import PropTypes        from 'prop-types';
 import ShortID          from 'shortid';
 import Notes            from 'components/Notes';
 import Grid, { Column } from 'components/Grid';
+import Tabs, { Tab }    from 'components/Tabs';
 import Wrapper          from 'components/Wrapper';
 import Actions          from 'library/Actions';
 import Key              from './Key';

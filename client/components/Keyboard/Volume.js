@@ -10,7 +10,7 @@
 import React     from 'react';
 import PropTypes from 'prop-types';
 import Tone      from 'tone';
-import { Knob }  from 'components/form';
+import { Knob }  from 'components/Form';
 
 class Volume extends React.Component {
 

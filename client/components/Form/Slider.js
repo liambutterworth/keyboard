@@ -6,7 +6,7 @@
 // :: Render
 // :: Properties
 
-import React from 'react';
+import React     from 'react';
 import PropTypes from 'prop-types';
 
 class Slider extends React.Component {
