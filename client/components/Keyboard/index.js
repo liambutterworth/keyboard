@@ -165,11 +165,13 @@ class Keyboard extends React.Component {
 	render() {
 		return (
 			<div className="keyboard">
-				<Tabs>
-					<Tab title="Synth">
-						<Wrapper>
+				<Wrapper>
+					<Tabs>
+						<Tab title="Notes">
 							<Notes onChange={ this.handleNotesChange } />
+						</Tab>
 
+						<Tab title="Synth">
 							<Grid>
 								<Column span="2">
 									<Oscillator
@@ -202,15 +204,13 @@ class Keyboard extends React.Component {
 									/>
 								</Column>
 							</Grid>
-						</Wrapper>
-					</Tab>
+						</Tab>
+					</Tabs>
+				</Wrapper>
 
-					<Tab title="Notes">
-						<div className="keyboard-keys">
-							{ this.renderKeys() }
-						</div>
-					</Tab>
-				</Tabs>
+				<div className="keyboard-keys">
+					{ this.renderKeys() }
+				</div>
 			</div>
 		);
 	}
