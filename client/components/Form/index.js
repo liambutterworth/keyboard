@@ -1,3 +1,9 @@
+//
+// Form
+//
+// :: Render
+// :: Properties
+
 import React                    from 'react';
 import PropTypes                from 'prop-types';
 import Button                   from './Button';
@@ -10,11 +16,19 @@ import Knob                     from './Knob';
 
 require( './style.css' );
 
+//
+// Render
+//
+
 const Form = ( props ) => (
 	<form onSubmit={ props.onSubmit }>
 		{ props.children }
 	</form>
 );
+
+//
+// Properties
+//
 
 Form.defaultProps = {
 	children: null,

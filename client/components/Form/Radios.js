@@ -1,3 +1,11 @@
+//
+// Radios
+//
+// :: Constructor
+// :: State Methods
+// :: Render
+// :: Properties
+
 import React     from 'react';
 import PropTypes from 'prop-types';
 import ShortID   from 'shortid';
@@ -11,30 +19,35 @@ import Radio     from './Radio';
 
 class Radios extends React.Component {
 
-	constructor( props ) {
+	//
+	// Constructor
+	//
 
+	constructor( props ) {
 		super( props );
 
 		this.state = {
 			disabled: this.props.disabled,
 		};
-
 	}
 
+	//
+	// State Methods
+	//
+
 	disable() {
-
 		if ( !this.state.disabled ) this.setState( { disabled: true } );
-
 	}
 
 	enable() {
-
 		if ( this.state.disabled ) this.setState( { disabled: false } );
-
 	}
 
-	render() {
+	//
+	// Render
+	//
 
+	render() {
 		return (
 			<div className="form-radios">
 				{ this.props.data.map( ( button ) => (
@@ -47,10 +60,12 @@ class Radios extends React.Component {
 				) ) }
 			</div>
 		);
-
 	}
-
 }
+
+//
+// Properties
+//
 
 Radios.defaultProps = {
 	disabled: false,

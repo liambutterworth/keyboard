@@ -164,46 +164,52 @@ class Keyboard extends React.Component {
 	render() {
 		return (
 			<div className="keyboard">
-				<Wrapper>
-					<Notes onChange={ this.handleNotesChange } />
+				<Tabs>
+					<Tab title="Synth">
+						<Wrapper>
+							<Notes onChange={ this.handleNotesChange } />
 
-					<Grid>
-						<Column span="2">
-							<Oscillator
-								heading="Oscillator 1"
-								ref={ ( self ) => ( this.controls.oscillator1 = self ) }
-							/>
+							<Grid>
+								<Column span="2">
+									<Oscillator
+										heading="Oscillator 1"
+										ref={ ( self ) => ( this.controls.oscillator1 = self ) }
+									/>
 
-							<Oscillator
-								heading="Oscillator 2"
-								ref={ ( self ) => ( this.controls.oscillator2 = self ) }
-							/>
-						</Column>
+									<Oscillator
+										heading="Oscillator 2"
+										ref={ ( self ) => ( this.controls.oscillator2 = self ) }
+									/>
+								</Column>
 
-						<Column span="5">
-							<Filter
-								heading="Filter"
-								ref={ ( self ) => ( this.controls.filter = self ) }
-							/>
-						</Column>
+								<Column span="5">
+									<Filter
+										heading="Filter"
+										ref={ ( self ) => ( this.controls.filter = self ) }
+									/>
+								</Column>
 
-						<Column span="5">
-							<Envelope
-								heading="Amplifier"
-								ref={ ( self ) => ( this.controls.envelope = self ) }
-							/>
+								<Column span="5">
+									<Envelope
+										heading="Amplifier"
+										ref={ ( self ) => ( this.controls.envelope = self ) }
+									/>
 
-							<Volume
-								heading="Volume"
-								ref={ ( self ) => ( this.controls.volume = self ) }
-							/>
-						</Column>
-					</Grid>
-				</Wrapper>
+									<Volume
+										heading="Volume"
+										ref={ ( self ) => ( this.controls.volume = self ) }
+									/>
+								</Column>
+							</Grid>
+						</Wrapper>
+					</Tab>
 
-				<div className="keyboard-keys">
-					{ this.renderKeys() }
-				</div>
+					<Tab title="Notes">
+						<div className="keyboard-keys">
+							{ this.renderKeys() }
+						</div>
+					</Tab>
+				</Tabs>
 			</div>
 		);
 	}

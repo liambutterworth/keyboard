@@ -1,32 +1,45 @@
+//
+// Option
+//
+// :: Constructor
+// :: State Methods
+// :: Render
+// :: Properties
+
 import React     from 'react';
 import PropTypes from 'prop-types';
 
 class Option extends React.Component {
 
-	constructor( props ) {
+	//
+	// Constructor
+	//
 
+	constructor( props ) {
 		super( props );
 
 		this.state = {
 			disabled: props.disabled,
 		};
-
 	}
 
+	//
+	// State Methods
+	//
+
 	disable() {
-
 		if ( !this.state.disabled ) this.setState( { disabled: true } );
-
 	}
 
 	enable() {
-
 		if ( this.state.disabled ) this.setState( { disabled: false } );
-
 	}
 
-	render() {
+	//
+	// Render
+	//
 
+	render() {
 		return (
 			<option
 				disabled={ this.props.disabled }
@@ -36,10 +49,12 @@ class Option extends React.Component {
 				{ this.props.label }
 			</option>
 		);
-
 	}
-
 }
+
+//
+// Properties
+//
 
 Option.defaultProps = {
 	disabled: false,

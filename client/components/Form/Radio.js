@@ -1,33 +1,46 @@
+//
+// Radio
+//
+// :: Constructor
+// :: State Methods
+// :: Render
+// :: Properties
+
 import React     from 'react';
 import PropTypes from 'prop-types';
 import ShortID   from 'shortid';
 
 class Radio extends React.Component {
 
-	constructor( props ) {
+	//
+	// Constructor
+	//
 
+	constructor( props ) {
 		super( props );
 
 		this.state = {
 			disabled: props.disabled,
 		};
-
 	}
 
+	//
+	// State Methods
+	//
+
 	disable() {
-
 		if ( !this.state.disabled ) this.setState( { disabled: true } );
-
 	}
 
 	enable() {
-
 		if ( this.state.disabled ) this.setState( { disabled: false } );
-
 	}
 
-	render() {
+	//
+	// Render
+	//
 
+	render() {
 		const uuid = ShortID.generate();
 
 		return (
@@ -46,10 +59,12 @@ class Radio extends React.Component {
 				</label>
 			</div>
 		);
-
 	}
-
 }
+
+//
+// Properties
+//
 
 Radio.defaultProps = {
 	disabled: false,

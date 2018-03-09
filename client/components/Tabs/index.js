@@ -1,3 +1,11 @@
+//
+// Tabs
+//
+// :: Constructor
+// :: State Methods
+// :: Render
+// :: Properties
+
 import React     from 'react';
 import PropTypes from 'prop-types';
 import ShortID   from 'shortid';
@@ -13,40 +21,40 @@ require( './style.css' );
 
 class Tabs extends React.Component {
 
-	constructor( props ) {
+	//
+	// Constructor
+	//
 
+	constructor( props ) {
 		super( props );
 
-		this.titles = [];
-		this.tabs   = [];
-
+		this.titles  = [];
+		this.tabs    = [];
 		this.showTab = this.showTab.bind( this );
-
 	}
 
+	//
+	// State Methods
+
 	showTab( index ) {
-
 		this.titles.forEach( ( title, titleIndex ) => {
-
 			if ( titleIndex === index ) title.activate(); else title.deactivate();
-
 		} );
 
 		this.tabs.forEach( ( tab, tabIndex ) => {
-
 			if ( tabIndex === index ) tab.show(); else tab.hide();
-
 		} );
-
 	}
 
-	render() {
+	//
+	// Render
+	//
 
+	render() {
 		const titles = [];
 		const tabs   = [];
 
 		React.Children.forEach( this.props.children, ( child, index ) => {
-
 			titles.push( <Title
 				key={ ShortID.generate() }
 				text={ child.props.title }
@@ -62,7 +70,6 @@ class Tabs extends React.Component {
 				show:  index === 0,
 				ref:   ( self ) => ( this.tabs[index] = self ),
 			} ) );
-
 		} );
 
 		return (
@@ -71,10 +78,12 @@ class Tabs extends React.Component {
 				<ul className="tabs-content">{ tabs }</ul>
 			</div>
 		);
-
 	}
-
 }
+
+//
+// Properties
+//
 
 Tabs.propTypes = {
 	children: PropTypes.node.isRequired,

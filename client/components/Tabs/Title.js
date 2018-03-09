@@ -1,11 +1,23 @@
+//
+// Title
+//
+// :: Constructor
+// :: Event Methods
+// :: State Methods
+// :: Render
+// :: Properties
+
 import React      from 'react';
 import PropTypes  from 'prop-types';
 import ClassNames from 'classnames';
 
 class Title extends React.Component {
 
-	constructor( props ) {
+	//
+	// Constructor
+	//
 
+	constructor( props ) {
 		super( props );
 
 		this.state = {
@@ -13,29 +25,33 @@ class Title extends React.Component {
 		};
 
 		this.handleClick = this.handleClick.bind( this );
-
 	}
+
+	//
+	// Event Methods
+	//
 
 	handleClick() {
-
 		this.props.showTab( this.props.index );
-
 	}
 
+	//
+	// State Methods
+	//
+
 	activate() {
-
 		if ( !this.state.active ) this.setState( { active: true } );
-
 	}
 
 	deactivate() {
-
 		if ( this.state.active ) this.setState( { active: false } );
-
 	}
 
-	render() {
+	//
+	// Render
+	//
 
+	render() {
 		const classNames = ClassNames( {
 			'tabs-title':         true,
 			'tabs-title--active': this.state.active,
@@ -46,10 +62,12 @@ class Title extends React.Component {
 				{ this.props.text }
 			</button>
 		);
-
 	}
-
 }
+
+//
+// Properties
+//
 
 Title.defaultProps = {
 	active: false,

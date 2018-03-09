@@ -15,10 +15,8 @@ const Actions = {
 	//
 
 	cache: () => {
-
 		if ( !document.actions ) document.actions = [];
 		return document.actions;
-
 	},
 
 	//
@@ -26,15 +24,11 @@ const Actions = {
 	//
 
 	add: ( actions ) => {
-
 		const cache = Actions.cache();
 
 		actions.forEach( ( action ) => {
-
 			if ( cache.indexOf( action ) === -1 ) cache.push( action );
-
 		} );
-
 	},
 
 	//
@@ -42,14 +36,12 @@ const Actions = {
 	//
 
 	is: ( code, type ) => {
-
 		const cache   = Actions.cache();
 		const actions = cache.filter( ( action ) => ( !type || action.type === type ) );
 		const codes   = actions.map( ( action ) => ( action.code ) );
 		const regex   = new RegExp( `^(${ codes.join( '|' ) })$` );
 
 		return regex.test( code );
-
 	},
 
 	isInput:    ( code ) => ( Actions.is( code, 'input' ) ),
@@ -61,10 +53,8 @@ const Actions = {
 	//
 
 	all: ( type ) => {
-
 		const cache = Actions.cache();
 		return cache.filter( ( action ) => ( !type || action.type === type ) );
-
 	},
 
 	//
@@ -72,12 +62,10 @@ const Actions = {
 	//
 
 	get: ( code, type, options ) => {
-
 		const cache  = Actions.cache();
 		const action = cache.find( ( entry ) => ( entry.code === code && ( !type || entry.type === type ) ) );
 
 		return Object.assign( action, options || {} );
-
 	},
 
 	getInput:    ( code, options ) => ( Actions.get( code, 'input', options ) ),
@@ -89,12 +77,9 @@ const Actions = {
 	//
 
 	dispatch: ( action ) => {
-
 		const customEvent = new CustomEvent( 'action', { detail: action } );
 		document.dispatchEvent( customEvent );
-
 	},
-
 };
 
 export default Actions;

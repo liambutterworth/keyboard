@@ -22,7 +22,6 @@ class App extends React.Component {
 	//
 
 	constructor( props ) {
-
 		super( props );
 
 		this.state = {
@@ -36,7 +35,6 @@ class App extends React.Component {
 		this.handleKeydown = this.handleKeydown.bind( this );
 		this.handleKeyup   = this.handleKeyup.bind( this );
 		this.handleAction  = this.handleAction.bind( this );
-
 	}
 
 	//
@@ -44,19 +42,15 @@ class App extends React.Component {
 	//
 
 	componentWillMount() {
-
 		document.addEventListener( 'keydown', this.handleKeydown );
 		document.addEventListener( 'keyup', this.handleKeyup );
 		document.addEventListener( 'action', this.handleAction );
-
 	}
 
 	componentWillUnmount() {
-
 		document.removeEventListener( 'keydown', this.handleKeydown );
 		document.removeEventListener( 'keyup', this.handleKeyup );
 		document.removeEventListener( 'action', this.handleAction );
-
 	}
 
 	//
@@ -64,11 +58,9 @@ class App extends React.Component {
 	//
 
 	toggleMode() {
-
 		this.setState( {
 			mode: this.state.mode === 'INPUT' ? 'COMMAND' : 'INPUT',
 		} );
-
 	}
 
 	//
@@ -76,19 +68,14 @@ class App extends React.Component {
 	//
 
 	handleAction( event ) {
-
 		switch ( event.detail.desc ) {
-
 			case 'toggle mode':
 				this.toggleMode();
 				break;
-
 		}
-
 	}
 
 	handleKeydown( event ) {
-
 		if ( event.metaKey ) return;
 		event.preventDefault();
 		if ( event.repeat ) return;
@@ -98,25 +85,17 @@ class App extends React.Component {
 		let action;
 
 		if ( this.state.mode === 'INPUT' && Actions.isInput( code ) ) {
-
 			action = Actions.getInput( code, { delegator: 'keydown' } );
-
 		} else if ( this.state.mode === 'COMMAND' && Actions.isCommand( code ) ) {
-
 			action = Actions.getCommand( code, { delegator: 'keydown' } );
-
 		} else if ( Actions.isShortcut( code ) ) {
-
 			action = Actions.getShortcut( code, { delegator: 'keydown' } );
-
 		}
 
 		if ( action ) Actions.dispatch( action );
-
 	}
 
 	handleKeyup( event ) {
-
 		const code = event.which;
 
 		if (
@@ -128,7 +107,6 @@ class App extends React.Component {
 		event.preventDefault();
 		const action = Actions.getInput( code, { delegator: 'keyup' } );
 		Actions.dispatch( action );
-
 	}
 
 	//
@@ -136,7 +114,6 @@ class App extends React.Component {
 	//
 
 	render() {
-
 		const classNames = ClassNames( {
 			'input-mode':   this.state.mode === 'INPUT',
 			'command-mode': this.state.mode === 'COMMAND',
@@ -147,9 +124,7 @@ class App extends React.Component {
 				{ this.props.children }
 			</div>
 		);
-
 	}
-
 }
 
 //

@@ -1,3 +1,11 @@
+//
+// Checkboxes
+//
+// :: Constructor
+// :: State Methods
+// :: Render
+// :: Properties
+
 import React     from 'react';
 import PropTypes from 'prop-types';
 import ShortID   from 'shortid';
@@ -11,30 +19,35 @@ import Checkbox  from './Checkbox';
 
 class Checkboxes extends React.Component {
 
-	constructor( props ) {
+	//
+	// Constructor
+	//
 
+	constructor( props ) {
 		super( props );
 
 		this.state = {
 			disabled: this.props.disabled,
 		};
-
 	}
 
+	//
+	// State Methods
+	//
+
 	disable() {
-
 		if ( !this.state.disabled ) this.setState( { disabled: true } );
-
 	}
 
 	enable() {
-
 		if ( this.state.disabled ) this.setState( { disabled: false } );
-
 	}
 
-	render() {
+	//
+	// Render
+	//
 
+	render() {
 		return (
 			<div className="form-checkboxes">
 				{ this.props.data.map( ( box ) => (
@@ -48,10 +61,12 @@ class Checkboxes extends React.Component {
 				) ) }
 			</div>
 		);
-
 	}
-
 }
+
+//
+// Properties
+//
 
 Checkboxes.defaultProps = {
 	disabled: false,

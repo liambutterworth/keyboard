@@ -1,32 +1,45 @@
+//
+// Button
+//
+// :: Constructor
+// :: State Methods
+// :: Render
+// :: Properties
+
 import React     from 'react';
 import PropTypes from 'prop-types';
 
 class Button extends React.Component {
 
-	constructor( props ) {
+	//
+	// Constructor
+	//
 
+	constructor( props ) {
 		super( props );
 
 		this.state = {
 			disabled: this.props.disabled,
 		};
-
 	}
 
+	//
+	// State Methods
+	//
+
 	disable() {
-
 		if ( !this.state.disabled ) this.setState( { disabled: true } );
-
 	}
 
 	enable() {
-
 		if ( this.state.disabled ) this.setState( { disabled: false } );
-
 	}
 
-	render() {
+	//
+	// Render
+	//
 
+	render() {
 		return (
 			<button
 				className="form-button"
@@ -39,10 +52,12 @@ class Button extends React.Component {
 				{ this.props.children || this.props.text }
 			</button>
 		);
-
 	}
-
 }
+
+//
+// Properties
+//
 
 Button.defaultProps = {
 	text:     '',

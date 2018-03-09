@@ -4,7 +4,6 @@ import Legend   from 'components/Legend';
 
 const Home = () => (
 	<div>
-		<Legend />
 		<Keyboard />
 	</div>
 );
