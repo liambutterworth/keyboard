@@ -74,8 +74,8 @@ class Tabs extends React.Component {
 
 		return (
 			<div className="tabs">
-				<header className="tabs-titles">{ titles }</header>
-				<ul className="tabs-content">{ tabs }</ul>
+				<header className="tabs__titles">{ titles }</header>
+				<ul className="tabs__content">{ tabs }</ul>
 			</div>
 		);
 	}

@@ -2,7 +2,7 @@
  * Keyboard
  */
 
-$white-count: 15;
+$white-count: 17;
 $white-width: calc( 100% / $white-count );
 $black-width: calc( $white-width / 2 );
 
@@ -15,17 +15,17 @@ $black-pressed-color: color( $black-color whiteness( 15% ) );
 	background: black;
 	color: white;
 	height: 100%;
-	/* min-height: 768px; */
 	position: fixed;
 	width: 100%;
 }
 
-.keyboard-keys {
+.keyboard__keys {
 	bottom: 0;
 	height: 256px;
 	left: 0;
 	position: absolute;
 	width: 100%;
+	white-space: nowrap;
 
 	&::after {
 		content: "";
@@ -34,10 +34,11 @@ $black-pressed-color: color( $black-color whiteness( 15% ) );
 	}
 }
 
-.keyboard-key {
+.keyboard__key {
 	background: $white-color;
 	height: 100%;
-	float: left;
+	display: inline-block;
+	white-space: nowrap;
 	width: $white-width;
 	border-right: 1px solid black;
 	position: relative;
@@ -47,28 +48,29 @@ $black-pressed-color: color( $black-color whiteness( 15% ) );
 		border-right: none;
 	}
 
-	&.keyboard-key--is-highlighted {
+	&.keyboard__key--is-highlighted {
 		background: red;
 	}
 
-	&.keyboard-key--is-pressed {
+	&.keyboard__key--is-pressed {
 		background: $white-pressed-color;
 	}
 
-	&.keyboard-key--accidental {
+	&.keyboard__key--accidental {
 		border: none;
 		border-radius: 0 0 3px 3px;
 		background: black;
 		margin: 0 calc( $black-width / -2 );
+		vertical-align: top;
 		width: $black-width;
 		height: 65%;
 		z-index: 2;
 
-		&.keyboard-key--is-pressed {
+		&.keyboard__key--is-pressed {
 			background: $black-pressed-color;
 		}
 
-		&.keyboard-key--is-highlighted {
+		&.keyboard__key--is-highlighted {
 			background: red;
 		}
 	}

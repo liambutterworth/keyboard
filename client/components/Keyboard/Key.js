@@ -86,10 +86,10 @@ class Key extends React.Component {
 
 	render() {
 		const classNames = ClassNames( {
-			'keyboard-key':                 true,
-			'keyboard-key--accidental':     this.note.isAccidental,
-			'keyboard-key--is-pressed':     this.state.isPressed,
-			'keyboard-key--is-highlighted': this.state.isHighlighted,
+			'keyboard__key':                 true,
+			'keyboard__key--accidental':     this.note.isAccidental,
+			'keyboard__key--is-pressed':     this.state.isPressed,
+			'keyboard__key--is-highlighted': this.state.isHighlighted,
 		} );
 
 		return (

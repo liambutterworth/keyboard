@@ -44,7 +44,7 @@ class Radio extends React.Component {
 		const uuid = ShortID.generate();
 
 		return (
-			<div className="form-radio">
+			<div className="form__radio">
 				<input
 					type="radio"
 					id={ uuid }
@@ -54,7 +54,7 @@ class Radio extends React.Component {
 				/>
 
 				<label htmlFor={ uuid }>
-					<span className="form-radio-box" />
+					<span className="form__radio__box" />
 					{ this.props.label }
 				</label>
 			</div>

@@ -53,8 +53,8 @@ class Title extends React.Component {
 
 	render() {
 		const classNames = ClassNames( {
-			'tabs-title':         true,
-			'tabs-title--active': this.state.active,
+			'tabs__title':         true,
+			'tabs__title--active': this.state.active,
 		} );
 
 		return (

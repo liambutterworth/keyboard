@@ -12,7 +12,7 @@ import PropTypes from 'prop-types';
 //
 
 const Column = ( props ) => (
-	<div className={ `grid-column grid-column--span-${ props.span }` }>
+	<div className={ `grid__column grid__column--span-${ props.span }` }>
 		{ props.children }
 	</div>
 );

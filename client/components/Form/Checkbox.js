@@ -44,7 +44,7 @@ class Checkbox extends React.Component {
 		const id = ShortID.generate();
 
 		return (
-			<div className="form-checkbox">
+			<div className="form__checkbox">
 				<input
 					type="checkbox"
 					id={ id }
@@ -55,7 +55,7 @@ class Checkbox extends React.Component {
 				/>
 
 				<label htmlFor={ uuid }>
-					<span className="form-checkbox-box" />
+					<span className="form__checkbox__box" />
 					{ this.props.label }
 				</label>
 			</div>

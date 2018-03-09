@@ -16,18 +16,19 @@ require( './style.css' );
 
 class Prompt extends React.Component {
 
+	//
+	// Constructor
+	//p
+
 	constructor( props ) {
-
 		super( props );
-
-		this.element = document;
 
 		this.state = {
 			open: props.open,
 		};
 
+		this.element            = document;
 		this.handleClosePrompts = this.handleClosePrompts.bind( this );
-
 	}
 
 	//
@@ -35,15 +36,11 @@ class Prompt extends React.Component {
 	//
 
 	componentWillMount() {
-
 		this.element.addEventListener( 'close-prompts', this.handleClosePrompts );
-
 	}
 
 	componentWillUnmount() {
-
 		this.element.remoevEventListener( 'close-prompts', this.handleClosePrompts );
-
 	}
 
 	//
@@ -51,37 +48,25 @@ class Prompt extends React.Component {
 	//
 
 	open() {
-
 		this.setState( { open: true } );
-
 	}
 
 	close() {
-
 		this.setState( { open: false } );
-
 	}
 
 	closeAll() {
-
 		const event = new Event( 'close-prompts' );
 		this.element.dispatchEvent( event );
-
 	}
 
 	toggle() {
-
 		if ( this.state.open ) {
-
 			this.close();
-
 		} else {
-
 			this.closeAll();
 			this.open();
-
 		}
-
 	}
 
 	//
@@ -89,9 +74,7 @@ class Prompt extends React.Component {
 	//
 
 	handleClosePrompts() {
-
 		if ( this.state.open ) this.close();
-
 	}
 
 	//
@@ -99,10 +82,9 @@ class Prompt extends React.Component {
 	//
 
 	render() {
-
 		const classNames = ClassNames( {
-			'keyboard-prompt':       true,
-			'keyboard-prompt--open': this.state.open,
+			'keyboard__prompt':       true,
+			'keyboard__prompt--open': this.state.open,
 		} );
 
 		return (
@@ -110,9 +92,7 @@ class Prompt extends React.Component {
 				{ this.props.children }
 			</div>
 		);
-
 	}
-
 }
 
 //

@@ -12,7 +12,7 @@ import PropTypes from 'prop-types';
 //
 
 const Row = ( props ) => (
-	<div className="grid-row">
+	<div className="grid__row">
 		{ props.children }
 	</div>
 );

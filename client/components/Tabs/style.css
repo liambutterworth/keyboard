@@ -3,13 +3,13 @@
  */
 
 .tabs {
-	.tabs-titles {
+	.tabs__titles {
 		padding: lines( 0.5 ) 0;
 		text-align: center;
 	}
 }
 
-.tabs-title {
+.tabs__title {
 	cursor: pointer;
 	font-size: font-size( 14px );
 	padding: lines( 0.25 ) lines( 0.5 );
@@ -23,19 +23,19 @@
 		border-radius: 0 4px 4px 0;
 	}
 
-	& + .tabs-title {
+	& + .tabs__title {
 		border-left: 1px solid grey;
 	}
 
-	&.tabs-title--active {
+	&.tabs__title--active {
 		color: red;
 	}
 }
 
-.tabs-tab {
+.tabs__tab {
 	display: none;
 
-	&.tabs-tab--show {
+	&.tabs__tab--show {
 		display: block;
 	}
 }

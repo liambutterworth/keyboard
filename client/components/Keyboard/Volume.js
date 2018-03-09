@@ -51,6 +51,7 @@ class Volume extends React.Component {
 		return (
 			<div>
 				<h4>{ this.props.heading }</h4>
+
 				<Knob
 					label="Volume"
 					name="volume"

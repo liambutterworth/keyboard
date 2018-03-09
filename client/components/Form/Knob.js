@@ -110,18 +110,18 @@ class Knob extends React.Component {
 	renderNumbers() {
 		if ( this.props.numbered ) {
 			return (
-				<ul className="form-knob-numbers">
-					<li className="form-knob-0">0</li>
-					<li className="form-knob-1">1</li>
-					<li className="form-knob-2">2</li>
-					<li className="form-knob-3">3</li>
-					<li className="form-knob-4">4</li>
-					<li className="form-knob-5">5</li>
-					<li className="form-knob-6">6</li>
-					<li className="form-knob-7">7</li>
-					<li className="form-knob-8">8</li>
-					<li className="form-knob-9">9</li>
-					<li className="form-knob-10">10</li>
+				<ul className="form__knob__numbers">
+					<li className="form__knob-0">0</li>
+					<li className="form__knob-1">1</li>
+					<li className="form__knob-2">2</li>
+					<li className="form__knob-3">3</li>
+					<li className="form__knob-4">4</li>
+					<li className="form__knob-5">5</li>
+					<li className="form__knob-6">6</li>
+					<li className="form__knob-7">7</li>
+					<li className="form__knob-8">8</li>
+					<li className="form__knob-9">9</li>
+					<li className="form__knob-10">10</li>
 				</ul>
 			);
 		}
@@ -131,25 +131,25 @@ class Knob extends React.Component {
 		const id = ShortID.generate();
 
 		const classNames = ClassNames( {
-			'form-knob':             true,
-			'form-knob--adjustable': this.state.adjustable,
-			'form-knob--numbered':   this.props.numbered,
+			'form__knob':             true,
+			'form__knob--adjustable': this.state.adjustable,
+			'form__knob--numbered':   this.props.numbered,
 		} );
 
 		return (
 			<div className={ classNames }>
 				{ this.props.label &&
-					<label className="form-knob-label" htmlFor={ id }>
+					<label className="form__knob__label" htmlFor={ id }>
 						{ this.props.label }
 					</label>
 				}
 
-				<div className="form-knob-body">
+				<div className="form__knob__body">
 					{ this.renderNumbers() }
 
-					<div className="form-knob-cap">
+					<div className="form__knob__cap">
 						<div
-							className="form-knob-marker"
+							className="form__knob__marker"
 							ref={ ( marker ) => ( this.marker = marker ) }
 						/>
 

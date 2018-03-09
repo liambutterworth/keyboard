@@ -49,7 +49,7 @@ class Radios extends React.Component {
 
 	render() {
 		return (
-			<div className="form-radios">
+			<div className="form__radios">
 				{ this.props.data.map( ( button ) => (
 					<Radio
 						key={ ShortID.generate() }

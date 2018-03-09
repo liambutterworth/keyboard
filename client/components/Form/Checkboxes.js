@@ -49,7 +49,7 @@ class Checkboxes extends React.Component {
 
 	render() {
 		return (
-			<div className="form-checkboxes">
+			<div className="form__checkboxes">
 				{ this.props.data.map( ( box ) => (
 					<Checkbox
 						key={ ShortID.generate() }

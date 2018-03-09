@@ -42,7 +42,7 @@ class Button extends React.Component {
 	render() {
 		return (
 			<button
-				className="form-button"
+				className="form__button"
 				type={ this.props.type }
 				name={ this.props.name }
 				value={ this.props.value }

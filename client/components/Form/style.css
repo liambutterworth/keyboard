@@ -17,44 +17,22 @@ label {
  * Button
  */
 
-.form-button {
+.form__button {
 	padding: lines( 1 ) lines( 2 );
-}
-
-/**
- * Select
- */
-
-.form-select {
-	border: 1px solid white;
-	margin: lines( 0.5 ) 0;
-
-	select {
-		appearance: none;
-		background: transparent;
-		border: none;
-		color: white;
-		cursor: pointer;
-		font-size: font-size( 18px );
-		line-height: line-height( 18px );
-		height: 100%;
-		padding: lines( 0.5, 1px ) lines( 0.75, 1px );
-		width: 100%;
-	}
 }
 
 /**
  * Checkbox
  */
 
-.form-checkbox {
+.form__checkbox {
 	margin: lines( 0.5 ) 0;
 
 	input[type=checkbox] {
 		display: none;
 	}
 
-	.form-checkbox-box {
+	.form__checkbox__box {
 		border: 1px solid white;
 		border-radius: 2px;
 		display: inline-block;
@@ -65,43 +43,9 @@ label {
 		position: relative;
 	}
 
-	:checked + label .form-checkbox-box::after {
+	:checked + label .form__checkbox__box::after {
 		background: red;
 		border-radius: 2px;
-		content: "";
-		position: absolute;
-		top: 12.5%;
-		left: 12.5%;
-		height: 75%;
-		width: 75%;
-	}
-}
-
-/**
- * Radio
- */
-
-.form-radio {
-	margin: lines( 0.5 ) 0;
-
-	input[type=radio] {
-		display: none;
-	}
-
-	.form-radio-box {
-		border: 1px solid white;
-		border-radius: 200px;
-		display: inline-block;
-		height: lines( 1 );
-		width: lines( 1 );
-		margin: 0 lines( 0.25 ) 0 0;
-		vertical-align: bottom;
-		position: relative;
-	}
-
-	:checked + label .form-radio-box::after {
-		background: red;
-		border-radius: 200px;
 		content: "";
 		position: absolute;
 		top: 12.5%;
@@ -115,11 +59,11 @@ label {
  * Knob
  */
 
-$padding: lines( 1.25 );
+$knob-padding: lines( 1.25 );
 $knob-diameter: lines( 4 );
 $knob-radius: calc( $knob-diameter / 2 );
-$range-height: $knob-diameter;
-$range-width: calc( $knob-diameter * 4 );
+$knob-range-height: $knob-diameter;
+$knob-range-width: calc( $knob-diameter * 4 );
 
 @define-mixin track {
 	background-color: red;
@@ -142,16 +86,16 @@ $range-width: calc( $knob-diameter * 4 );
 	}
 }
 
-.form-knob {
+.form__knob {
 	display: inline-block;
 	position: relative;
 
-	&.form-knob--numbered .form-knob-body {
-		padding: $padding;
+	&.form__knob--numbered .form__knob__body {
+		padding: $knob-padding;
 		position: relative;
 	}
 
-	.form-knob-label {
+	.form__knob__label {
 		display: block;
 		text-align: center;
 		margin-bottom: lines( 0.5 );
@@ -175,32 +119,32 @@ $range-width: calc( $knob-diameter * 4 );
 
 	.form-knob-5 { left: 50%; }
 
-	.form-knob-4,
-	.form-knob-6 { top: lines( 0.5 ); }
-	.form-knob-4 { left: 25%; }
-	.form-knob-6 { left: 75%; }
+	.form__knob-4,
+	.form__knob-6 { top: lines( 0.5 ); }
+	.form__knob-4 { left: 25%; }
+	.form__knob-6 { left: 75%; }
 
-	.form-knob-3,
-	.form-knob-7 { top: lines( 1.75 ); }
-	.form-knob-3 { left: 12.5%; }
-	.form-knob-7 { left: 87.5%; }
+	.form__knob-3,
+	.form__knob-7 { top: lines( 1.75 ); }
+	.form__knob-3 { left: 12.5%; }
+	.form__knob-7 { left: 87.5%; }
 
-	.form-knob-2,
-	.form-knob-8 { top: lines( 3.25 ); }
-	.form-knob-2 { left: 10%; }
-	.form-knob-8 { left: 90%; }
+	.form__knob-2,
+	.form__knob-8 { top: lines( 3.25 ); }
+	.form__knob-2 { left: 10%; }
+	.form__knob-8 { left: 90%; }
 
-	.form-knob-1,
-	.form-knob-9 { top: lines( 4.5 ); }
-	.form-knob-1 { left: 17.5%; }
-	.form-knob-9 { left: 82.5%; }
+	.form__knob-1,
+	.form__knob-9 { top: lines( 4.5 ); }
+	.form__knob-1 { left: 17.5%; }
+	.form__knob-9 { left: 82.5%; }
 
-	.form-knob-0,
-	.form-knob-10 { top: lines( 5.45 ); }
-	.form-knob-0 { left: 32.5%; }
-	.form-knob-10 { left: 67.6%; }
+	.form__knob-0,
+	.form__knob-10 { top: lines( 5.45 ); }
+	.form__knob-0 { left: 32.5%; }
+	.form__knob-10 { left: 67.6%; }
 
-	.form-knob-marker {
+	.form__knob__marker {
 		height: 2px;
 		width: $knob-radius;
 		position: absolute;
@@ -214,7 +158,7 @@ $range-width: calc( $knob-diameter * 4 );
 		z-index: 1;
 	}
 
-	.form-knob-cap {
+	.form__knob__cap {
 		background: blue;
 		border-radius: 100%;
 		height: $knob-diameter;
@@ -222,23 +166,23 @@ $range-width: calc( $knob-diameter * 4 );
 		position: relative;
 		overflow: hidden;
 
-		&.form-knob--adjustable {
+		&.form__knob--adjustable {
 			overflow: visible;
 		}
 
 		input[type=range] {
 			-webkit-appearance: none;
 			cursor: pointer;
-			height: $range-height;
+			height: $knob-range-height;
 			opacity: 0;
 			outline: none;
 			transform: rotate( -90deg );
-			width: $range-width;
+			width: $knob-range-width;
 			position: absolute;
 			top: 50%;
 			left: 50%;
-			margin-top: calc( $range-height / -2 );
-			margin-left: calc( $range-width / -2 );
+			margin-top: calc( $knob-range-height / -2 );
+			margin-left: calc( $knob-range-width / -2 );
 
 			&::-webkit-slider-runnable-track { @mixin track; }
 			&::-webkit-slider-thumb { @mixin thumb; }
@@ -251,11 +195,67 @@ $range-width: calc( $knob-diameter * 4 );
 }
 
 /**
+ * Radio
+ */
+
+.form__radio {
+	margin: lines( 0.5 ) 0;
+
+	input[type=radio] {
+		display: none;
+	}
+
+	.form__radio__box {
+		border: 1px solid white;
+		border-radius: 200px;
+		display: inline-block;
+		height: lines( 1 );
+		width: lines( 1 );
+		margin: 0 lines( 0.25 ) 0 0;
+		vertical-align: bottom;
+		position: relative;
+	}
+
+	:checked + label .form__radio__box::after {
+		background: red;
+		border-radius: 200px;
+		content: "";
+		position: absolute;
+		top: 12.5%;
+		left: 12.5%;
+		height: 75%;
+		width: 75%;
+	}
+}
+
+/**
+ * Select
+ */
+
+.form__select {
+	border: 1px solid white;
+	margin: lines( 0.5 ) 0;
+
+	select {
+		appearance: none;
+		background: transparent;
+		border: none;
+		color: white;
+		cursor: pointer;
+		font-size: font-size( 18px );
+		line-height: line-height( 18px );
+		height: 100%;
+		padding: lines( 0.5, 1px ) lines( 0.75, 1px );
+		width: 100%;
+	}
+}
+
+/**
  * Slider
  */
 
-$slider-height: lines( 10 );
-$thumb-height: lines( 1.25 );
+$slider-range-height: lines( 10 );
+$slider-thumb-height: lines( 1.25 );
 
 @define-mixin track {
 	background-color: red;
@@ -266,26 +266,26 @@ $thumb-height: lines( 1.25 );
 @define-mixin thumb {
 	-webkit-appearance: none;
 	background-color: grey;
-	height: $thumb-height;
+	height: $slider-thumb-height;
 	width: 30px;
-	margin: calc( $thumb-height / -2 ) 0 0;
+	margin: calc( $slider-thumb-height / -2 ) 0 0;
 }
 
-.form-slider {
+.form__slider {
 	background: blue;
 	display: inline-block;
-	height: $slider-height;
-	width: $thumb-height;
+	height: $slider-range-height;
+	width: $slider-thumb-height;
 
 	input[type=range] {
 		-webkit-appearance: none;
 		cursor: pointer;
 		height: 2px;
-		margin: 0 0 0 calc( $thumb-height / 2 );
+		margin: 0 0 0 calc( $slider-thumb-height / 2 );
 		outline: none;
 		transform: rotate( -270deg ) translateX( -11px );
 		transform-origin: top left;
-		width: $slider-height;
+		width: $slider-range-height;
 
 		&::-webkit-slider-runnable-track { @mixin track; }
 		&::-webkit-slider-thumb { @mixin thumb; }

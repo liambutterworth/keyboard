@@ -42,8 +42,8 @@ class Tab extends React.Component {
 
 	render() {
 		const classNames = ClassNames( {
-			'tabs-tab':       true,
-			'tabs-tab--show': this.state.show,
+			'tabs__tab':       true,
+			'tabs__tab--show': this.state.show,
 		} );
 
 		return (

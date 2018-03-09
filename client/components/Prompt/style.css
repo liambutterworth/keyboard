@@ -1,7 +1,7 @@
 $prompt-height: 500px;
 $prompt-width: 750px;
 
-.keyboard-prompt {
+.keyboard__prompt {
 	background: $background-color;
 	border: 1px solid #333;
 	/* height: $prompt-height; */
@@ -18,7 +18,7 @@ $prompt-width: 750px;
 	display: none;
 	z-index: 3;
 
-	&.keyboard-prompt--open {
+	&.keyboard__prompt--open {
 		display: block;
 	}
 }

@@ -208,7 +208,7 @@ class Keyboard extends React.Component {
 					</Tabs>
 				</Wrapper>
 
-				<div className="keyboard-keys">
+				<div className="keyboard__keys">
 					{ this.renderKeys() }
 				</div>
 			</div>
