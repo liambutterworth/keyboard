@@ -2,6 +2,8 @@
  * Keyboard
  */
 
+@import 'globals';
+
 $white-count: 17;
 $white-width: calc( 100% / $white-count );
 $black-width: calc( $white-width / 2 );

@@ -9,6 +9,8 @@
  * :: Slider
  */
 
+@import 'globals';
+
 label {
 	cursor: pointer;
 }

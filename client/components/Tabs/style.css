@@ -2,6 +2,8 @@
  * Tabs
  */
 
+@import 'globals';
+
 .tabs {
 	.tabs__titles {
 		padding: lines( 0.5 ) 0;
