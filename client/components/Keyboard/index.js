@@ -9,7 +9,6 @@
 // :: Properties
 
 import React            from 'react';
-import PropTypes        from 'prop-types';
 import ShortID          from 'shortid';
 import Notes            from 'components/Notes';
 import Grid, { Column } from 'components/Grid';
@@ -39,35 +38,35 @@ class Keyboard extends React.Component {
 		this.handleNotesChange = this.handleNotesChange.bind( this );
 
 		Actions.add( [
-			{ type: 'input', char: 'z', code: 90, note: 'C',  desc: 'toggle key' },
-			{ type: 'input', char: 's', code: 83, note: 'Db', desc: 'toggle key' },
-			{ type: 'input', char: 'x', code: 88, note: 'D',  desc: 'toggle key' },
-			{ type: 'input', char: 'd', code: 68, note: 'Eb', desc: 'toggle key' },
-			{ type: 'input', char: 'c', code: 67, note: 'E',  desc: 'toggle key' },
-			{ type: 'input', char: 'v', code: 86, note: 'F',  desc: 'toggle key' },
-			{ type: 'input', char: 'g', code: 71, note: 'Gb', desc: 'toggle key' },
-			{ type: 'input', char: 'b', code: 66, note: 'G',  desc: 'toggle key' },
-			{ type: 'input', char: 'h', code: 72, note: 'Ab', desc: 'toggle key' },
-			{ type: 'input', char: 'n', code: 78, note: 'A',  desc: 'toggle key' },
-			{ type: 'input', char: 'j', code: 74, note: 'Bb', desc: 'toggle key' },
-			{ type: 'input', char: 'm', code: 77, note: 'B',  desc: 'toggle key' },
-			{ type: 'input', char: 'q', code: 81, note: 'C',  desc: 'toggle key' },
-			{ type: 'input', char: '2', code: 50, note: 'Db', desc: 'toggle key' },
-			{ type: 'input', char: 'w', code: 87, note: 'D',  desc: 'toggle key' },
-			{ type: 'input', char: '3', code: 51, note: 'Eb', desc: 'toggle key' },
-			{ type: 'input', char: 'e', code: 69, note: 'E',  desc: 'toggle key' },
-			{ type: 'input', char: 'r', code: 82, note: 'F',  desc: 'toggle key' },
-			{ type: 'input', char: '5', code: 53, note: 'Gb', desc: 'toggle key' },
-			{ type: 'input', char: 't', code: 84, note: 'G',  desc: 'toggle key' },
-			{ type: 'input', char: '6', code: 54, note: 'Ab', desc: 'toggle key' },
-			{ type: 'input', char: 'y', code: 89, note: 'A',  desc: 'toggle key' },
-			{ type: 'input', char: '7', code: 55, note: 'Bb', desc: 'toggle key' },
-			{ type: 'input', char: 'u', code: 85, note: 'B',  desc: 'toggle key' },
-			{ type: 'input', char: 'i', code: 73, note: 'C',  desc: 'toggle key' },
-			{ type: 'input', char: '9', code: 57, note: 'Db', desc: 'toggle key' },
-			{ type: 'input', char: 'o', code: 79, note: 'D',  desc: 'toggle key' },
-			{ type: 'input', char: '0', code: 48, note: 'Eb', desc: 'toggle key' },
-			{ type: 'input', char: 'p', code: 80, note: 'E',  desc: 'toggle key' },
+			{ type: 'input', char: 'z', code: 90, desc: 'toggle key', note: 'C' },
+			{ type: 'input', char: 's', code: 83, desc: 'toggle key', note: 'Db' },
+			{ type: 'input', char: 'x', code: 88, desc: 'toggle key', note: 'D' },
+			{ type: 'input', char: 'd', code: 68, desc: 'toggle key', note: 'Eb' },
+			{ type: 'input', char: 'c', code: 67, desc: 'toggle key', note: 'E' },
+			{ type: 'input', char: 'v', code: 86, desc: 'toggle key', note: 'F' },
+			{ type: 'input', char: 'g', code: 71, desc: 'toggle key', note: 'Gb' },
+			{ type: 'input', char: 'b', code: 66, desc: 'toggle key', note: 'G' },
+			{ type: 'input', char: 'h', code: 72, desc: 'toggle key', note: 'Ab' },
+			{ type: 'input', char: 'n', code: 78, desc: 'toggle key', note: 'A' },
+			{ type: 'input', char: 'j', code: 74, desc: 'toggle key', note: 'Bb' },
+			{ type: 'input', char: 'm', code: 77, desc: 'toggle key', note: 'B' },
+			{ type: 'input', char: 'q', code: 81, desc: 'toggle key', note: 'C' },
+			{ type: 'input', char: '2', code: 50, desc: 'toggle key', note: 'Db' },
+			{ type: 'input', char: 'w', code: 87, desc: 'toggle key', note: 'D' },
+			{ type: 'input', char: '3', code: 51, desc: 'toggle key', note: 'Eb' },
+			{ type: 'input', char: 'e', code: 69, desc: 'toggle key', note: 'E' },
+			{ type: 'input', char: 'r', code: 82, desc: 'toggle key', note: 'F' },
+			{ type: 'input', char: '5', code: 53, desc: 'toggle key', note: 'Gb' },
+			{ type: 'input', char: 't', code: 84, desc: 'toggle key', note: 'G' },
+			{ type: 'input', char: '6', code: 54, desc: 'toggle key', note: 'Ab' },
+			{ type: 'input', char: 'y', code: 89, desc: 'toggle key', note: 'A' },
+			{ type: 'input', char: '7', code: 55, desc: 'toggle key', note: 'Bb' },
+			{ type: 'input', char: 'u', code: 85, desc: 'toggle key', note: 'B' },
+			{ type: 'input', char: 'i', code: 73, desc: 'toggle key', note: 'C' },
+			{ type: 'input', char: '9', code: 57, desc: 'toggle key', note: 'Db' },
+			{ type: 'input', char: 'o', code: 79, desc: 'toggle key', note: 'D' },
+			{ type: 'input', char: '0', code: 48, desc: 'toggle key', note: 'Eb' },
+			{ type: 'input', char: 'p', code: 80, desc: 'toggle key', note: 'E' },
 		] );
 	}
 
@@ -88,7 +87,7 @@ class Keyboard extends React.Component {
 	//
 
 	getKey( keyCode ) {
-		return this.keys.find(( key ) => ( key.props.code === keyCode ));
+		return this.keys.find( ( key ) => ( key.props.code === keyCode ) );
 	}
 
 	playKey( keyCode ) {
@@ -102,7 +101,7 @@ class Keyboard extends React.Component {
 	}
 
 	stopKeys() {
-		this.keys.forEach(( key ) => ( key.release() ));
+		this.keys.forEach( ( key ) => ( key.release() ) );
 	}
 
 	//
@@ -124,7 +123,7 @@ class Keyboard extends React.Component {
 	handleNotesChange( highlight, notes ) {
 		const symbols = notes.symbols();
 
-		this.keys.forEach(( key ) => {
+		this.keys.forEach( ( key ) => {
 			const symbol = key.note.symbol();
 
 			if ( symbols.includes( symbol ) ) {
@@ -159,7 +158,7 @@ class Keyboard extends React.Component {
 
 			if ( ( index + 1 ) % 12 === 0 ) octave += 1;
 			return component;
-		} );
+		});
 	}
 
 	render() {
@@ -167,10 +166,6 @@ class Keyboard extends React.Component {
 			<div className="keyboard">
 				<Wrapper>
 					<Tabs>
-						<Tab title="Notes">
-							<Notes onChange={ this.handleNotesChange } />
-						</Tab>
-
 						<Tab title="Synth">
 							<Grid>
 								<Column span="2">
@@ -205,6 +200,10 @@ class Keyboard extends React.Component {
 								</Column>
 							</Grid>
 						</Tab>
+
+						<Tab title="Notes">
+							<Notes onChange={ this.handleNotesChange } />
+						</Tab>
 					</Tabs>
 				</Wrapper>
 
@@ -214,6 +213,7 @@ class Keyboard extends React.Component {
 			</div>
 		);
 	}
+
 }
 
 export default Keyboard;

@@ -28,13 +28,25 @@
 		"no-return-assign":             [ "error", "except-parens" ],
 		"template-curly-spacing":       [ "warn", "always" ],
 		"arrow-parens":                 [ "warn", "always" ],
-		"space-in-parens":              [ "warn", "always" ],
-		"padded-blocks":                [ "warn", "always" ],
 		"object-shorthand":             [ "warn", "consistent" ],
 		"one-var-declaration-per-line": [ "warn", "initializations" ],
 
+		"space-in-parens": [ "warn", "always", {
+			"exceptions": [ "{}" ],
+		} ],
+
 		"key-spacing": [ "warn", {
 			align: "value"
+		} ],
+
+		"padded-blocks": [ "warn", {
+			classes: "always",
+		} ],
+
+		"lines-around-comment": [ "warn", {
+			beforeBlockComment:   true,
+			afterBlockComment:    true,
+			beforeLineComment:    true,
 		} ],
 
 		"indent": [ "error", "tab", {
