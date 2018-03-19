@@ -65,13 +65,13 @@ $knob-radius: calc( $knob-diameter / 2 );
 $knob-range-height: $knob-diameter;
 $knob-range-width: calc( $knob-diameter * 4 );
 
-@define-mixin track {
+@mixin track {
 	background-color: red;
 	border: none;
 	height: $knob-diameter;
 }
 
-@define-mixin thumb {
+@mixin thumb {
 	-webkit-appearance: none;
 	background-color: blue;
 	height: $knob-diameter;
@@ -184,12 +184,12 @@ $knob-range-width: calc( $knob-diameter * 4 );
 			margin-top: calc( $knob-range-height / -2 );
 			margin-left: calc( $knob-range-width / -2 );
 
-			&::-webkit-slider-runnable-track { @mixin track; }
-			&::-webkit-slider-thumb { @mixin thumb; }
-			&::-moz-range-track { @mixin track; }
-			&::-moz-range-thumb { @mixin thumb; }
-			&::-ms-track { @mixin track; }
-			&::-ms-thumb { @mixin thumb; }
+			&::-webkit-slider-runnable-track { @include track; }
+			&::-webkit-slider-thumb { @include thumb; }
+			&::-moz-range-track { @include track; }
+			&::-moz-range-thumb { @include thumb; }
+			&::-ms-track { @include track; }
+			&::-ms-thumb { @include thumb; }
 		}
 	}
 }
@@ -257,13 +257,13 @@ $knob-range-width: calc( $knob-diameter * 4 );
 $slider-range-height: lines( 10 );
 $slider-thumb-height: lines( 1.25 );
 
-@define-mixin track {
+@mixin track {
 	background-color: red;
 	border: none;
 	height: 2px;
 }
 
-@define-mixin thumb {
+@mixin thumb {
 	-webkit-appearance: none;
 	background-color: grey;
 	height: $slider-thumb-height;
@@ -287,11 +287,11 @@ $slider-thumb-height: lines( 1.25 );
 		transform-origin: top left;
 		width: $slider-range-height;
 
-		&::-webkit-slider-runnable-track { @mixin track; }
-		&::-webkit-slider-thumb { @mixin thumb; }
-		&::-moz-range-track { @mixin track; }
-		&::-moz-range-thumb { @mixin thumb; }
-		&::-ms-track { @mixin track; }
-		&::-ms-thumb { @mixin thumb; }
+		&::-webkit-slider-runnable-track { @include track; }
+		&::-webkit-slider-thumb { @include thumb; }
+		&::-moz-range-track { @include track; }
+		&::-moz-range-thumb { @include thumb; }
+		&::-ms-track { @include track; }
+		&::-ms-thumb { @include thumb; }
 	}
 }

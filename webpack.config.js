@@ -5,10 +5,7 @@ const path               = require( 'path' );
 
 module.exports = {
 	context: `${ __dirname }/client/`,
-
-	entry: [
-		'./index.js',
-	],
+	entry:   [ './index.js' ],
 
 	output: {
 		path:     `${ __dirname }/build`,
@@ -25,7 +22,7 @@ module.exports = {
 	},
 
 	module: {
-		loaders: [ {
+		loaders: [{
 			test:    /\.js$/,
 			exclude: /node_modules/,
 			use:     'babel-loader',
@@ -33,9 +30,17 @@ module.exports = {
 			test:    /\.css$/,
 			exclude: /node_modules/,
 
-			use: ExtractTextPlugin.extract( {
-				use: 'css-loader!postcss-loader',
-			} ),
+			use: ExtractTextPlugin.extract({
+				use: [{
+					loader: 'css-loader',
+				}, {
+					loader: 'sass-loader',
+
+					options: {
+						includePaths: [ 'client' ],
+					},
+				}],
+			}),
 		}, {
 			test:    /\.(jpe?g|png|woff(2)?|eot|ttf)(\?[a-z0-9]+)?$/,
 			exclude: /node_modules/,
@@ -44,20 +49,17 @@ module.exports = {
 			test:    /\.svg$/,
 			exclude: /node_modules/,
 			use:     'svg-inline-loader',
-		} ],
+		}],
 	},
 
 	plugins: [
 		new ExtractTextPlugin( '[name].[hash].css' ),
-
-		new HtmlWebpackPlugin( {
-			template: 'index.html',
-		} ),
+		new HtmlWebpackPlugin({ template: 'index.html' }),
 
 		new CleanWebpackPlugin( [ 'build' ], {
 			root:    __dirname,
 			verbose: true,
 			watch:   true,
-		} ),
+		}),
 	],
 };
