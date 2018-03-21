@@ -1,11 +1,11 @@
+const path               = require( 'path' );
 const ExtractTextPlugin  = require( 'extract-text-webpack-plugin' );
 const HtmlWebpackPlugin  = require( 'html-webpack-plugin' );
 const CleanWebpackPlugin = require( 'clean-webpack-plugin' );
-const path               = require( 'path' );
 
 module.exports = {
 	context: `${ __dirname }/client/`,
-	entry:   [ './index.js' ],
+	entry:   './index.js',
 
 	output: {
 		path:     `${ __dirname }/build`,
@@ -31,17 +31,7 @@ module.exports = {
 			exclude: /node_modules/,
 
 			use: ExtractTextPlugin.extract({
-				use: [{
-					loader: 'css-loader',
-				}, {
-					loader: 'sass-loader',
-
-					options: {
-						includePaths: [ 'client' ],
-					},
-				}, {
-					loader: 'autoprefixer-loader',
-				}],
+				use: 'css-loader!sass-loader?includePaths[]=client!autoprefixer-loader',
 			}),
 		}, {
 			test:    /\.(jpe?g|png|woff(2)?|eot|ttf)(\?[a-z0-9]+)?$/,
@@ -57,11 +47,6 @@ module.exports = {
 	plugins: [
 		new ExtractTextPlugin( '[name].[hash].css' ),
 		new HtmlWebpackPlugin({ template: 'index.html' }),
-
-		new CleanWebpackPlugin( [ 'build' ], {
-			root:    __dirname,
-			verbose: true,
-			watch:   true,
-		}),
+		new CleanWebpackPlugin([ 'build' ], { watch: true }),
 	],
 };
