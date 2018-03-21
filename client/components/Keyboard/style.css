@@ -5,13 +5,13 @@
 @import 'globals';
 
 $white-count: 17;
-$white-width: calc( 100% / $white-count );
-$black-width: calc( $white-width / 2 );
+$white-width: 100% / $white-count;
+$black-width: $white-width / 2;
 
 $white-color: white;
-$white-pressed-color: color( $white-color blackness( 15% ) );
+$white-pressed-color: darken( $white-color, 15 );
 $black-color: black;
-$black-pressed-color: color( $black-color whiteness( 15% ) );
+$black-pressed-color: darken( $black-color, 15 );
 
 .keyboard {
 	background: black;
@@ -62,7 +62,7 @@ $black-pressed-color: color( $black-color whiteness( 15% ) );
 		border: none;
 		border-radius: 0 0 3px 3px;
 		background: black;
-		margin: 0 calc( $black-width / -2 );
+		margin: 0 ( $black-width / -2 );
 		vertical-align: top;
 		width: $black-width;
 		height: 65%;

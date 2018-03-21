@@ -39,6 +39,8 @@ module.exports = {
 					options: {
 						includePaths: [ 'client' ],
 					},
+				}, {
+					loader: 'autoprefixer-loader',
 				}],
 			}),
 		}, {

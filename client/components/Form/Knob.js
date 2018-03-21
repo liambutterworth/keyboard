@@ -52,16 +52,16 @@ class Knob extends React.Component {
 	//
 
 	disable() {
-		if ( !this.state.disabled ) this.setState( { disabled: true } );
+		if ( !this.state.disabled ) this.setState({ disabled: true });
 	}
 
 	enable() {
-		if ( this.state.disabled ) this.setState( { disabled: false } );
+		if ( this.state.disabled ) this.setState({ disabled: false });
 	}
 
 	adjust() {
 		const percent = ( this.value - this.props.min ) / ( this.props.max - this.props.min );
-		const degree  = percent * ( this.maxDegree - this.minDegree ) + this.minDegree;
+		const degree  = ( percent * ( this.maxDegree - this.minDegree ) ) + this.minDegree;
 
 		this.marker.style.transform = `rotate( ${ degree }deg )`;
 	}
@@ -94,12 +94,12 @@ class Knob extends React.Component {
 	}
 
 	handleMouseDown() {
-		if ( !this.state.adjustable ) this.setState( { adjustable: true } );
+		if ( !this.state.adjustable ) this.setState({ adjustable: true });
 	}
 
 	handleMouseUp() {
 		this.initialValue = 0;
-		if ( this.state.adjustable ) this.setState( { adjustable: false } );
+		if ( this.state.adjustable ) this.setState({ adjustable: false });
 		if ( this.props.onChange ) this.props.onChange( this.value );
 	}
 
@@ -130,11 +130,11 @@ class Knob extends React.Component {
 	render() {
 		const id = ShortID.generate();
 
-		const classNames = ClassNames( {
-			'form__knob':             true,
+		const classNames = ClassNames({
+			form__knob:               true,
 			'form__knob--adjustable': this.state.adjustable,
 			'form__knob--numbered':   this.props.numbered,
-		} );
+		});
 
 		return (
 			<div className={ classNames }>

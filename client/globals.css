@@ -1,13 +1,14 @@
-//
-// Globals
-//
-// :: Variables
-// :: Functions
-// :: Mixins
+/**
+ * Globals
+ *
+ * :: Variables
+ * :: Functions
+ * :: Mixins
+ */
 
-//
-// Variables
-//
+/**
+ * Variables
+ */
 
 $wrapper-width:    1024px;
 $background-color: white;
@@ -16,18 +17,45 @@ $highlight-color:  red;
 $base-font-size:   16px;
 $base-line-height: 1.5;
 
-//
-// Functions
-//
+/**
+ * Functions
+ */
+
+@function strip-units( $number ) {
+	@return $number / ( $number * 0 + 1 );
+}
 
 @function font-size( $target-font-size ) {
-	@return $target-font-size / $base-font-size * 1rem;
+	$font-size: $target-font-size / $base-font-size;
+	@return $font-size * 1rem;
 }
 
 @function line-height( $target-font-size ) {
-	$lineMultipl
+	$line: $base-font-size * $base-line-height;
+	$line-count: ceil( $target-font-size / $line );
+	$line-height: ( $line * $line-count ) / $target-font-size;
+	@return $line-height;
 }
 
-//
-// Mixins
-//
+@function lines( $count, $pixels-to-subtract: null ) {
+	$subtract: if( $pixels-to-subtract != null, $pixels-to-subtract / $base-font-size, 0 );
+	$line: $base-line-height * 1rem;
+	@return $line * $count - $subtract;
+}
+
+/**
+ * Mixins
+ */
+
+@mixin clearfix() {
+	&::after {
+		content: "";
+		display: table;
+		clear: both;
+	}
+}
+
+@mixin font-size( $target-font-size ) {
+	font-size: font-size( $target-font-size );
+	line-height: line-height( $target-font-size );
+}

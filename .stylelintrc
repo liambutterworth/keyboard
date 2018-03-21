@@ -1,9 +1,11 @@
 {
-	"extends": "stylelint-config-standard",
+	"extends": "stylelint-config-recommended-scss",
+
+	"plugins": [
+		"stylelint-scss",
+	],
 
 	"rules": {
-		"block-opening-brace-space-before":               0,
-		"declaration-block-no-duplicate-properties":      0,
 		"indentation":                                    "tab",
 		"function-parentheses-space-inside":              "always",
 		"media-feature-parentheses-space-inside":         "always",

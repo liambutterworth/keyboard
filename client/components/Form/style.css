@@ -5,8 +5,8 @@
  * :: Select
  * :: Checkbox
  * :: Radio
- * :: Knob
  * :: Slider
+ * :: Knob
  */
 
 @import 'globals';
@@ -58,14 +58,60 @@ label {
 }
 
 /**
+ * Slider
+ */
+
+$slider-range-height: lines( 10 );
+$slider-thumb-height: lines( 1.25 );
+
+@mixin track {
+	background-color: red;
+	border: none;
+	height: 2px;
+}
+
+@mixin thumb {
+	-webkit-appearance: none;
+	background-color: grey;
+	height: $slider-thumb-height;
+	width: 30px;
+	margin: ( $slider-thumb-height / -2 ) 0 0;
+}
+
+.form__slider {
+	background: blue;
+	display: inline-block;
+	height: $slider-range-height;
+	width: $slider-thumb-height;
+
+	input[type=range] {
+		-webkit-appearance: none;
+		cursor: pointer;
+		height: 2px;
+		margin: 0 0 0 ( $slider-thumb-height / 2 );
+		outline: none;
+		transform: rotate( -270deg ) translateX( -11px );
+		transform-origin: top left;
+		width: $slider-range-height;
+
+		&::-webkit-slider-runnable-track { @include track; }
+		&::-webkit-slider-thumb          { @include thumb; }
+		&::-moz-range-track              { @include track; }
+		&::-moz-range-thumb              { @include thumb; }
+		&::-ms-track                     { @include track; }
+		&::-ms-thumb                     { @include thumb; }
+	}
+}
+
+/**
  * Knob
  */
 
 $knob-padding: lines( 1.25 );
-$knob-diameter: lines( 4 );
-$knob-radius: calc( $knob-diameter / 2 );
+$knob-diameter: lines( 3 );
+$knob-radius: $knob-diameter / 2;
 $knob-range-height: $knob-diameter;
-$knob-range-width: calc( $knob-diameter * 4 );
+$knob-range-width: $knob-diameter * 4;
 
 @mixin track {
 	background-color: red;
@@ -91,6 +137,7 @@ $knob-range-width: calc( $knob-diameter * 4 );
 .form__knob {
 	display: inline-block;
 	position: relative;
+	content: $knob-diameter;
 
 	&.form__knob--numbered .form__knob__body {
 		padding: $knob-padding;
@@ -183,15 +230,15 @@ $knob-range-width: calc( $knob-diameter * 4 );
 			position: absolute;
 			top: 50%;
 			left: 50%;
-			margin-top: calc( $knob-range-height / -2 );
-			margin-left: calc( $knob-range-width / -2 );
+			margin-top: $knob-range-height / -2;
+			margin-left: $knob-range-width / -2;
 
 			&::-webkit-slider-runnable-track { @include track; }
-			&::-webkit-slider-thumb { @include thumb; }
-			&::-moz-range-track { @include track; }
-			&::-moz-range-thumb { @include thumb; }
-			&::-ms-track { @include track; }
-			&::-ms-thumb { @include thumb; }
+			&::-webkit-slider-thumb          { @include thumb; }
+			&::-moz-range-track              { @include track; }
+			&::-moz-range-thumb              { @include thumb; }
+			&::-ms-track                     { @include track; }
+			&::-ms-thumb                     { @include thumb; }
 		}
 	}
 }
@@ -244,56 +291,11 @@ $knob-range-width: calc( $knob-diameter * 4 );
 		border: none;
 		color: white;
 		cursor: pointer;
-		font-size: font-size( 18px );
-		line-height: line-height( 18px );
+		font-size: font-size( 16px );
+		line-height: line-height( 16px );
 		height: 100%;
-		padding: lines( 0.5, 1px ) lines( 0.75, 1px );
+		padding: lines( 0.5, 1px );
+		padding: lines( 0.5 );
 		width: 100%;
-	}
-}
-
-/**
- * Slider
- */
-
-$slider-range-height: lines( 10 );
-$slider-thumb-height: lines( 1.25 );
-
-@mixin track {
-	background-color: red;
-	border: none;
-	height: 2px;
-}
-
-@mixin thumb {
-	-webkit-appearance: none;
-	background-color: grey;
-	height: $slider-thumb-height;
-	width: 30px;
-	margin: calc( $slider-thumb-height / -2 ) 0 0;
-}
-
-.form__slider {
-	background: blue;
-	display: inline-block;
-	height: $slider-range-height;
-	width: $slider-thumb-height;
-
-	input[type=range] {
-		-webkit-appearance: none;
-		cursor: pointer;
-		height: 2px;
-		margin: 0 0 0 calc( $slider-thumb-height / 2 );
-		outline: none;
-		transform: rotate( -270deg ) translateX( -11px );
-		transform-origin: top left;
-		width: $slider-range-height;
-
-		&::-webkit-slider-runnable-track { @include track; }
-		&::-webkit-slider-thumb { @include thumb; }
-		&::-moz-range-track { @include track; }
-		&::-moz-range-thumb { @include thumb; }
-		&::-ms-track { @include track; }
-		&::-ms-thumb { @include thumb; }
 	}
 }
