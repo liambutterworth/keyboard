@@ -12,7 +12,7 @@ import PropTypes from 'prop-types';
 import Tone      from 'tone';
 import { Knob }  from 'components/Form';
 
-class AmpEnvelope extends React.Component {
+class Envelope extends React.Component {
 
 	//
 	// Constructor
@@ -22,10 +22,10 @@ class AmpEnvelope extends React.Component {
 		super( props );
 
 		this.instances           = [];
-		this.attack              = this.props.attack;
-		this.decay               = this.props.decay;
-		this.sustain             = this.props.sustain;
-		this.release             = this.props.release;
+		this.attack              = props.attack;
+		this.decay               = props.decay;
+		this.sustain             = props.sustain;
+		this.release             = props.release;
 		this.handleAttackChange  = this.handleAttackChange.bind( this );
 		this.handleDecayChange   = this.handleAttackChange.bind( this );
 		this.handleSustainChange = this.handleAttackChange.bind( this );
@@ -114,27 +114,28 @@ class AmpEnvelope extends React.Component {
 					onChange={ this.handleReleaseChange }
 				/>
 			</div>
-		)
+		);
 	}
+
 }
 
 //
 // Properties
 //
 
-AmpEnvelope.defaultProps = {
+Envelope.defaultProps = {
 	attack:  0.1,
 	decay:   0.2,
 	sustain: 1,
 	release: 0.8,
 };
 
-AmpEnvelope.PropTypes = {
+Envelope.propTypes = {
 	heading: PropTypes.string.isRequired,
 	attack:  PropTypes.number,
 	decay:   PropTypes.number,
 	sustain: PropTypes.number,
 	release: PropTypes.number,
-}
+};
 
-export default AmpEnvelope;
+export default Envelope;

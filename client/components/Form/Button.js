@@ -28,11 +28,11 @@ class Button extends React.Component {
 	//
 
 	disable() {
-		if ( !this.state.disabled ) this.setState( { disabled: true } );
+		if ( !this.state.disabled ) this.setState({ disabled: true });
 	}
 
 	enable() {
-		if ( this.state.disabled ) this.setState( { disabled: false } );
+		if ( this.state.disabled ) this.setState({ disabled: false });
 	}
 
 	//
@@ -53,6 +53,7 @@ class Button extends React.Component {
 			</button>
 		);
 	}
+
 }
 
 //

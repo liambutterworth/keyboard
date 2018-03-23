@@ -2,7 +2,7 @@
  * Tabs
  */
 
-@import 'globals';
+@import 'global';
 
 .tabs {
 	.tabs__titles {

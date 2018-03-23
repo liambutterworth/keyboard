@@ -1,6 +1,6 @@
 {
 	extends: "airbnb",
-	parser: "babel-eslint",
+	parser:  "babel-eslint",
 
 	parserOptions: {
 		ecmaVersion: 6,
@@ -32,31 +32,31 @@
 		"one-var-declaration-per-line": [ "warn", "initializations" ],
 
 		"space-in-parens": [ "warn", "always", {
-			"exceptions": [ "{}", "[]" ],
-		} ],
+			"exceptions": [ "()", "[]", "{}" ],
+		}],
 
 		"key-spacing": [ "warn", {
 			align: "value"
-		} ],
+		}],
 
 		"padded-blocks": [ "warn", {
 			classes: "always",
-		} ],
+		}],
 
 		"lines-around-comment": [ "warn", {
 			beforeBlockComment:   true,
 			afterBlockComment:    true,
 			beforeLineComment:    true,
-		} ],
+		}],
 
 		"indent": [ "error", "tab", {
 			SwitchCase: 1,
-		} ],
+		}],
 
 		"array-bracket-spacing": [ "warn", "always", {
 			objectsInArrays: false,
 			arraysInArrays:  false,
-		} ],
+		}],
 
 		"no-multi-spaces": [ "warn", {
 			exceptions: {
@@ -65,26 +65,23 @@
 				VariableDeclarator:   true,
 				ImportDeclaration:    true,
 			}
-		} ],
+		}],
 
 		"import/no-extraneous-dependencies": [ "error", {
 			devDependencies: true,
-		} ],
+		}],
 
 		"react/forbid-prop-types": 0,
 		"react/jsx-indent":        [ "error", "tab" ],
 		"react/jsx-indent-props":  [ "error", "tab" ],
 
 		"react/jsx-curly-spacing": [ "warn", {
-			when: "always",
-
-			spacing: {
-				objectLiterals: "never",
-			},
-		} ],
+			when:    "always",
+			spacing: { objectLiterals: "never" },
+		}],
 
 		"react/jsx-filename-extension": [ "error", {
 			extensions: [ ".js", ".jsx" ],
-		} ],
+		}],
 	},
 }

@@ -1,4 +1,8 @@
-@import 'globals';
+/**
+ * Wrapper
+ */
+
+@import 'global';
 
 .wrapper {
 	box-sizing: content-box;

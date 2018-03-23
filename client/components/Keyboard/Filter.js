@@ -13,7 +13,7 @@ import Tone      from 'tone';
 
 import Grid, {
 	Row,
-	Column
+	Column,
 } from 'components/Grid';
 
 import {
@@ -32,15 +32,15 @@ class Filter extends React.Component {
 		super( props );
 
 		this.instances             = [];
-		this.type                  = this.props.type;
-		this.cutoff                = this.props.cutoff;
-		this.rolloff               = this.props.rolloff;
-		this.resonance             = this.props.resonance;
-		this.attack                = this.props.attack;
-		this.decay                 = this.props.decay;
-		this.sustain               = this.props.sustain;
-		this.release               = this.props.release;
-		this.octave                = this.props.octave;
+		this.type                  = props.type;
+		this.cutoff                = props.cutoff;
+		this.rolloff               = props.rolloff;
+		this.resonance             = props.resonance;
+		this.attack                = props.attack;
+		this.decay                 = props.decay;
+		this.sustain               = props.sustain;
+		this.release               = props.release;
+		this.octave                = props.octave;
 		this.handleTypeChange      = this.handleTypeChange.bind( this );
 		this.handleCutoffChange    = this.handleCutoffChange.bind( this );
 		this.handleRolloffChange   = this.handleRolloffChange.bind( this );
@@ -102,7 +102,7 @@ class Filter extends React.Component {
 		this.resonance = value;
 
 		this.instances.forEach(( instance ) => {
-			instance.Q.value = this.resonance
+			instance.Q.value = this.resonance;
 		});
 	}
 
@@ -130,6 +130,7 @@ class Filter extends React.Component {
 		this.octave = value;
 		this.instances.forEach(( instance ) => ( instance.envelope.octave = this.octave ));
 	}
+
 	//
 	// Render
 	//
@@ -200,23 +201,23 @@ class Filter extends React.Component {
 								returnType="number"
 								defaultValue={ this.rolloff }
 								onChange={ this.handleRolloffChange }
-								options={[
-									{ label: '-12', value: '-12' },
-									{ label: '-24', value: '-24' },
-									{ label: '-48', value: '-48' },
-									{ label: '-96', value: '-96' },
-								]}
+								options={ [
+										{ label: '-12', value: '-12' },
+										{ label: '-24', value: '-24' },
+										{ label: '-48', value: '-48' },
+										{ label: '-96', value: '-96' },
+								] }
 							/>
 
 							<Select
 								name="type"
 								defaultValue={ this.type }
 								onChange={ this.handleTypeChange }
-								options={[
+								options={ [
 									{ label: 'Lowpass',  value: 'lowpass' },
 									{ label: 'Bandpass', value: 'bandpass' },
 									{ label: 'Highpass', value: 'highpass' },
-								]}
+								] }
 							/>
 
 							<Counter

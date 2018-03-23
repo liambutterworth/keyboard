@@ -36,11 +36,11 @@ class Radios extends React.Component {
 	//
 
 	disable() {
-		if ( !this.state.disabled ) this.setState( { disabled: true } );
+		if ( !this.state.disabled ) this.setState({ disabled: true });
 	}
 
 	enable() {
-		if ( this.state.disabled ) this.setState( { disabled: false } );
+		if ( this.state.disabled ) this.setState({ disabled: false });
 	}
 
 	//
@@ -50,17 +50,18 @@ class Radios extends React.Component {
 	render() {
 		return (
 			<div className="form__radios">
-				{ this.props.data.map( ( button ) => (
+				{ this.props.data.map(( button ) => (
 					<Radio
 						key={ ShortID.generate() }
 						name={ this.props.name }
 						disabled={ this.props.disabled }
 						{ ...button }
 					/>
-				) ) }
+				))}
 			</div>
 		);
 	}
+
 }
 
 //

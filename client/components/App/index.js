@@ -28,9 +28,9 @@ class App extends React.Component {
 			mode: 'INPUT',
 		};
 
-		Actions.add( [
+		Actions.add([
 			{ type: 'shortcut', char: ' ', code: 32, desc: 'toggle mode' },
-		] );
+		]);
 
 		this.handleKeydown = this.handleKeydown.bind( this );
 		this.handleKeyup   = this.handleKeyup.bind( this );
@@ -58,9 +58,9 @@ class App extends React.Component {
 	//
 
 	toggleMode() {
-		this.setState( {
+		this.setState({
 			mode: this.state.mode === 'INPUT' ? 'COMMAND' : 'INPUT',
-		} );
+		});
 	}
 
 	//
@@ -84,12 +84,12 @@ class App extends React.Component {
 
 		let action;
 
-		if ( this.state.mode === 'INPUT' && Actions.isInput( code ) ) {
-			action = Actions.getInput( code, { delegator: 'keydown' } );
-		} else if ( this.state.mode === 'COMMAND' && Actions.isCommand( code ) ) {
-			action = Actions.getCommand( code, { delegator: 'keydown' } );
-		} else if ( Actions.isShortcut( code ) ) {
-			action = Actions.getShortcut( code, { delegator: 'keydown' } );
+		if ( this.state.mode === 'INPUT' && Actions.isInput( code )) {
+			action = Actions.getInput( code, { delegator: 'keydown' });
+		} else if ( this.state.mode === 'COMMAND' && Actions.isCommand( code )) {
+			action = Actions.getCommand( code, { delegator: 'keydown' });
+		} else if ( Actions.isShortcut( code )) {
+			action = Actions.getShortcut( code, { delegator: 'keydown' });
 		}
 
 		if ( action ) Actions.dispatch( action );
@@ -105,7 +105,7 @@ class App extends React.Component {
 		) return;
 
 		event.preventDefault();
-		const action = Actions.getInput( code, { delegator: 'keyup' } );
+		const action = Actions.getInput( code, { delegator: 'keyup' });
 		Actions.dispatch( action );
 	}
 
@@ -114,10 +114,10 @@ class App extends React.Component {
 	//
 
 	render() {
-		const classNames = ClassNames( {
+		const classNames = ClassNames({
 			'input-mode':   this.state.mode === 'INPUT',
 			'command-mode': this.state.mode === 'COMMAND',
-		} );
+		});
 
 		return (
 			<div id="app" className={ classNames }>
@@ -125,6 +125,7 @@ class App extends React.Component {
 			</div>
 		);
 	}
+
 }
 
 //

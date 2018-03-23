@@ -39,11 +39,11 @@ class Select extends React.Component {
 	//
 
 	disable() {
-		if ( !this.state.disabled ) this.setState( { disabled: true } );
+		if ( !this.state.disabled ) this.setState({ disabled: true });
 	}
 
 	enable() {
-		if ( this.state.disabled ) this.setState( { disabled: false } );
+		if ( this.state.disabled ) this.setState({ disabled: false });
 	}
 
 	//
@@ -60,7 +60,7 @@ class Select extends React.Component {
 	//
 
 	renderOptions( options ) {
-		return options.map( ( option ) => {
+		return options.map(( option ) => {
 			const key = ShortID.generate();
 			let html;
 
@@ -71,7 +71,7 @@ class Select extends React.Component {
 			}
 
 			return html;
-		} );
+		});
 	}
 
 	render() {
@@ -90,6 +90,7 @@ class Select extends React.Component {
 			</div>
 		);
 	}
+
 }
 
 //
@@ -100,7 +101,7 @@ Select.defaultProps = {
 	required:     false,
 	multiple:     false,
 	disabled:     false,
-	onChange:     function() {},
+	onChange:     null,
 	returnType:   'string',
 	defaultValue: '',
 };

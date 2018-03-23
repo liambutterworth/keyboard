@@ -31,7 +31,7 @@ class Knob extends React.Component {
 		this.maxDegree       = 250;
 		this.initialValue    = 0;
 		this.previousValue   = 0;
-		this.resistance      = 0.5;
+		this.resistance      = this.props.resistance;
 		this.value           = this.props.value;
 		this.median          = this.props.max / 2;
 		this.handleMouseDown = this.handleMouseDown.bind( this );
@@ -61,7 +61,7 @@ class Knob extends React.Component {
 
 	adjust() {
 		const percent = ( this.value - this.props.min ) / ( this.props.max - this.props.min );
-		const degree  = ( percent * ( this.maxDegree - this.minDegree ) ) + this.minDegree;
+		const degree  = ( percent * ( this.maxDegree - this.minDegree )) + this.minDegree;
 
 		this.marker.style.transform = `rotate( ${ degree }deg )`;
 	}
@@ -108,23 +108,23 @@ class Knob extends React.Component {
 	//
 
 	renderNumbers() {
-		if ( this.props.numbered ) {
-			return (
-				<ul className="form__knob__numbers">
-					<li className="form__knob-0">0</li>
-					<li className="form__knob-1">1</li>
-					<li className="form__knob-2">2</li>
-					<li className="form__knob-3">3</li>
-					<li className="form__knob-4">4</li>
-					<li className="form__knob-5">5</li>
-					<li className="form__knob-6">6</li>
-					<li className="form__knob-7">7</li>
-					<li className="form__knob-8">8</li>
-					<li className="form__knob-9">9</li>
-					<li className="form__knob-10">10</li>
-				</ul>
-			);
-		}
+		if ( !this.props.numbered ) return false;
+
+		return (
+			<ul className="form__knob__numbers">
+				<li className="form__knob-0">0</li>
+				<li className="form__knob-1">1</li>
+				<li className="form__knob-2">2</li>
+				<li className="form__knob-3">3</li>
+				<li className="form__knob-4">4</li>
+				<li className="form__knob-5">5</li>
+				<li className="form__knob-6">6</li>
+				<li className="form__knob-7">7</li>
+				<li className="form__knob-8">8</li>
+				<li className="form__knob-9">9</li>
+				<li className="form__knob-10">10</li>
+			</ul>
+		);
 	}
 
 	render() {
@@ -170,6 +170,7 @@ class Knob extends React.Component {
 			</div>
 		);
 	}
+
 }
 
 //

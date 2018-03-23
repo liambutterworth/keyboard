@@ -1,4 +1,8 @@
-@import 'globals';
+/**
+ * Prompt
+ */
+
+@import 'global';
 
 $prompt-height: 500px;
 $prompt-width: 750px;

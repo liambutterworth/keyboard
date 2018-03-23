@@ -36,11 +36,11 @@ class Checkboxes extends React.Component {
 	//
 
 	disable() {
-		if ( !this.state.disabled ) this.setState( { disabled: true } );
+		if ( !this.state.disabled ) this.setState({ disabled: true });
 	}
 
 	enable() {
-		if ( this.state.disabled ) this.setState( { disabled: false } );
+		if ( this.state.disabled ) this.setState({ disabled: false });
 	}
 
 	//
@@ -50,7 +50,7 @@ class Checkboxes extends React.Component {
 	render() {
 		return (
 			<div className="form__checkboxes">
-				{ this.props.data.map( ( box ) => (
+				{ this.props.data.map(( box ) => (
 					<Checkbox
 						key={ ShortID.generate() }
 						name={ this.props.name }
@@ -58,10 +58,11 @@ class Checkboxes extends React.Component {
 						disabled={ this.props.disabled }
 						{ ...box }
 					/>
-				) ) }
+				))}
 			</div>
 		);
 	}
+
 }
 
 //

@@ -2,7 +2,10 @@
  * Keyboard
  */
 
-@import 'globals';
+@import 'global';
+
+$key-height: 256px;
+$controls-height: ;
 
 $white-count: 17;
 $white-width: 100% / $white-count;
@@ -23,7 +26,7 @@ $black-pressed-color: darken( $black-color, 15 );
 
 .keyboard__keys {
 	bottom: 0;
-	height: 256px;
+	height: $key-height;
 	left: 0;
 	position: absolute;
 	width: 100%;

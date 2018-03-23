@@ -9,7 +9,7 @@
  * :: Knob
  */
 
-@import 'globals';
+@import 'global';
 
 label {
 	cursor: pointer;

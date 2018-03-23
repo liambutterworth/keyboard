@@ -1,6 +1,6 @@
 //
 // Checkbox
-// 
+//
 // :: Constructor
 // :: State Methods
 // :: Render
@@ -29,11 +29,11 @@ class Checkbox extends React.Component {
 	//
 
 	disable() {
-		if ( !this.state.disabled ) this.setState( { disabled: true } );
+		if ( !this.state.disabled ) this.setState({ disabled: true });
 	}
 
 	enable() {
-		if ( this.state.disabled ) this.setState( { disabled: false } );
+		if ( this.state.disabled ) this.setState({ disabled: false });
 	}
 
 	//
@@ -54,13 +54,14 @@ class Checkbox extends React.Component {
 					onChange={ this.props.onChange }
 				/>
 
-				<label htmlFor={ uuid }>
+				<label htmlFor={ id }>
 					<span className="form__checkbox__box" />
 					{ this.props.label }
 				</label>
 			</div>
 		);
 	}
+
 }
 
 //

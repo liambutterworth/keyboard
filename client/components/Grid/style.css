@@ -2,7 +2,7 @@
  * Grid
  */
 
-@import 'globals';
+@import 'global';
 
 .grid {
 	margin: 0 -1rem;

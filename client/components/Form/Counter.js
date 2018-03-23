@@ -71,6 +71,7 @@ class Counter extends React.Component {
 			</div>
 		);
 	}
+
 }
 
 //
@@ -78,9 +79,10 @@ class Counter extends React.Component {
 //
 
 Counter.defaultProps = {
-	step:     1,
-	disabled: false,
-	onChange: function() {},
+	step:         1,
+	disabled:     false,
+	onChange:     null,
+	defaultValue: 0,
 };
 
 Counter.propTypes = {
