@@ -1,0 +1,82 @@
+/**
+ * Keyboard
+ */
+
+@import 'global';
+
+$key-height: 256px;
+/* $controls-height: ; */
+
+$white-count: 17;
+$white-width: 100% / $white-count;
+$black-width: $white-width / 2;
+
+$white-color: white;
+$white-pressed-color: darken( $white-color, 15 );
+$black-color: black;
+$black-pressed-color: darken( $black-color, 15 );
+
+.keyboard {
+	background: black;
+	color: white;
+	height: 100%;
+	position: fixed;
+	width: 100%;
+}
+
+.keyboard__keys {
+	bottom: 0;
+	height: $key-height;
+	left: 0;
+	position: absolute;
+	width: 100%;
+	white-space: nowrap;
+
+	&::after {
+		content: "";
+		display: table;
+		clear: both;
+	}
+}
+
+.keyboard__key {
+	background: $white-color;
+	height: 100%;
+	display: inline-block;
+	white-space: nowrap;
+	width: $white-width;
+	border-right: 1px solid black;
+	position: relative;
+	z-index: 1;
+
+	&:last-child {
+		border-right: none;
+	}
+
+	&.keyboard__key--is-highlighted {
+		background: red;
+	}
+
+	&.keyboard__key--is-pressed {
+		background: $white-pressed-color;
+	}
+
+	&.keyboard__key--accidental {
+		border: none;
+		border-radius: 0 0 3px 3px;
+		background: black;
+		margin: 0 ( $black-width / -2 );
+		vertical-align: top;
+		width: $black-width;
+		height: 65%;
+		z-index: 2;
+
+		&.keyboard__key--is-pressed {
+			background: $black-pressed-color;
+		}
+
+		&.keyboard__key--is-highlighted {
+			background: red;
+		}
+	}
+}

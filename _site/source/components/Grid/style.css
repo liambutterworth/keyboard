@@ -1,0 +1,43 @@
+/**
+ * Grid
+ */
+
+@import 'global';
+
+.grid {
+	margin: 0 -1rem;
+
+	&::after {
+		content: "";
+		display: table;
+		clear: both;
+	}
+}
+
+.grid__row {
+	margin: 0 -1rem;
+
+	&::after {
+		content: "";
+		display: table;
+		clear: both;
+	}
+}
+
+.grid__column {
+	float: left;
+	padding: 0 1rem;
+
+	&.grid__column--span-1  { width: calc( 100% / 12 ); }
+	&.grid__column--span-2  { width: calc( 100% / 12 * 2 ); }
+	&.grid__column--span-3  { width: calc( 100% / 12 * 3 ); }
+	&.grid__column--span-4  { width: calc( 100% / 12 * 4 ); }
+	&.grid__column--span-5  { width: calc( 100% / 12 * 5 ); }
+	&.grid__column--span-6  { width: calc( 100% / 12 * 6 ); }
+	&.grid__column--span-7  { width: calc( 100% / 12 * 7 ); }
+	&.grid__column--span-8  { width: calc( 100% / 12 * 8 ); }
+	&.grid__column--span-9  { width: calc( 100% / 12 * 9 ); }
+	&.grid__column--span-10 { width: calc( 100% / 12 * 10 ); }
+	&.grid__column--span-11 { width: calc( 100% / 12 * 11 ); }
+	&.grid__column--span-12 { width: calc( 100% / 12 * 12 ); }
+}

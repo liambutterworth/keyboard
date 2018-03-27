@@ -5,7 +5,7 @@
 @import 'global';
 
 $key-height: 256px;
-$controls-height: ;
+/* $controls-height: ; */
 
 $white-count: 17;
 $white-width: 100% / $white-count;
