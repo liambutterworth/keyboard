@@ -165,6 +165,7 @@ class Keyboard extends React.Component {
 		return (
 			<div className="keyboard">
 				<Wrapper>
+					FOOBAR
 					<Tabs>
 						<Tab title="Synth">
 							<Grid>
