@@ -37,7 +37,7 @@ class Keyboard extends React.Component {
 		this.handleAction      = this.handleAction.bind( this );
 		this.handleNotesChange = this.handleNotesChange.bind( this );
 
-		Actions.add( [
+		Actions.add([
 			{ type: 'input', char: 'z', code: 90, desc: 'toggle key', note: 'C' },
 			{ type: 'input', char: 's', code: 83, desc: 'toggle key', note: 'Db' },
 			{ type: 'input', char: 'x', code: 88, desc: 'toggle key', note: 'D' },
@@ -67,7 +67,7 @@ class Keyboard extends React.Component {
 			{ type: 'input', char: 'o', code: 79, desc: 'toggle key', note: 'D' },
 			{ type: 'input', char: '0', code: 48, desc: 'toggle key', note: 'Eb' },
 			{ type: 'input', char: 'p', code: 80, desc: 'toggle key', note: 'E' },
-		] );
+		]);
 	}
 
 	//
@@ -87,7 +87,7 @@ class Keyboard extends React.Component {
 	//
 
 	getKey( keyCode ) {
-		return this.keys.find( ( key ) => ( key.props.code === keyCode ) );
+		return this.keys.find(( key ) => ( key.props.code === keyCode ));
 	}
 
 	playKey( keyCode ) {
@@ -101,7 +101,7 @@ class Keyboard extends React.Component {
 	}
 
 	stopKeys() {
-		this.keys.forEach( ( key ) => ( key.release() ) );
+		this.keys.forEach(( key ) => ( key.release()));
 	}
 
 	//
@@ -123,10 +123,10 @@ class Keyboard extends React.Component {
 	handleNotesChange( highlight, notes ) {
 		const symbols = notes.symbols();
 
-		this.keys.forEach( ( key ) => {
+		this.keys.forEach(( key ) => {
 			const symbol = key.note.symbol();
 
-			if ( symbols.includes( symbol ) ) {
+			if ( symbols.includes( symbol )) {
 				key.highlight();
 			} else {
 				key.unhighlight();
@@ -141,7 +141,7 @@ class Keyboard extends React.Component {
 	renderKeys() {
 		let octave = 3;
 
-		return Actions.all( 'input' ).map( ( key, index ) => {
+		return Actions.all( 'input' ).map(( key, index ) => {
 			const component = (
 				<Key
 					key={ ShortID.generate() }
@@ -156,7 +156,7 @@ class Keyboard extends React.Component {
 				/>
 			);
 
-			if ( ( index + 1 ) % 12 === 0 ) octave += 1;
+			if (( index + 1 ) % 12 === 0 ) octave += 1;
 			return component;
 		});
 	}
@@ -165,7 +165,6 @@ class Keyboard extends React.Component {
 		return (
 			<div className="keyboard">
 				<Wrapper>
-					FOOBAR
 					<Tabs>
 						<Tab title="Synth">
 							<Grid>
