@@ -19,7 +19,7 @@
   "bugs": {
     "url": "https://github.com/wbbutterworth/keyboard/issues"
   },
-  "homepage": "http://wbbutterworth.github.io/keyboard",
+  "homepage": "https://wbbutterworth.github.io/keyboard",
   "dependencies": {
     "classnames": "^2.2.5",
     "music-theory": "github:wbbutterworth/music-theory",

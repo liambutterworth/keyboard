@@ -17,10 +17,10 @@ module.exports = {
 
 	resolve: {
 		alias: {
-			components: path.resolve( __dirname, 'src/components' ),
-			containers: path.resolve( __dirname, 'src/containers' ),
-			library:    path.resolve( __dirname, 'src/library' ),
 			modules:    path.resolve( __dirname, 'node_modules' ),
+			library:    path.resolve( __dirname, 'src/library' ),
+			containers: path.resolve( __dirname, 'src/containers' ),
+			components: path.resolve( __dirname, 'src/components' ),
 		},
 	},
 
