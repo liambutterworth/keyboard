@@ -9,6 +9,8 @@ import {
 	Route,
 } from 'react-router-dom';
 
+console.log( process.env.PUBLIC_URL );
+
 const Routes = () => (
 	<Router basename={ process.env.PUBLIC_URL }>
 		<Switch>
