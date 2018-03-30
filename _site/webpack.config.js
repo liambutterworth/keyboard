@@ -1,12 +1,18 @@
 const path                 = require( 'path' );
 const CleanWebpackPlugin   = require( 'clean-webpack-plugin' );
 const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
+const HtmlWebpackPlugin    = require( 'html-webpack-plugin' );
 
 module.exports = {
 	plugins: [
-		new MiniCssExtractPlugin(),
 		new CleanWebpackPlugin([ 'dist' ], { watch: true }),
+		new MiniCssExtractPlugin({ filename: '[name].[hash].css' }),
+		new HtmlWebpackPlugin({ template: 'src/index.html', filename: '../index.html' }),
 	],
+
+	output: {
+		filename: '[name].[hash].js',
+	},
 
 	resolve: {
 		alias: {

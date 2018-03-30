@@ -6,7 +6,8 @@
   "scripts": {
     "start": "webpack --mode development --watch",
     "build": "webpack --mode production",
-    "serve": "bundle exec jekyll serve"
+    "serve": "bundle exec jekyll serve",
+		"dev": "webpack --mode development"
   },
   "repository": {
     "type": "git",
