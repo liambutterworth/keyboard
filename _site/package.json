@@ -7,7 +7,8 @@
     "start": "webpack --mode development --watch",
     "build": "webpack --mode production",
     "serve": "bundle exec jekyll serve",
-    "dev": "webpack --mode development"
+    "dev": "webpack --mode development",
+		"deploy": "gh-pages -d dist"
   },
   "repository": {
     "type": "git",
@@ -18,7 +19,7 @@
   "bugs": {
     "url": "https://github.com/wbbutterworth/keyboard/issues"
   },
-  "homepage": "https://github.com/wbbutterworth/keyboard#readme",
+  "homepage": "https://wbbutterworth.github.io/keyboard",
   "dependencies": {
     "classnames": "^2.2.5",
     "music-theory": "github:wbbutterworth/music-theory",
@@ -44,6 +45,7 @@
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-react": "^7.4.0",
+    "gh-pages": "^1.1.0",
     "history": "^4.7.2",
     "html-webpack-plugin": "^3.1.0",
     "mini-css-extract-plugin": "^0.2.0",

@@ -7,7 +7,7 @@ module.exports = {
 	plugins: [
 		new CleanWebpackPlugin([ 'dist' ], { watch: true }),
 		new MiniCssExtractPlugin({ filename: '[name].[hash].css' }),
-		new HtmlWebpackPlugin({ template: 'src/index.html', filename: '../index.html' }),
+		new HtmlWebpackPlugin({ template: 'src/index.html', filename: 'index.html' }),
 	],
 
 	output: {

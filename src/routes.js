@@ -9,7 +9,7 @@ import {
 	Route,
 } from 'react-router-dom';
 
-console.log( `Public URL: ${ process.env.PUBLIC_URL }` );
+console.log( `PUBLIC_URL: ${ process.env.PUBLIC_URL }` );
 
 const Routes = () => (
 	<Router basename={ process.env.PUBLIC_URL }>
