@@ -1,7 +1,6 @@
 import React    from 'react';
 import Home     from 'containers/Home';
 import NotFound from 'containers/NotFound';
-// import History  from 'history/createBrowserHistory';
 
 import {
 	BrowserRouter as Router,
@@ -9,6 +8,7 @@ import {
 	Route,
 } from 'react-router-dom';
 
+console.log( process.env );
 console.log( `PUBLIC_URL: ${ process.env.PUBLIC_URL }` );
 
 const Routes = () => (

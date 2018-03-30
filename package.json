@@ -6,9 +6,9 @@
   "scripts": {
     "start": "webpack --mode development --watch",
     "build": "webpack --mode production",
-    "serve": "bundle exec jekyll serve",
+    "serve": "bundle exec jekyll serve -s dist",
     "dev": "webpack --mode development",
-		"deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist"
   },
   "repository": {
     "type": "git",
@@ -19,7 +19,7 @@
   "bugs": {
     "url": "https://github.com/wbbutterworth/keyboard/issues"
   },
-  "homepage": "https://wbbutterworth.github.io/keyboard/",
+  "homepage": "http://wbbutterworth.github.io/keyboard",
   "dependencies": {
     "classnames": "^2.2.5",
     "music-theory": "github:wbbutterworth/music-theory",

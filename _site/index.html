@@ -1,37 +1,48 @@
 <!DOCTYPE html>
+
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="x-ua-compatible" content="ie=edge" />
+		<title>Keyboard</title>
+		<link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900" rel="stylesheet" />
 
-<!-- Begin Jekyll SEO tag v2.4.0 -->
-<title>keyboard | A virtual keyboard app</title>
-<meta name="generator" content="Jekyll v3.7.3" />
-<meta property="og:title" content="keyboard" />
-<meta property="og:locale" content="en_US" />
-<meta name="description" content="A virtual keyboard app" />
-<meta property="og:description" content="A virtual keyboard app" />
-<link rel="canonical" href="http://localhost:4000/" />
-<meta property="og:url" content="http://localhost:4000/" />
-<meta property="og:site_name" content="keyboard" />
-<script type="application/ld+json">
-{"headline":"keyboard","description":"A virtual keyboard app","name":"keyboard","@type":"WebSite","url":"http://localhost:4000/","@context":"http://schema.org"}</script>
-<!-- End Jekyll SEO tag -->
+		<script type="text/javascript">
+			// Single Page Apps for GitHub Pages
+			// https://github.com/rafrex/spa-github-pages
+			// Copyright (c) 2016 Rafael Pedicini, licensed under the MIT License
+			// ----------------------------------------------------------------------
+			// This script checks to see if a redirect is present in the query string
+			// and converts it back into the correct url and adds it to the
+			// browser's history using window.history.replaceState(...),
+			// which won't cause the browser to attempt to load the new url.
+			// When the single page app is loaded further down in this file,
+			// the correct url will be waiting in the browser's history for
+			// the single page app to route accordingly.
 
-    <link href="/assets/css/style.css?v=59a629a62ba8952135d0f4578f211b2b084f49a4" rel="stylesheet">
-  </head>
-  <body>
-    <div class="container-lg px-3 my-5 markdown-body">
-      
-        <h1><a href="http://localhost:4000/">keyboard</a></h1>
-      
+			( function( l ) {
+				if ( l.search ) {
+					var q = {};
 
-      <p>A work-in-progress pet project that will be a virtual keyboard application</p>
+					l.search.slice( 1 ).split( '&' ).forEach( function( v ) {
+						var a = v.split( '=' );
+						q[ a[0] ] = a.slice( 1 ).join( '=' ).replace( /~and~/g, '&' );
+					});
 
+					if ( q.p !== undefined ) {
+						window.history.replaceState(null, null,
+							l.pathname.slice( 0, -1 ) + ( q.p || '' ) +
+							( q.q ? ( '?' + q.q ) : '' ) +
+							l.hash
+						);
+					}
+				}
+			}( window.location ))
+		</script>
+	<link href="main.73081ef6de3d2db054ea.css" rel="stylesheet"></head>
 
-      
-    </div>
-    <script src="/assets/javascript/anchor-js/anchor.min.js"></script>
-    <script>anchors.add();</script>
-  </body>
+	<body>
+		<div id="root"></div>
+		<script src="https://use.fontawesome.com/9e52f90dc9.js"></script>
+	<script type="text/javascript" src="main.73081ef6de3d2db054ea.js"></script></body>
 </html>
