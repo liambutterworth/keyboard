@@ -4,11 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npm run serve & npm run watch",
-    "serve": "bundle exec jekyll serve",
-    "watch": "webpack --watch",
+    "start": "webpack --mode development --watch",
     "build": "webpack --mode production",
-    "dev": "webpack --mode development"
+    "serve": "bundle exec jekyll serve"
   },
   "repository": {
     "type": "git",
