@@ -8,11 +8,8 @@ import {
 	Route,
 } from 'react-router-dom';
 
-console.log( process );
-console.log( `PUBLIC_URL: ${ process.env.PUBLIC_URL }` );
-
 const Routes = () => (
-	<Router basename={ 'keyboard' }>
+	<Router basename={ process.env.NODE_ENV === 'production' ? 'keyboard' : '' }>
 		<Switch>
 			<Route path="/" exact component={ Home } />
 			<Route component={ NotFound } />
