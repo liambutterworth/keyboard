@@ -24,9 +24,18 @@ $black-pressed-color: darken( $black-color, 15 );
 	width: 100%;
 }
 
+.keyboard__controls {
+	height: 75vh;
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+}
+
 .keyboard__keys {
 	bottom: 0;
 	height: $key-height;
+	height: 25vh;
 	left: 0;
 	position: absolute;
 	width: 100%;

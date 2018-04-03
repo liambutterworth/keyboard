@@ -164,48 +164,50 @@ class Keyboard extends React.Component {
 	render() {
 		return (
 			<div className="keyboard">
-				<Wrapper>
-					<Tabs>
-						<Tab title="Synth">
-							<Grid>
-								<Column span="2">
-									<Oscillator
-										heading="Oscillator 1"
-										ref={ ( self ) => ( this.controls.oscillator1 = self ) }
-									/>
+				<div className="keyboard__controls">
+					<Wrapper>
+						<Tabs>
+							<Tab title="Synth">
+								<Grid>
+									<Column span="2">
+										<Oscillator
+											heading="Oscillator 1"
+											ref={ ( self ) => ( this.controls.oscillator1 = self ) }
+										/>
 
-									<Oscillator
-										heading="Oscillator 2"
-										ref={ ( self ) => ( this.controls.oscillator2 = self ) }
-									/>
-								</Column>
+										<Oscillator
+											heading="Oscillator 2"
+											ref={ ( self ) => ( this.controls.oscillator2 = self ) }
+										/>
+									</Column>
 
-								<Column span="5">
-									<Filter
-										heading="Filter"
-										ref={ ( self ) => ( this.controls.filter = self ) }
-									/>
-								</Column>
+									<Column span="5">
+										<Filter
+											heading="Filter"
+											ref={ ( self ) => ( this.controls.filter = self ) }
+										/>
+									</Column>
 
-								<Column span="5">
-									<Envelope
-										heading="Amplifier"
-										ref={ ( self ) => ( this.controls.envelope = self ) }
-									/>
+									<Column span="5">
+										<Envelope
+											heading="Amplifier"
+											ref={ ( self ) => ( this.controls.envelope = self ) }
+										/>
 
-									<Volume
-										heading="Volume"
-										ref={ ( self ) => ( this.controls.volume = self ) }
-									/>
-								</Column>
-							</Grid>
-						</Tab>
+										<Volume
+											heading="Volume"
+											ref={ ( self ) => ( this.controls.volume = self ) }
+										/>
+									</Column>
+								</Grid>
+							</Tab>
 
-						<Tab title="Notes">
-							<Notes onChange={ this.handleNotesChange } />
-						</Tab>
-					</Tabs>
-				</Wrapper>
+							<Tab title="Notes">
+								<Notes onChange={ this.handleNotesChange } />
+							</Tab>
+						</Tabs>
+					</Wrapper>
+				</div>
 
 				<div className="keyboard__keys">
 					{ this.renderKeys() }

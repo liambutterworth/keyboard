@@ -1,42 +1,74 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<title>Single Page Apps for GitHub Pages</title>
-
-		<script type="text/javascript">
-			// Single Page Apps for GitHub Pages
-			// https://github.com/rafrex/spa-github-pages
-			// Copyright (c) 2016 Rafael Pedicini, licensed under the MIT License
-			// ----------------------------------------------------------------------
-			// This script takes the current url and converts the path and query
-			// string into just a query string, and then redirects the browser
-			// to the new url with only a query string and hash fragment,
-			// e.g. http://www.foo.tld/one/two?a=b&c=d#qwe, becomes
-			// http://www.foo.tld/?p=/one/two&q=a=b~and~c=d#qwe
-			// Note: this 404.html file must be at least 512 bytes for it to work
-			// with Internet Explorer (it is currently > 512 bytes)
-
-			// If you're creating a Project Pages site and NOT using a custom domain,
-			// then set segmentCount to 1 (enterprise users may need to set it to > 1).
-			// This way the code will only replace the route part of the path, and not
-			// the real directory in which the app resides, for example:
-			// https://username.github.io/repo-name/one/two?a=b&c=d#qwe becomes
-			// https://username.github.io/repo-name/?p=/one/two&q=a=b~and~c=d#qwe
-			// Otherwise, leave segmentCount as 0.
-
-			var segmentCount = 0;
-			var l            = window.location;
-
-			l.replace(
-				l.protocol + '//' + l.hostname + ( l.port ? ':' + l.port : '' ) +
-				l.pathname.split( '/' ).slice( 0, 1 + segmentCount ).join( '/' ) + '/?p=/' +
-				l.pathname.slice( 1 ).split( '/' ).slice( segmentCount ).join( '/' ).replace( /&/g, '~and~' ) +
-				( l.search ? '&q=' + l.search.slice( 1 ).replace( /&/g, '~and~' ) : '' ) +
-				l.hash
-			);
-		</script>
-	<link href="main.5b0672ac46837e188886.css" rel="stylesheet"></head>
-
-	<body><script type="text/javascript" src="main.5b0672ac46837e188886.js"></script></body>
-</html>
+Html Webpack Plugin:
+<pre>
+  Error: Child compilation failed:
+  Module build failed: Error: ENOENT: no such file or directory, open '/Users/liam/Develop  ment/keyboard/src/404.html':
+  Error: ENOENT: no such file or directory, open '/Users/liam/Development/keyboard/src/404  .html'
+  
+  - compiler.js:79 childCompiler.runAsChild
+    [keyboard]/[html-webpack-plugin]/lib/compiler.js:79:16
+  
+  - Compiler.js:240 compile
+    [keyboard]/[webpack]/lib/Compiler.js:240:11
+  
+  - Compiler.js:488 hooks.afterCompile.callAsync.err
+    [keyboard]/[webpack]/lib/Compiler.js:488:14
+  
+  
+  - Hook.js:35 AsyncSeriesHook.lazyCompileHook [as _callAsync]
+    [keyboard]/[webpack]/[tapable]/lib/Hook.js:35:21
+  
+  - Compiler.js:485 compilation.seal.err
+    [keyboard]/[webpack]/lib/Compiler.js:485:30
+  
+  
+  - Hook.js:35 AsyncSeriesHook.lazyCompileHook [as _callAsync]
+    [keyboard]/[webpack]/[tapable]/lib/Hook.js:35:21
+  
+  - Compilation.js:960 hooks.optimizeAssets.callAsync.err
+    [keyboard]/[webpack]/lib/Compilation.js:960:35
+  
+  
+  - Hook.js:35 AsyncSeriesHook.lazyCompileHook [as _callAsync]
+    [keyboard]/[webpack]/[tapable]/lib/Hook.js:35:21
+  
+  - Compilation.js:951 hooks.optimizeChunkAssets.callAsync.err
+    [keyboard]/[webpack]/lib/Compilation.js:951:32
+  
+  
+  - Hook.js:35 AsyncSeriesHook.lazyCompileHook [as _callAsync]
+    [keyboard]/[webpack]/[tapable]/lib/Hook.js:35:21
+  
+  - Compilation.js:946 hooks.additionalAssets.callAsync.err
+    [keyboard]/[webpack]/lib/Compilation.js:946:36
+  
+  
+  - Hook.js:35 AsyncSeriesHook.lazyCompileHook [as _callAsync]
+    [keyboard]/[webpack]/[tapable]/lib/Hook.js:35:21
+  
+  - Compilation.js:942 hooks.optimizeTree.callAsync.err
+    [keyboard]/[webpack]/lib/Compilation.js:942:32
+  
+  
+  - Hook.js:35 AsyncSeriesHook.lazyCompileHook [as _callAsync]
+    [keyboard]/[webpack]/[tapable]/lib/Hook.js:35:21
+  
+  - Compilation.js:884 Compilation.seal
+    [keyboard]/[webpack]/lib/Compilation.js:884:27
+  
+  - Compiler.js:482 hooks.make.callAsync.err
+    [keyboard]/[webpack]/lib/Compiler.js:482:17
+  
+  
+  - Compilation.js:752 _addModuleChain
+    [keyboard]/[webpack]/lib/Compilation.js:752:12
+  
+  - Compilation.js:691 processModuleDependencies.err
+    [keyboard]/[webpack]/lib/Compilation.js:691:9
+  
+  - next_tick.js:131 _combinedTickCallback
+    internal/process/next_tick.js:131:7
+  
+  - next_tick.js:180 process._tickCallback
+    internal/process/next_tick.js:180:9
+  
+</pre><script type="text/javascript" src="main.117c951cdf87e2d408d0.js"></script>

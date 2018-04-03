@@ -1,14 +1,11 @@
-const path                 = require( 'path' );
-const CleanWebpackPlugin   = require( 'clean-webpack-plugin' );
-const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
-const HtmlWebpackPlugin    = require( 'html-webpack-plugin' );
+const path               = require( 'path' );
+const CleanWebpackPlugin = require( 'clean-webpack-plugin' );
+const HtmlWebpackPlugin  = require( 'html-webpack-plugin' );
 
 module.exports = {
 	plugins: [
 		new CleanWebpackPlugin([ 'dist' ], { watch: true }),
-		new MiniCssExtractPlugin({ filename: '[name].[hash].css' }),
 		new HtmlWebpackPlugin({ template: 'src/index.html', filename: 'index.html' }),
-		new HtmlWebpackPlugin({ template: 'src/404.html', filename: '404.html' }),
 	],
 
 	output: {
@@ -34,7 +31,7 @@ module.exports = {
 			exclude: /node_modues/,
 
 			use: [
-				MiniCssExtractPlugin.loader,
+				'style-loader',
 				'css-loader',
 				'sass-loader?includePaths[]=src',
 			],
