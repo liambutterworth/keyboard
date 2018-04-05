@@ -73,11 +73,11 @@ class Key extends React.Component {
 	}
 
 	highlight() {
-		if ( !this.state.isHighlighted ) this.setState( { isHighlighted: true } );
+		if ( !this.state.isHighlighted ) this.setState({ isHighlighted: true });
 	}
 
 	unhighlight() {
-		if ( this.state.isHighlighted ) this.setState( { isHighlighted: false } );
+		if ( this.state.isHighlighted ) this.setState({ isHighlighted: false });
 	}
 
 	//
@@ -85,17 +85,18 @@ class Key extends React.Component {
 	//
 
 	render() {
-		const classNames = ClassNames( {
-			'keyboard__key':                 true,
+		const classNames = ClassNames({
+			keyboard__key:                   true,
 			'keyboard__key--accidental':     this.note.isAccidental,
 			'keyboard__key--is-pressed':     this.state.isPressed,
 			'keyboard__key--is-highlighted': this.state.isHighlighted,
-		} );
+		});
 
 		return (
 			<div className={ classNames } />
 		);
 	}
+
 }
 
 //
@@ -103,8 +104,9 @@ class Key extends React.Component {
 //
 
 Key.propTypes = {
-	note:   PropTypes.string.isRequired,
-	octave: PropTypes.number.isRequired,
+	note:     PropTypes.string.isRequired,
+	octave:   PropTypes.number.isRequired,
+	controls: PropTypes.object.isRequired,
 };
 
 export default Key;

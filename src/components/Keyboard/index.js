@@ -169,7 +169,7 @@ class Keyboard extends React.Component {
 						<Tabs>
 							<Tab title="Synth">
 								<Grid>
-									<Column span="2">
+									<Column span="4">
 										<Oscillator
 											heading="Oscillator 1"
 											ref={ ( self ) => ( this.controls.oscillator1 = self ) }
@@ -181,14 +181,14 @@ class Keyboard extends React.Component {
 										/>
 									</Column>
 
-									<Column span="5">
+									<Column span="4">
 										<Filter
 											heading="Filter"
 											ref={ ( self ) => ( this.controls.filter = self ) }
 										/>
 									</Column>
 
-									<Column span="5">
+									<Column span="4">
 										<Envelope
 											heading="Amplifier"
 											ref={ ( self ) => ( this.controls.envelope = self ) }

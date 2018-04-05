@@ -106,6 +106,7 @@ class Envelope extends React.Component {
 					onChange={ this.handleSustainChange }
 				/>
 
+				{/*
 				<Knob
 					label="Release"
 					name="amp-envelope-release"
@@ -113,6 +114,7 @@ class Envelope extends React.Component {
 					value={ this.release }
 					onChange={ this.handleReleaseChange }
 				/>
+				*/}
 			</div>
 		);
 	}

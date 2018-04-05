@@ -82,8 +82,9 @@ class Oscillator extends React.Component {
 
 				<Select
 					name="octave"
+					label="Octave"
 					returnType="number"
-					defaultValue={ '0' }
+					defaultValue="0"
 					onChange={ this.handleOctaveChange }
 					options={[
 						{ label: '-2', value: '-2' },
@@ -96,8 +97,9 @@ class Oscillator extends React.Component {
 
 				<Select
 					name="detune"
+					label="Detune"
 					returnType="number"
-					defaultValue={ '0' }
+					defaultValue="0"
 					onChange={ this.handleDetuneChange }
 					options={[
 						{ label: '-7', value: '-7' },
@@ -120,7 +122,8 @@ class Oscillator extends React.Component {
 
 				<Select
 					name="waveform"
-					defaultValue={ '0' }
+					label="Waveform"
+					defaultValue="0"
 					onChange={ this.handleWaveformChange }
 					options={[
 						{ label: 'Sine',     value: 'sine'     },

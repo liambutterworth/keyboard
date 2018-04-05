@@ -21,17 +21,9 @@ class Volume extends React.Component {
 	constructor( props ) {
 		super( props );
 
-		this.instance       = new Tone.Volume( this.props.value );
+		this.instance       = new Tone.Volume( this.props.volume );
 		this.volume         = this.props.volume;
 		this.onVolumeChange = this.onVolumeChange.bind( this );
-	}
-
-	//
-	// Get
-	//
-
-	get() {
-		return this.instance;
 	}
 
 	//
@@ -44,14 +36,20 @@ class Volume extends React.Component {
 	}
 
 	//
+	// Get
+	//
+
+	get() {
+		return this.instance;
+	}
+
+	//
 	// Render
 	//
 
 	render() {
 		return (
 			<div>
-				<h4>{ this.props.heading }</h4>
-
 				<Knob
 					label="Volume"
 					name="volume"
@@ -63,6 +61,7 @@ class Volume extends React.Component {
 			</div>
 		);
 	}
+
 }
 
 //
@@ -70,12 +69,11 @@ class Volume extends React.Component {
 //
 
 Volume.defaultProps = {
-	volume: -30,
+	volume: -15,
 };
 
 Volume.propTypes = {
-	heading: PropTypes.string,
-	volume:  PropTypes.number,
+	volume: PropTypes.number,
 };
 
 export default Volume;

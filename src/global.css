@@ -47,6 +47,12 @@ $base-line-height: 1.5;
  * Mixins
  */
 
+@mixin digital() {
+	font-family: 'Alarm Clock', monospace;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+}
+
 @mixin clearfix() {
 	&::after {
 		content: "";

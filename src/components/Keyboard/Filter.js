@@ -196,19 +196,22 @@ class Filter extends React.Component {
 								onChange={ this.handleReleaseChange }
 							/>
 
+							{/*
 							<Select
 								name="rolloff"
 								returnType="number"
 								defaultValue={ this.rolloff }
 								onChange={ this.handleRolloffChange }
 								options={ [
-										{ label: '-12', value: '-12' },
-										{ label: '-24', value: '-24' },
-										{ label: '-48', value: '-48' },
-										{ label: '-96', value: '-96' },
+									{ label: '-12', value: '-12' },
+									{ label: '-24', value: '-24' },
+									{ label: '-48', value: '-48' },
+									{ label: '-96', value: '-96' },
 								] }
 							/>
+							*/}
 
+							{/*
 							<Select
 								name="type"
 								defaultValue={ this.type }
@@ -219,13 +222,16 @@ class Filter extends React.Component {
 									{ label: 'Highpass', value: 'highpass' },
 								] }
 							/>
+							*/}
 
+							{/*
 							<Counter
 								label="Octave"
 								name="ocatve"
 								onChange={ this.handleOctaveChange }
 								defaultValue={ this.octave }
 							/>
+						*/}
 						</Column>
 					</Row>
 				</Grid>

@@ -15,9 +15,10 @@ module.exports = {
 	resolve: {
 		alias: {
 			modules:    path.resolve( __dirname, 'node_modules' ),
-			library:    path.resolve( __dirname, 'src/library' ),
+			assets:     path.resolve( __dirname, 'src/assets' ),
 			containers: path.resolve( __dirname, 'src/containers' ),
 			components: path.resolve( __dirname, 'src/components' ),
+			library:    path.resolve( __dirname, 'src/library' ),
 		},
 	},
 
@@ -36,9 +37,13 @@ module.exports = {
 				'sass-loader?includePaths[]=src',
 			],
 		}, {
-			test:    /\.(jpe?g|png|woff(2)|eot|ttf)(\?[a-z0-9]+)?$/,
+			test:    /\.(woff(2)?|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
 			exclude: /node_modules/,
-			use:     'url-loader?limit=8192&name=[path][name].[hash].[ext]',
+			use:     'url-loader?limit=8192&name=assets/fonts/[name].[hash].[ext]',
+		}, {
+			test:    /\.(jpe?g|png)(\?[a-z0-9]+)?$/,
+			exclude: /node_modules/,
+			use:     'url-loader?limit=8192&name=assets/images/[name].[hash].[ext]',
 		}, {
 			test:    /\.svg$/,
 			exclude: /node_modules/,

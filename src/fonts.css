@@ -1,0 +1,33 @@
+/**
+ * Fonts
+ */
+
+@font-face {
+	font-family: 'Digital 7';
+	src: url( '~assets/fonts/digital-7.eot' );
+	src:
+		url( '~assets/fonts/digital-7.eot#iefix' ) format( 'embedded-opentype' ),
+		url( '~assets/fonts/digital-7.woff2' ) format( 'woff2' ),
+		url( '~assets/fonts/digital-7.woff' ) format( 'woff' ),
+		url( '~assets/fonts/digital-7.ttf' ) format( 'truetype' );
+}
+
+@font-face {
+	font-family: 'Alarm Clock';
+	src: url( '~assets/fonts/alarm-clock.eot' );
+	src:
+		url( '~assets/fonts/alarm-clock.eot#iefix' ) format( 'embedded-opentype' ),
+		url( '~assets/fonts/alarm-clock.woff2' ) format( 'woff2' ),
+		url( '~assets/fonts/alarm-clock.woff' ) format( 'woff' ),
+		url( '~assets/fonts/alarm-clock.ttf' ) format( 'truetype' );
+}
+
+@font-face {
+	font-family: 'Century Gothic';
+	src: url( '~assets/fonts/century-gothic.eot' );
+	src:
+		url( '~assets/fonts/century-gothic.eot#iefix' ) format( 'embedded-opentype' ),
+		url( '~assets/fonts/century-gothic.woff2' ) format( 'woff2' ),
+		url( '~assets/fonts/century-gothic.woff' ) format( 'woff' ),
+		url( '~assets/fonts/century-gothic.ttf' ) format( 'truetype' ),
+}

@@ -77,16 +77,24 @@ class Select extends React.Component {
 	render() {
 		return (
 			<div className="form__select">
-				<select
-					name={ this.props.name }
-					defaultValue={ this.props.defaultValue }
-					required={ this.props.required }
-					multiple={ this.props.multiple }
-					disabled={ this.state.disabled }
-					onChange={ this.handleChange }
-				>
-					{ this.renderOptions( this.props.options ) }
-				</select>
+				{ this.props.label !== '' &&
+					<p className="form__select__label">
+						{ this.props.label }
+					</p>
+				}
+
+				<div className="form__select__body">
+					<select
+						name={ this.props.name }
+						defaultValue={ this.props.defaultValue }
+						required={ this.props.required }
+						multiple={ this.props.multiple }
+						disabled={ this.state.disabled }
+						onChange={ this.handleChange }
+					>
+						{ this.renderOptions( this.props.options ) }
+					</select>
+				</div>
 			</div>
 		);
 	}
@@ -98,6 +106,7 @@ class Select extends React.Component {
 //
 
 Select.defaultProps = {
+	label:        '',
 	required:     false,
 	multiple:     false,
 	disabled:     false,
@@ -109,6 +118,7 @@ Select.defaultProps = {
 Select.propTypes = {
 	name:     PropTypes.string.isRequired,
 	options:  PropTypes.array.isRequired,
+	label:    PropTypes.string,
 	required: PropTypes.bool,
 	multiple: PropTypes.bool,
 	disabled: PropTypes.bool,

@@ -22,6 +22,11 @@ $black-pressed-color: darken( $black-color, 15 );
 	height: 100%;
 	position: fixed;
 	width: 100%;
+
+	h4 {
+		color: yellow;
+		font-family: 'Century Gothic', sans-serif;
+	}
 }
 
 .keyboard__controls {
