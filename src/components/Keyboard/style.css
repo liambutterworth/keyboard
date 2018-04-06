@@ -4,9 +4,6 @@
 
 @import 'global';
 
-$key-height: 256px;
-/* $controls-height: ; */
-
 $white-count: 17;
 $white-width: 100% / $white-count;
 $black-width: $white-width / 2;
@@ -29,28 +26,25 @@ $black-pressed-color: darken( $black-color, 15 );
 	}
 }
 
-.keyboard__controls {
-	height: 75vh;
+.keyboard__controls,
+.keyboard__toolbar,
+.keyboard__keys {
 	left: 0;
 	position: absolute;
-	top: 0;
 	width: 100%;
 }
-
+.keyboard__controls {
+	height: 70vh;
+	top: 0;
+}
+.keyboard__toolbar {
+	height: 10vh;
+	top: 70vh;
+}
 .keyboard__keys {
-	bottom: 0;
-	height: $key-height;
-	height: 25vh;
-	left: 0;
-	position: absolute;
-	width: 100%;
+	height: 20vh;
+	top: 80vh;
 	white-space: nowrap;
-
-	&::after {
-		content: "";
-		display: table;
-		clear: both;
-	}
 }
 
 .keyboard__key {

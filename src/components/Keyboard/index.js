@@ -3,6 +3,7 @@
 //
 // :: Constructor
 // :: Mount Events
+// :: State Methods
 // :: Key Methods
 // :: Event Handlers
 // :: Render Methods
@@ -14,6 +15,7 @@ import Notes            from 'components/Notes';
 import Grid, { Column } from 'components/Grid';
 import Tabs, { Tab }    from 'components/Tabs';
 import Wrapper          from 'components/Wrapper';
+import { Select }       from 'components/Form';
 import Actions          from 'library/Actions';
 import Key              from './Key';
 import Oscillator       from './Oscillator';
@@ -31,6 +33,10 @@ class Keyboard extends React.Component {
 
 	constructor( props ) {
 		super( props );
+
+		this.state = {
+			tooltip: 'char',
+		};
 
 		this.controls          = {};
 		this.keys              = [];
@@ -83,11 +89,19 @@ class Keyboard extends React.Component {
 	}
 
 	//
+	// State Methods
+	//
+
+	changeTooltip() {
+		console.log( 'change tooltip' );
+	}
+
+	//
 	// Key Methods
 	//
 
 	getKey( keyCode ) {
-		return this.keys.find(( key ) => ( key.props.code === keyCode ));
+		return this.keys.find(( key ) => ( key.props.data.code === keyCode ));
 	}
 
 	playKey( keyCode ) {
@@ -145,12 +159,9 @@ class Keyboard extends React.Component {
 			const component = (
 				<Key
 					key={ ShortID.generate() }
-					index={ index }
-					code={ key.code }
-					note={ key.note }
-					synth={ this.synth }
+					data={ key }
 					octave={ octave }
-					context={ this.context }
+					tooltip={ this.state.tooltip }
 					controls={ this.controls }
 					ref={ ( self ) => ( this.keys[index] = self ) }
 				/>
@@ -206,6 +217,21 @@ class Keyboard extends React.Component {
 								<Notes onChange={ this.handleNotesChange } />
 							</Tab>
 						</Tabs>
+					</Wrapper>
+				</div>
+
+				<div className="keyboard__toolbar">
+					<Wrapper>
+						<Select
+							name="tooltip"
+							defaultValue="char"
+							onChange={ this.handleTooltipChange }
+							options={ [
+								{ label: 'Key', value: 'char' },
+								{ label: 'Note', value: 'note' },
+								{ label: 'Interval', value: 'interval'  },
+							] }
+						/>
 					</Wrapper>
 				</div>
 

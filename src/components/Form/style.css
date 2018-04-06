@@ -250,16 +250,25 @@ $knob-range-width: $knob-diameter * 4;
 .form__radio {
 	margin: lines( 0.5 ) 0;
 
+	.form__radios--horizontal & {
+		display: inline-block;
+		margin-left: lines( 0.5 );
+
+		&:first-child {
+			margin-left: 0;
+		}
+	}
+
 	input[type=radio] {
 		display: none;
 	}
 
 	.form__radio__box {
 		border: 1px solid white;
-		border-radius: 200px;
+		border-radius: 100%;
 		display: inline-block;
-		height: lines( 1 );
-		width: lines( 1 );
+		height: lines( 1, 2px );
+		width: lines( 1, 2px );
 		margin: 0 lines( 0.25 ) 0 0;
 		vertical-align: bottom;
 		position: relative;
@@ -267,7 +276,7 @@ $knob-range-width: $knob-diameter * 4;
 
 	:checked + label .form__radio__box::after {
 		background: red;
-		border-radius: 200px;
+		border-radius: 100%;
 		content: "";
 		position: absolute;
 		top: 12.5%;

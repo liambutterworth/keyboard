@@ -6,12 +6,13 @@
 // :: Render
 // :: Properties
 
-import React     from 'react';
-import PropTypes from 'prop-types';
-import ShortID   from 'shortid';
-import Radio     from './Radio';
+import React      from 'react';
+import PropTypes  from 'prop-types';
+import ShortID    from 'shortid';
+import ClassNames from 'classnames';
+import Radio      from './Radio';
 
-// <Radios name="foo" options={ [
+// <Radios name="foo" data={ [
 // 	{ label: 'foobar', value: 'foo' },
 // 	{ label: 'barbaz', value: 'bar' },
 // 	{ label: 'bazfoo', value: 'baz' }
@@ -48,8 +49,13 @@ class Radios extends React.Component {
 	//
 
 	render() {
+		const classNames = ClassNames({
+			'form__radios':             true,
+			'form__radios--horizontal': this.props.horizontal,
+		});
+
 		return (
-			<div className="form__radios">
+			<div className={ classNames }>
 				{ this.props.data.map(( button ) => (
 					<Radio
 						key={ ShortID.generate() }
@@ -69,13 +75,15 @@ class Radios extends React.Component {
 //
 
 Radios.defaultProps = {
-	disabled: false,
+	disabled:   false,
+	horizontal: false,
 };
 
 Radios.propTypes = {
-	name:     PropTypes.string.isRequired,
-	data:     PropTypes.array.isRequired,
-	disabled: PropTypes.bool,
+	name:       PropTypes.string.isRequired,
+	data:       PropTypes.array.isRequired,
+	disabled:   PropTypes.bool,
+	horizontal: PropTypes.bool,
 };
 
 export default Radios;

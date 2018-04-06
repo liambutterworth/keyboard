@@ -27,7 +27,7 @@ class Key extends React.Component {
 			isHighlighted: false,
 		};
 
-		this.note      = new MusicTheory.Note( props.note );
+		this.note      = new MusicTheory.Note( props.data.note );
 		this.pitch     = `${ this.note.symbol() }${ props.octave }`;
 		this.frequency = Tone.Frequency( this.pitch ).toFrequency();
 	}
@@ -92,8 +92,28 @@ class Key extends React.Component {
 			'keyboard__key--is-highlighted': this.state.isHighlighted,
 		});
 
+		let tooltip;
+
+		switch ( this.props.tooltip ) {
+			case 'char':
+				tooltip = this.props.data.char;
+				break;
+
+			case 'note':
+				tooltip = this.props.data.note;
+				break;
+
+			case 'interval':
+				tooltip = 'Int';
+				break;
+		}
+
 		return (
-			<div className={ classNames } />
+			<div className={ classNames }>
+				<div className="keyboard__key__tooltip">
+					{ tooltip }
+				</div>
+			</div>
 		);
 	}
 
@@ -104,8 +124,10 @@ class Key extends React.Component {
 //
 
 Key.propTypes = {
+	data:     PropTypes.object.isRequired,
 	note:     PropTypes.string.isRequired,
 	octave:   PropTypes.number.isRequired,
+	tooltip:  PropTypes.string.isRequired,
 	controls: PropTypes.object.isRequired,
 };
 
