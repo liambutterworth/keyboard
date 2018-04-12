@@ -309,6 +309,10 @@ $knob-range-width: $knob-diameter * 4;
 		border: 1px solid white;
 		line-height: lines( 1.5, 2px );
 		height: lines( 1.5, 2px );
+		width: 100%;
+	}
+
+	.form__select__label + .form__select__body {
 		width: 66.66%;
 	}
 

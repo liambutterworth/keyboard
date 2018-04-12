@@ -28,16 +28,29 @@
 	float: left;
 	padding: 0 1rem;
 
-	&.grid__column--span-1  { width: calc( 100% / 12 ); }
-	&.grid__column--span-2  { width: calc( 100% / 12 * 2 ); }
-	&.grid__column--span-3  { width: calc( 100% / 12 * 3 ); }
-	&.grid__column--span-4  { width: calc( 100% / 12 * 4 ); }
-	&.grid__column--span-5  { width: calc( 100% / 12 * 5 ); }
-	&.grid__column--span-6  { width: calc( 100% / 12 * 6 ); }
-	&.grid__column--span-7  { width: calc( 100% / 12 * 7 ); }
-	&.grid__column--span-8  { width: calc( 100% / 12 * 8 ); }
-	&.grid__column--span-9  { width: calc( 100% / 12 * 9 ); }
-	&.grid__column--span-10 { width: calc( 100% / 12 * 10 ); }
-	&.grid__column--span-11 { width: calc( 100% / 12 * 11 ); }
-	&.grid__column--span-12 { width: calc( 100% / 12 * 12 ); }
+	&.grid__column--span-1  { width: 100% / 12; }
+	&.grid__column--span-2  { width: 100% / 12 * 2; }
+	&.grid__column--span-3  { width: 100% / 12 * 3; }
+	&.grid__column--span-4  { width: 100% / 12 * 4; }
+	&.grid__column--span-5  { width: 100% / 12 * 5; }
+	&.grid__column--span-6  { width: 100% / 12 * 6; }
+	&.grid__column--span-7  { width: 100% / 12 * 7; }
+	&.grid__column--span-8  { width: 100% / 12 * 8; }
+	&.grid__column--span-9  { width: 100% / 12 * 9; }
+	&.grid__column--span-10 { width: 100% / 12 * 10; }
+	&.grid__column--span-11 { width: 100% / 12 * 11; }
+	&.grid__column--span-12 { width: 100% / 12 * 12; }
+
+	&.grid__column--offset-1  { margin-left: 100% / 12; }
+	&.grid__column--offset-2  { margin-left: 100% / 12 * 2; }
+	&.grid__column--offset-3  { margin-left: 100% / 12 * 3; }
+	&.grid__column--offset-4  { margin-left: 100% / 12 * 4; }
+	&.grid__column--offset-5  { margin-left: 100% / 12 * 5; }
+	&.grid__column--offset-6  { margin-left: 100% / 12 * 6; }
+	&.grid__column--offset-7  { margin-left: 100% / 12 * 7; }
+	&.grid__column--offset-8  { margin-left: 100% / 12 * 8; }
+	&.grid__column--offset-9  { margin-left: 100% / 12 * 9; }
+	&.grid__column--offset-10 { margin-left: 100% / 12 * 19; }
+	&.grid__column--offset-11 { margin-left: 100% / 12 * 11; }
+	&.grid__column--offset-12 { margin-left: 100% / 12 * 12; }
 }

@@ -49,6 +49,7 @@ $black-pressed-color: darken( $black-color, 15 );
 
 .keyboard__key {
 	background: $white-color;
+	color: black;
 	height: 100%;
 	display: inline-block;
 	white-space: nowrap;
@@ -73,6 +74,7 @@ $black-pressed-color: darken( $black-color, 15 );
 		border: none;
 		border-radius: 0 0 3px 3px;
 		background: black;
+		color: white;
 		margin: 0 ( $black-width / -2 );
 		vertical-align: top;
 		width: $black-width;
@@ -86,5 +88,14 @@ $black-pressed-color: darken( $black-color, 15 );
 		&.keyboard__key--is-highlighted {
 			background: red;
 		}
+	}
+
+	.keyboard__key__tooltip {
+		bottom: 0;
+		padding: 0 0 lines( 0.25 );
+		position: absolute;
+		left: 0;
+		text-align: center;
+		width: 100%;
 	}
 }

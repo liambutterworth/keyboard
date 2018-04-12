@@ -29,7 +29,7 @@ class App extends React.Component {
 		};
 
 		Actions.add([
-			{ type: 'shortcut', char: ' ', code: 32, desc: 'toggle mode' },
+			// { type: 'shortcut', char: ' ', code: 32, desc: 'toggle mode' },
 		]);
 
 		this.handleKeydown = this.handleKeydown.bind( this );

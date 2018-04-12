@@ -23,6 +23,7 @@ class Key extends React.Component {
 		super( props );
 
 		this.state = {
+			tooltip:       this.props.tooltip,
 			isPressed:     false,
 			isHighlighted: false,
 		};
@@ -58,6 +59,10 @@ class Key extends React.Component {
 	// State Methods
 	//
 
+	changeTooltip( tooltip ) {
+		this.setState({ tooltip });
+	}
+
 	press() {
 		if ( this.state.isPressed ) return;
 		this.setState({ isPressed: true });
@@ -73,6 +78,7 @@ class Key extends React.Component {
 	}
 
 	highlight() {
+		console.log( this.props.note );
 		if ( !this.state.isHighlighted ) this.setState({ isHighlighted: true });
 	}
 
@@ -94,7 +100,7 @@ class Key extends React.Component {
 
 		let tooltip;
 
-		switch ( this.props.tooltip ) {
+		switch ( this.state.tooltip ) {
 			case 'char':
 				tooltip = this.props.data.char;
 				break;
@@ -122,6 +128,10 @@ class Key extends React.Component {
 //
 // Properties
 //
+
+Key.defaultProps = {
+	tooltip: 'char',
+};
 
 Key.propTypes = {
 	data:     PropTypes.object.isRequired,

@@ -3,7 +3,6 @@
 //
 // :: Constructor
 // :: Mount Events
-// :: State Methods
 // :: Key Methods
 // :: Event Handlers
 // :: Render Methods
@@ -38,10 +37,11 @@ class Keyboard extends React.Component {
 			tooltip: 'char',
 		};
 
-		this.controls          = {};
-		this.keys              = [];
-		this.handleAction      = this.handleAction.bind( this );
-		this.handleNotesChange = this.handleNotesChange.bind( this );
+		this.controls            = {};
+		this.keys                = [];
+		this.handleAction        = this.handleAction.bind( this );
+		this.handleNotesChange   = this.handleNotesChange.bind( this );
+		this.handleTooltipChange = this.handleTooltipChange.bind( this );
 
 		Actions.add([
 			{ type: 'input', char: 'z', code: 90, desc: 'toggle key', note: 'C' },
@@ -86,14 +86,6 @@ class Keyboard extends React.Component {
 
 	componentWillUnmount() {
 		document.removeEventListener( 'action', this.handleAction );
-	}
-
-	//
-	// State Methods
-	//
-
-	changeTooltip() {
-		console.log( 'change tooltip' );
 	}
 
 	//
@@ -146,6 +138,10 @@ class Keyboard extends React.Component {
 				key.unhighlight();
 			}
 		});
+	}
+
+	handleTooltipChange( tooltip ) {
+		this.keys.forEach(( key ) => ( key.changeTooltip( tooltip )));
 	}
 
 	//
@@ -222,16 +218,19 @@ class Keyboard extends React.Component {
 
 				<div className="keyboard__toolbar">
 					<Wrapper>
-						<Select
-							name="tooltip"
-							defaultValue="char"
-							onChange={ this.handleTooltipChange }
-							options={ [
-								{ label: 'Key', value: 'char' },
-								{ label: 'Note', value: 'note' },
-								{ label: 'Interval', value: 'interval'  },
-							] }
-						/>
+						<Grid>
+							<Column span="4" offset="4">
+								<Select
+									name="tooltip"
+									defaultValue="char"
+									onChange={ this.handleTooltipChange }
+									options={ [
+										{ label: 'Keys', value: 'char' },
+										{ label: 'Notes', value: 'note' },
+									] }
+								/>
+							</Column>
+						</Grid>
 					</Wrapper>
 				</div>
 
