@@ -96,6 +96,7 @@ $black-pressed-color: darken( $black-color, 15 );
 		position: absolute;
 		left: 0;
 		text-align: center;
+		text-transform: uppercase;
 		width: 100%;
 	}
 }
