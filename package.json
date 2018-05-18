@@ -23,7 +23,8 @@
   "dependencies": {
     "classnames": "^2.2.5",
     "dotenv": "^5.0.1",
-    "music-theory": "github:wbbutterworth/music-theory",
+    "music-theory": "github:liambutterworth/music-theory",
+    "npm": "^6.0.1",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",

@@ -121,7 +121,6 @@ $knob-range-width: $knob-diameter * 4;
 
 @mixin thumb {
 	-webkit-appearance: none;
-	background-color: blue;
 	height: $knob-diameter;
 	width: lines( 0.25 );
 
@@ -200,7 +199,7 @@ $knob-range-width: $knob-diameter * 4;
 		top: 50%;
 		left: 0;
 		margin-top: -1px;
-		background: white;
+		background: #2c2d2f;
 		pointer-events: none;
 		transform: rotate( -65deg );
 		transform-origin: top right;
@@ -208,12 +207,24 @@ $knob-range-width: $knob-diameter * 4;
 	}
 
 	.form__knob__cap {
-		background: blue;
+		background: #111;
 		border-radius: 100%;
+		border: 1px solid #000;
 		height: $knob-diameter;
 		width: $knob-diameter;
 		position: relative;
 		overflow: hidden;
+
+		&::before {
+			content: "";
+			height: 100%;
+			width: 100%;
+			border-radius: 100%;
+			border: 1px solid white;
+			position: absolute;
+			left: 0;
+			top: 0;
+		}
 
 		&.form__knob--adjustable {
 			overflow: visible;
