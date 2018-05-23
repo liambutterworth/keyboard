@@ -133,6 +133,14 @@ $knob-range-width: $knob-diameter * 4;
 	}
 }
 
+@mixin knob-gradient {
+	$color: #f5f5f5;
+	$start: #1d1d1d;
+	$stop: #131313;
+	background: green;
+	background: linear-gradient( 0deg, $start, $stop );
+}
+
 .form__knob {
 	display: inline-block;
 	position: relative;
@@ -199,7 +207,7 @@ $knob-range-width: $knob-diameter * 4;
 		top: 50%;
 		left: 0;
 		margin-top: -1px;
-		background: #2c2d2f;
+		background: #b1b1b1;
 		pointer-events: none;
 		transform: rotate( -65deg );
 		transform-origin: top right;
@@ -207,7 +215,12 @@ $knob-range-width: $knob-diameter * 4;
 	}
 
 	.form__knob__cap {
-		background: #111;
+		@include knob-gradient;
+		background: #1d1d1d;
+		background: linear-gradient( 0deg, #1d1d1d, #131313 );
+		box-shadow: 0 0.2em 0.1em 0.05em rgba( 255, 255, 255, 0.1 ) inset,
+								0 -0.2em 0.1em 0.05em rgba( 0, 0, 0, 0.5 ) inset,
+								0 0.5em 0.65em 0 rgba( 0, 0, 0, 0.3 );
 		border-radius: 100%;
 		border: 1px solid #000;
 		height: $knob-diameter;
@@ -216,11 +229,11 @@ $knob-range-width: $knob-diameter * 4;
 		overflow: hidden;
 
 		&::before {
+			background-image: url( '../../assets/images/noise.png' );
 			content: "";
 			height: 100%;
 			width: 100%;
 			border-radius: 100%;
-			border: 1px solid white;
 			position: absolute;
 			left: 0;
 			top: 0;
