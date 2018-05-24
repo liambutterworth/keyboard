@@ -216,11 +216,12 @@ $knob-range-width: $knob-diameter * 4;
 
 	.form__knob__cap {
 		@include knob-gradient;
-		background: #1d1d1d;
-		background: linear-gradient( 0deg, #1d1d1d, #131313 );
-		box-shadow: 0 0.2em 0.1em 0.05em rgba( 255, 255, 255, 0.1 ) inset,
-								0 -0.2em 0.1em 0.05em rgba( 0, 0, 0, 0.5 ) inset,
-								0 0.5em 0.65em 0 rgba( 0, 0, 0, 0.3 );
+		background: $background-color;
+		background: linear-gradient( 0deg, $background-color, lighten( $background-color, 7 ) );
+		box-shadow: 
+			0 0.2em 0.1em 0.05em rgba( 255, 255, 255, 0.1 ) inset,
+			0 -0.2em 0.1em 0.05em rgba( 0, 0, 0, 0.5 ) inset,
+			0 0.5em 0.65em 0 rgba( 0, 0, 0, 0.3 );
 		border-radius: 100%;
 		border: 1px solid #000;
 		height: $knob-diameter;

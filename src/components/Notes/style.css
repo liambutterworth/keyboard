@@ -97,7 +97,7 @@ $chord-row-lines: 3;
 	}
 
 	.notes__fifth {
-		background: black;
+		background: $background-color url( '../../assets/images/noise.png' );
 		border-radius: 100%;
 		cursor: pointer;
 		display: inline-block;

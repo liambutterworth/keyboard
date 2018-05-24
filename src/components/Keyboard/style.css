@@ -14,7 +14,7 @@ $black-color: black;
 $black-pressed-color: darken( $black-color, 15 );
 
 .keyboard {
-	background: #111 url( '../../assets/images/noise.png' );
+	background: $background-color url( '../../assets/images/noise.png' );
 	color: white;
 	height: 100%;
 	position: fixed;
