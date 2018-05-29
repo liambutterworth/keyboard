@@ -3,26 +3,29 @@
  *
  * :: Layout
  * :: Palette
+ * :: Variables
  * :: Functions
  * :: Mixins
  */
 
 /**
- * Layout
+ * Variables
  */
 
 $wrapper-width:    1024px;
 $base-font-size:   16px;
 $base-line-height: 1.5;
 
-/**
- * Palette
- */
-
-/* $background-color: #1d1d1d; */
 $background-color: #151515;
 $foreground-color: #b1b1b1;
-$highlight-color: #941b0c;
+$highlight-color:  #941b0c;
+$heading-color:    yellow;
+
+$color-dark:      #121314;
+$color-light:     invert( $color-dark );
+$color-primary:   #941b0c;
+$color-secondary: yellow;
+$color-tertiary:  grey;
 
 /**
  * Functions

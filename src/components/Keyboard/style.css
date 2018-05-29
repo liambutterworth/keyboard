@@ -4,17 +4,29 @@
 
 @import 'global';
 
-$white-count: 17;
-$white-width: 100% / $white-count;
-$black-width: $white-width / 2;
+$white-count:              17;
+$white-width:              100% / $white-count;
+$white-bg:                 $color-light;
+$white-fg:                 $color-dark;
+$white-press-bg:           darken( $white-bg, 12 );
+$white-press-fg:           $color-dark;
+$white-highlight-bg:       $color-primary;
+$white-highlight-fg:       $color-light;
+$white-highlight-press-bg: darken( $color-primary, 12 );
+$white-highlight-press-fg: $color-light;
 
-$white-color: white;
-$white-pressed-color: darken( $white-color, 15 );
-$black-color: black;
-$black-pressed-color: darken( $black-color, 15 );
+$black-width:              $white-width / 2;
+$black-bg:                 darken( $color-dark, 7 );
+$black-fg:                 $color-light;
+$black-press-bg:           green;
+$black-press-fg:           $color-light;
+$black-highlight-bg:       $color-primary;
+$black-highlight-fg:       $color-light;
+$black-highlight-press-bg: darken( $color-primary, 12 );
+$black-highlight-press-fg: $color-light;
 
 .keyboard {
-	background: $background-color url( '../../assets/images/noise.png' );
+	background: $color-dark url( '../../assets/images/noise.png' );
 	color: white;
 	height: 100%;
 	position: fixed;
@@ -38,6 +50,8 @@ $black-pressed-color: darken( $black-color, 15 );
 	top: 0;
 }
 .keyboard__toolbar {
+	background: $black-bg;
+	padding-top: lines( 1 );
 	height: 10vh;
 	top: 70vh;
 }
@@ -48,8 +62,8 @@ $black-pressed-color: darken( $black-color, 15 );
 }
 
 .keyboard__key {
-	background: $white-color;
-	color: black;
+	background: $white-bg;
+	color: $white-fg;
 	height: 100%;
 	display: inline-block;
 	white-space: nowrap;
@@ -63,17 +77,24 @@ $black-pressed-color: darken( $black-color, 15 );
 	}
 
 	&.keyboard__key--is-highlighted {
-		background: red;
+		background: $white-highlight-bg;
+		color: $white-highlight-fg;
 	}
 
 	&.keyboard__key--is-pressed {
-		background: $white-pressed-color;
+		background: $white-press-bg;
+		color: $white-press-fg;
+	}
+
+	&.keyboard__key--is-highlighted.keyboard__key--is-pressed {
+		background: $white-highlight-press-bg;
+		color: $white-highlight-press-fg;
 	}
 
 	&.keyboard__key--accidental {
 		border: none;
 		border-radius: 0 0 3px 3px;
-		background: black;
+		background: $black-bg;
 		color: white;
 		margin: 0 ( $black-width / -2 );
 		vertical-align: top;
@@ -82,11 +103,19 @@ $black-pressed-color: darken( $black-color, 15 );
 		z-index: 2;
 
 		&.keyboard__key--is-pressed {
-			background: $black-pressed-color;
+			background: $black-press-bg;
+			color: $black-press-fg;
 		}
 
 		&.keyboard__key--is-highlighted {
-			background: red;
+			background: $black-highlight-bg;
+			border: 1px solid $black-bg;
+			border-top: none;
+		}
+
+		&.keyboard__key--is-highlighted.keyboard__key--is-pressed {
+			background: $black-highlight-press-bg;
+			color: $black-highlight-press-fg;
 		}
 	}
 

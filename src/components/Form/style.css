@@ -46,7 +46,7 @@ label {
 	}
 
 	:checked + label .form__checkbox__box::after {
-		background: red;
+		background: $color-primary;
 		border-radius: 2px;
 		content: "";
 		position: absolute;
