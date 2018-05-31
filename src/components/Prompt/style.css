@@ -8,7 +8,7 @@ $prompt-height: 500px;
 $prompt-width: 750px;
 
 .keyboard__prompt {
-	background: $background-color;
+	background: $color-dark;
 	border: 1px solid #333;
 	/* height: $prompt-height; */
 	/* width: $prompt-width; */

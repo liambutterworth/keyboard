@@ -1,8 +1,6 @@
 /**
  * Globals
  *
- * :: Layout
- * :: Palette
  * :: Variables
  * :: Functions
  * :: Mixins
@@ -12,19 +10,14 @@
  * Variables
  */
 
-$wrapper-width:    1024px;
+$site-width:       1280px;
 $base-font-size:   16px;
 $base-line-height: 1.5;
-
-$background-color: #151515;
-$foreground-color: #b1b1b1;
-$highlight-color:  #941b0c;
-$heading-color:    yellow;
 
 $color-dark:      #121314;
 $color-light:     invert( $color-dark );
 $color-primary:   #941b0c;
-$color-secondary: yellow;
+$color-secondary: #e6e600;
 $color-tertiary:  grey;
 
 /**

@@ -140,56 +140,101 @@ class Filter extends React.Component {
 			<div>
 				<h4>{ this.props.heading }</h4>
 
-				<Knob
-					label="Cutoff"
-					name="cutoff"
-					max={ 12000 }
-					value={ this.cutoff }
-					onChange={ this.handleCutoffChange }
-				/>
+				<Grid>
+					<Row>
+						<Column span="12">
+							<Knob
+								label="Cutoff"
+								name="cutoff"
+								max={ 12000 }
+								value={ this.cutoff }
+								onChange={ this.handleCutoffChange }
+							/>
 
-				<Knob
-					label="Resonance"
-					name="resonance"
-					max={ 20 }
-					resistance={ 0.2 }
-					value={ this.resonance }
-					onChange={ this.handleResonanceChange }
-				/>
+							<Knob
+								label="Resonance"
+								name="resonance"
+								max={ 20 }
+								resistance={ 0.2 }
+								value={ this.resonance }
+								onChange={ this.handleResonanceChange }
+							/>
+						</Column>
+					</Row>
 
-				<br />
+					<Row>
+						<Column span="12">
+							<Knob
+								label="Attack"
+								name="filter-envelope-attack"
+								max={ 10 }
+								value={ this.attack }
+								onChange={ this.handleAttackChange }
+							/>
 
-				<Knob
-					label="Attack"
-					name="filter-envelope-attack"
-					max={ 10 }
-					value={ this.attack }
-					onChange={ this.handleAttackChange }
-				/>
+							<Knob
+								label="Decay"
+								name="filter-envelope-decay"
+								max={ 10 }
+								value={ this.decay }
+								onChange={ this.handleDecayChange }
+							/>
 
-				<Knob
-					label="Decay"
-					name="filter-envelope-decay"
-					max={ 10 }
-					value={ this.decay }
-					onChange={ this.handleDecayChange }
-				/>
+							<Knob
+								label="Sustain"
+								name="filter-envelope-sustain"
+								max={ 10 }
+								value={ this.sustain }
+								onChange={ this.handleSustainChange }
+							/>
 
-				<Knob
-					label="Sustain"
-					name="filter-envelope-sustain"
-					max={ 10 }
-					value={ this.sustain }
-					onChange={ this.handleSustainChange }
-				/>
+							<Knob
+								label="Release"
+								name="filter-envelope-release"
+								max={ 10 }
+								value={ this.release }
+								onChange={ this.handleReleaseChange }
+							/>
 
-				<Knob
-					label="Release"
-					name="filter-envelope-release"
-					max={ 10 }
-					value={ this.release }
-					onChange={ this.handleReleaseChange }
-				/>
+							{/*
+							<Select
+								name="rolloff"
+								returnType="number"
+								defaultValue={ this.rolloff }
+								onChange={ this.handleRolloffChange }
+								options={ [
+									{ label: '-12', value: '-12' },
+									{ label: '-24', value: '-24' },
+									{ label: '-48', value: '-48' },
+									{ label: '-96', value: '-96' },
+								] }
+							/>
+							*/}
+
+							{/*
+							<Select
+								name="type"
+								defaultValue={ this.type }
+								onChange={ this.handleTypeChange }
+								options={ [
+									{ label: 'Lowpass',  value: 'lowpass' },
+									{ label: 'Bandpass', value: 'bandpass' },
+									{ label: 'Highpass', value: 'highpass' },
+								] }
+							/>
+							*/}
+
+							{/*
+							<Counter
+								label="Octave"
+								name="ocatve"
+								onChange={ this.handleOctaveChange }
+								defaultValue={ this.octave }
+							/>
+						*/}
+						</Column>
+					</Row>
+				</Grid>
 			</div>
 		);
 	}

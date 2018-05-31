@@ -18,7 +18,7 @@ $white-highlight-press-fg: $color-light;
 $black-width:              $white-width / 2;
 $black-bg:                 darken( $color-dark, 7 );
 $black-fg:                 $color-light;
-$black-press-bg:           green;
+$black-press-bg:           lighten( $black-bg, 12 );
 $black-press-fg:           $color-light;
 $black-highlight-bg:       $color-primary;
 $black-highlight-fg:       $color-light;
@@ -27,14 +27,15 @@ $black-highlight-press-fg: $color-light;
 
 .keyboard {
 	background: $color-dark url( '../../assets/images/noise.png' );
-	color: white;
+	color: $color-light;
 	height: 100%;
 	position: fixed;
 	width: 100%;
 
 	h4 {
-		color: yellow;
+		color: $color-secondary;
 		font-family: 'Century Gothic', sans-serif;
+		margin: lines( 0.5 ) 0;
 	}
 }
 

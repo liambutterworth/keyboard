@@ -146,6 +146,10 @@ $knob-range-width: $knob-diameter * 4;
 	position: relative;
 	content: $knob-diameter;
 
+	& + .form__knob {
+		margin-left: lines( 0.5 );
+	}
+
 	&.form__knob--numbered .form__knob__body {
 		padding: $knob-padding;
 		position: relative;
@@ -216,8 +220,8 @@ $knob-range-width: $knob-diameter * 4;
 
 	.form__knob__cap {
 		@include knob-gradient;
-		background: $background-color;
-		background: linear-gradient( 0deg, $background-color, lighten( $background-color, 7 ) );
+		background: $color-dark;
+		background: linear-gradient( 0deg, $color-dark, lighten( $color-dark, 7 ) );
 		box-shadow: 
 			0 0.2em 0.1em 0.05em rgba( 255, 255, 255, 0.1 ) inset,
 			0 -0.2em 0.1em 0.05em rgba( 0, 0, 0, 0.5 ) inset,
