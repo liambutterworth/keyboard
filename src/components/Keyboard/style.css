@@ -126,7 +126,7 @@ $black-highlight-press-fg: $color-light;
 		position: absolute;
 		left: 0;
 		text-align: center;
-		text-transform: uppercase;
+		/* text-transform: uppercase; */
 		width: 100%;
 	}
 }

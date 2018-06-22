@@ -16,6 +16,7 @@
 	font-size: font-size( 14px );
 	padding: lines( 0.25 ) lines( 0.5 );
 	outline: none;
+	background: $color-light;
 
 	&:first-child {
 		border-radius: 4px 0 0 4px;
@@ -30,7 +31,8 @@
 	}
 
 	&.tabs__title--active {
-		color: red;
+		background: darken( $color-light, 12 );
+		box-shadow: inset -10px 0px 3px -7px rgba( 0, 0, 0, 0.18 );
 	}
 }
 
