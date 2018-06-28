@@ -10,6 +10,8 @@
 
 import React            from 'react';
 import ShortID          from 'shortid';
+import keysSVG          from 'assets/icons/keys.svg';
+import notesSVG         from 'assets/icons/notes.svg';
 import Notes            from 'components/Notes';
 import Grid, { Column } from 'components/Grid';
 import Tabs, { Tab }    from 'components/Tabs';
@@ -21,10 +23,6 @@ import Oscillator       from './Oscillator';
 import Envelope         from './Envelope';
 import Filter           from './Filter';
 import Volume           from './Volume';
-
-import Icon from 'components/Icon';
-import keysSVG from 'assets/icons/Keys.svg';
-import notesSVG from 'assets/icons/Notes.svg';
 
 require( './style.css' );
 
@@ -176,13 +174,9 @@ class Keyboard extends React.Component {
 		return (
 			<div className="keyboard">
 				<div className="keyboard__controls">
-					<div style={{ height: '250px' }}>
-						<Icon svg={ notesSVG } />
-					</div>
-
 					<Wrapper>
 						<Tabs>
-							<Tab title="Synth">
+							<Tab title="Synth" icon={ keysSVG }>
 								<Grid>
 									<Column span="4">
 										<Oscillator
@@ -217,7 +211,7 @@ class Keyboard extends React.Component {
 								</Grid>
 							</Tab>
 
-							<Tab title="Notes">
+							<Tab title="Notes" icon={ notesSVG }>
 								<Notes onChange={ this.handleNotesChange } />
 							</Tab>
 						</Tabs>

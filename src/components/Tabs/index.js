@@ -37,13 +37,13 @@ class Tabs extends React.Component {
 	// State Methods
 
 	showTab( index ) {
-		this.titles.forEach( ( title, titleIndex ) => {
+		this.titles.forEach(( title, titleIndex ) => {
 			if ( titleIndex === index ) title.activate(); else title.deactivate();
-		} );
+		});
 
-		this.tabs.forEach( ( tab, tabIndex ) => {
+		this.tabs.forEach(( tab, tabIndex ) => {
 			if ( tabIndex === index ) tab.show(); else tab.hide();
-		} );
+		});
 	}
 
 	//
@@ -58,6 +58,7 @@ class Tabs extends React.Component {
 			titles.push( <Title
 				key={ ShortID.generate() }
 				text={ child.props.title }
+				icon={ child.props.icon }
 				index={ index }
 				active={ index === 0 }
 				showTab={ this.showTab }
@@ -69,8 +70,8 @@ class Tabs extends React.Component {
 				index: index,
 				show:  index === 0,
 				ref:   ( self ) => ( this.tabs[index] = self ),
-			} ) );
-		} );
+			}));
+		});
 
 		return (
 			<div className="tabs">
@@ -79,11 +80,16 @@ class Tabs extends React.Component {
 			</div>
 		);
 	}
+
 }
 
 //
 // Properties
 //
+
+Tabs.defaultProps = {
+	icon: null,
+};
 
 Tabs.propTypes = {
 	children: PropTypes.node.isRequired,

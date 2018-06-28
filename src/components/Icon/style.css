@@ -1,10 +1,64 @@
+/**
+ * Icon
+ *
+ * :: Keys
+ * :: Notes
+ */
+
+@import 'global';
+
 .icon {
 	display: inline-block;
 	height: 100%;
+	max-height: 176px;
+	color: $color-light;
+	transition: 200ms color;
 
 	svg {
-		fill: black;
 		height: 100%;
-		transition: fill 300ms;
+		transition: fill 200ms;
+	}
+}
+
+/**
+ * Keys
+ */
+
+.icon #keys {
+	fill: currentColor;
+	stroke: currentColor;
+
+	#keys__C,
+	#keys__D,
+	#keys__E {
+		stroke: currentColor;
+	}
+
+	#keys__Db,
+	#keys__Eb {
+		fill: currentColor;
+	}
+}
+
+/**
+ * Notes
+ */
+
+.icon #notes {
+	fill: currentColor;
+	stroke: currentColor;
+
+	#notes__beam {
+		fill: currentColor;
+	}
+
+	#notes__left-8th__bar,
+	#notes__right-8th__bar{
+		stroke: currentColor;
+	}
+
+	#notes__left-8th__note,
+	#notes__left-8th__note {
+		fill: currentColor;
 	}
 }

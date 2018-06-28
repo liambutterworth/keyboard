@@ -10,6 +10,7 @@
 import React      from 'react';
 import PropTypes  from 'prop-types';
 import ClassNames from 'classnames';
+import Icon       from 'components/Icon';
 
 class Title extends React.Component {
 
@@ -40,11 +41,11 @@ class Title extends React.Component {
 	//
 
 	activate() {
-		if ( !this.state.active ) this.setState( { active: true } );
+		if ( !this.state.active ) this.setState({ active: true });
 	}
 
 	deactivate() {
-		if ( this.state.active ) this.setState( { active: false } );
+		if ( this.state.active ) this.setState({ active: false });
 	}
 
 	//
@@ -52,17 +53,19 @@ class Title extends React.Component {
 	//
 
 	render() {
-		const classNames = ClassNames( {
-			'tabs__title':         true,
+		const classNames = ClassNames({
+			tabs__title:           true,
 			'tabs__title--active': this.state.active,
-		} );
+		});
 
 		return (
 			<button className={ classNames } onClick={ this.handleClick }>
-				{ this.props.text }
+				<Icon svg={ this.props.icon } />
+				{/* this.props.text */}
 			</button>
 		);
 	}
+
 }
 
 //
@@ -71,12 +74,14 @@ class Title extends React.Component {
 
 Title.defaultProps = {
 	active: false,
+	icon:   '',
 };
 
 Title.propTypes = {
 	text:    PropTypes.string.isRequired,
 	index:   PropTypes.number.isRequired,
 	showTab: PropTypes.func.isRequired,
+	icon:    PropTypes.string,
 	active:  PropTypes.bool,
 };
 

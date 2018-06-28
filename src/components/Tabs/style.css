@@ -13,26 +13,17 @@
 
 .tabs__title {
 	cursor: pointer;
-	font-size: font-size( 14px );
-	padding: lines( 0.25 ) lines( 0.5 );
+	background: transparent;
+	height: lines( 2 );
 	outline: none;
-	background: $color-light;
-
-	&:first-child {
-		border-radius: 4px 0 0 4px;
+	
+	&:hover .icon,
+	&.tabs__title--active .icon {
+		color: $color-light;
 	}
 
-	&:last-child {
-		border-radius: 0 4px 4px 0;
-	}
-
-	& + .tabs__title {
-		border-left: 1px solid grey;
-	}
-
-	&.tabs__title--active {
-		background: darken( $color-light, 12 );
-		box-shadow: inset -10px 0px 3px -7px rgba( 0, 0, 0, 0.18 );
+	.icon {
+		color: rgba( $color-light, 0.5 );
 	}
 }
 
