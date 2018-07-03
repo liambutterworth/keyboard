@@ -25,17 +25,21 @@
  */
 
 .icon #keys {
-	fill: currentColor;
-	stroke: currentColor;
+	/* #keys__natural { */
+	/* 	stroke: currentColor; */
+	/* } */
 
-	#keys__C,
-	#keys__D,
-	#keys__E {
+	#keys__natural__outline {
+		fill: currentColor;
+	}
+
+	#keys__natural__left-divider,
+	#keys__natural__right-divider {
 		stroke: currentColor;
 	}
 
-	#keys__Db,
-	#keys__Eb {
+	#keys__accidental__left,
+	#keys__accidental__right {
 		fill: currentColor;
 	}
 }
@@ -45,9 +49,6 @@
  */
 
 .icon #notes {
-	fill: currentColor;
-	stroke: currentColor;
-
 	#notes__beam {
 		fill: currentColor;
 	}
@@ -58,7 +59,7 @@
 	}
 
 	#notes__left-8th__note,
-	#notes__left-8th__note {
+	#notes__right-8th__note {
 		fill: currentColor;
 	}
 }

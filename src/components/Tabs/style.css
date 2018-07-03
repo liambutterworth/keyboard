@@ -16,14 +16,14 @@
 	background: transparent;
 	height: lines( 2 );
 	outline: none;
+
+	.icon {
+		color: rgba( $color-light, 0.5 );
+	}
 	
 	&:hover .icon,
 	&.tabs__title--active .icon {
 		color: $color-light;
-	}
-
-	.icon {
-		color: rgba( $color-light, 0.5 );
 	}
 }
 
