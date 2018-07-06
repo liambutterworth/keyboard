@@ -14,7 +14,7 @@ $site-width:       1280px;
 $base-font-size:   16px;
 $base-line-height: 1.5;
 
-$color-dark:      #121314;
+$color-dark:      #191919;
 $color-light:     invert( $color-dark );
 $color-primary:   #941b0c;
 $color-secondary: #e6e600;

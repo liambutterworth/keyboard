@@ -16,7 +16,8 @@ $white-highlight-press-bg: darken( $color-primary, 12 );
 $white-highlight-press-fg: $color-light;
 
 $black-width:              $white-width / 2;
-$black-bg:                 darken( $color-dark, 7 );
+/* $black-bg:                 darken( $color-dark, 7 ); */
+$black-bg:                 darken( $color-dark, 4 );
 $black-fg:                 $color-light;
 $black-press-bg:           lighten( $black-bg, 12 );
 $black-press-fg:           $color-light;
@@ -60,6 +61,7 @@ $black-highlight-press-fg: $color-light;
 	height: 20vh;
 	top: 80vh;
 	white-space: nowrap;
+	min-width: $site-width;
 }
 
 .keyboard__key {

@@ -20,6 +20,10 @@
 	.icon {
 		color: rgba( $color-light, 0.5 );
 	}
+
+	& + .tabs__title {
+		margin-left: lines( 0.5 );
+	}
 	
 	&:hover .icon,
 	&.tabs__title--active .icon {
